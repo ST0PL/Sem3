@@ -125,6 +125,16 @@
   <ItemGroup>
     <ClCompile Include="lab3.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Ammunition.hpp" />
+    <ClInclude Include="Enums.hpp" />
+    <ClInclude Include="Equipment.hpp" />
+    <ClInclude Include="Fuel.hpp" />
+    <ClInclude Include="Resource.hpp" />
+    <ClInclude Include="Vehicle.hpp" />
+    <ClInclude Include="WarehouseEntry.hpp" />
+    <ClInclude Include="Weapon.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
