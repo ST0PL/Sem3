@@ -18,5 +18,6 @@ public:
     void SetId(int id);
     void AssignWarehouse(const Warehouse*);
     virtual bool IsMatches(SupplyRequestDetail*) const = 0;
-    virtual ~WarehouseEntry() = 0;
+    virtual bool IsEmpty() const = 0;
+    virtual ~WarehouseEntry() = default;
 };

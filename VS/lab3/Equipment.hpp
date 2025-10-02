@@ -9,5 +9,6 @@ public:
     void Increase(int);
     int Decrease(int);
     int GetCount() const;
+    bool IsEmpty() const override;
     ~Equipment() = default;
 };

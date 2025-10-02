@@ -123,7 +123,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ammunition.cpp" />
+    <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Fuel.cpp" />
     <ClCompile Include="lab3.cpp" />
+    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="SupplyRequest.cpp" />
+    <ClCompile Include="SupplyRequestDetail.cpp" />
+    <ClCompile Include="Vehicle.cpp" />
+    <ClCompile Include="Warehouse.cpp" />
+    <ClCompile Include="WarehouseEntry.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ammunition.hpp" />
@@ -131,7 +141,10 @@
     <ClInclude Include="Equipment.hpp" />
     <ClInclude Include="Fuel.hpp" />
     <ClInclude Include="Resource.hpp" />
+    <ClInclude Include="SupplyRequest.hpp" />
+    <ClInclude Include="SupplyRequestDetail.hpp" />
     <ClInclude Include="Vehicle.hpp" />
+    <ClInclude Include="Warehouse.hpp" />
     <ClInclude Include="WarehouseEntry.hpp" />
     <ClInclude Include="Weapon.hpp" />
   </ItemGroup>

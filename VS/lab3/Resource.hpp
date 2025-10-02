@@ -2,12 +2,13 @@
 #include "WarehouseEntry.hpp"
 #include "Enums.hpp"
 
-class Resource : public WarehouseEntry  {
+class Resource : public WarehouseEntry {
 public:
-    Resource(int, std::string, MeasureUnit, float);
+    Resource(int id, std::string name, MeasureUnit measureUnit, float quantity);
     virtual ~Resource() = default;
     MeasureUnit GetMeasureUnit() const;
     float GetQuantity() const;
+    bool IsEmpty() const override;
     void Increase(float);
     float Decrease(float);
 protected:
