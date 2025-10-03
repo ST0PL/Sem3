@@ -2,6 +2,7 @@
 #include "Staff.hpp"
 #include "SupplyRequestDetail.hpp"
 #include "SupplyResponse.hpp"
+#include <algorithm>
 
 Unit::Unit(int id, const std::string& name, UnitType unitType) :
     m_id(id), m_name(name), m_type(unitType) {
@@ -60,9 +61,26 @@ void Unit::AddChildUnit(Unit* unit) {
     }
 }
 
-void Unit::AddChildUnits(std::vector<Unit*> units) {
+void Unit::AddChildUnits(std::vector<Unit*>& units) {
     for (Unit* unit : units)
         m_children.push_back(unit);
+}
+
+void Unit::AddSoldier(Staff* soldier) {
+    m_personnel.push_back(soldier);
+}
+void Unit::AddSoldiers(std::vector<Staff*>& soldiers) {
+    for (auto& soldier : soldiers)
+        m_personnel.push_back(soldier);
+}
+bool Unit::RemoveSoldier(int id) {
+    int startSize = m_personnel.size();
+    auto newEnd = std::remove_if(m_personnel.begin(), m_personnel.end(), [&id](const Staff* soldier)
+        {
+            return soldier == nullptr || soldier->GetId() == id;
+        });
+    m_personnel.erase(newEnd, m_personnel.end());
+    return m_personnel.size() < startSize;
 }
 
 void Unit::AssignWarehouse(Warehouse* warehouse) {
@@ -83,7 +101,7 @@ bool Unit::RemoveChildUnit(int id) {
 
     int prevSize = m_children.size();
 
-    auto new_end = std::remove_if(m_children.begin(), m_children.end(), [&id](const Unit* unit)
+    auto newEnd = std::remove_if(m_children.begin(), m_children.end(), [&id](const Unit* unit)
         {
             if (unit)
                 return unit->GetId() == id;
@@ -91,7 +109,7 @@ bool Unit::RemoveChildUnit(int id) {
             return true;
         });
 
-    m_children.erase(new_end, m_children.end());
+    m_children.erase(newEnd, m_children.end());
 
     return m_children.size() <= prevSize;
 }

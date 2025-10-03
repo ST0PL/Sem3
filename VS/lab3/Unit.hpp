@@ -17,7 +17,10 @@ public:
     void SetParent(Unit*);
     SupplyResponse MakeSupplyRequest(SupplyRequest&) override;
     void AddChildUnit(Unit*);
-    void AddChildUnits(std::vector<Unit*>);
+    void AddChildUnits(std::vector<Unit*>&);
+    void AddSoldier(Staff*);
+    void AddSoldiers(std::vector<Staff*>&);
+    bool RemoveSoldier(int);
     void AssignWarehouse(Warehouse*);
     void AssignCommander(const Staff*);
     bool RemoveChildUnit(int);
