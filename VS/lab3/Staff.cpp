@@ -1,7 +1,8 @@
 #include "Staff.hpp"
 
 Staff::Staff(int id, const std::string& fullName, Rank rank, Speciality speciality) :
-    m_id(id), m_fullName(fullName), m_rank(rank), m_speciality(speciality) { }
+    m_id(id), m_fullName(fullName), m_rank(rank), m_speciality(speciality) {
+}
 
 
 int Staff::GetId() const {

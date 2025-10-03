@@ -4,7 +4,8 @@
 #include "SupplyResponse.hpp"
 
 Unit::Unit(int id, const std::string& name, UnitType unitType) :
-    m_id(id), m_name(name), m_type(unitType) { }
+    m_id(id), m_name(name), m_type(unitType) {
+}
 
 UnitType Unit::GetType() const {
     return m_type;
@@ -28,20 +29,38 @@ void Unit::SetParent(Unit* parent) {
     }
 }
 
-SupplyResponse Unit::MakeSupplyRequest(SupplyRequest request) {
+SupplyResponse Unit::MakeSupplyRequest(SupplyRequest& request) {
+    bool detailsCorreted = m_assignedWarehouse != nullptr ?
+        m_assignedWarehouse->ProcessSupplyRequestDetails(request.GetDetails()) : false;
 
-    // Заглушка
-    return SupplyResponse(SupplyResponseStatus::Success, "");
+    auto& remainingDetails = request.GetDetails();
+
+    if (remainingDetails.empty())
+        return SupplyResponse(SupplyResponseStatus::Success, "");
+
+
+    if (m_parent != nullptr) {
+        auto parentResponse = m_parent->MakeSupplyRequest(request);
+
+        if (parentResponse.GetStatus() == SupplyResponseStatus::Success)
+            return SupplyResponse(SupplyResponseStatus::Success, "");
+
+        return detailsCorreted ? SupplyResponse(SupplyResponseStatus::Partial, SupplyRequestDetail::ToString(remainingDetails)) :
+            SupplyResponse(SupplyResponseStatus::Denied, "Ни один из складов высших порядков не смог удовлетворить запрос");
+    }
+
+    return detailsCorreted ? SupplyResponse(SupplyResponseStatus::Partial, SupplyRequestDetail::ToString(remainingDetails)) :
+        SupplyResponse(SupplyResponseStatus::Denied, m_assignedWarehouse == nullptr ? "Нет прикрепленного склада" : "Склад подразделения не смог удовлетворить запрос");
 }
 
-
-void Unit::AddChildUnit(const Unit* unit) {
+void Unit::AddChildUnit(Unit* unit) {
     if (unit && (unit->GetType() < m_type))
-        m_children.push_back(unit);
+        unit->SetParent(this);
+    m_children.push_back(unit);
 }
 
-void Unit::AddChildUnits(std::vector<const Unit*> units) {
-    for (const Unit* unit : units)
+void Unit::AddChildUnits(std::vector<Unit*> units) {
+    for (Unit* unit : units)
         m_children.push_back(unit);
 }
 
@@ -60,6 +79,7 @@ void Unit::AssignCommander(const Staff* commander) {
 }
 
 bool Unit::RemoveChildUnit(int id) {
+
     int prevSize = m_children.size();
 
     auto new_end = std::remove_if(m_children.begin(), m_children.end(), [&id](const Unit* unit)
@@ -69,6 +89,7 @@ bool Unit::RemoveChildUnit(int id) {
 
             return true;
         });
+
     m_children.erase(new_end, m_children.end());
 
     return m_children.size() <= prevSize;

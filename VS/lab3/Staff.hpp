@@ -6,7 +6,7 @@
 
 class Staff {
 public:
-    Staff(int, const std::string&, Rank, Speciality );
+    Staff(int, const std::string&, Rank, Speciality);
 
     int GetId() const;
     std::string GetFullName() const;

@@ -5,6 +5,6 @@ class SupplyRequest;
 
 class IUnit {
 public:
-    virtual SupplyResponse MakeSupplyRequest(SupplyRequest) = 0;
+    virtual SupplyResponse MakeSupplyRequest(SupplyRequest&) = 0;
     ~IUnit() = default;
 };

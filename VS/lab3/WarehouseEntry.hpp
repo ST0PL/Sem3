@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
 #include <memory>
+
+
 class SupplyRequestDetail;
 class Warehouse;
 
+template<typename T>
 class WarehouseEntry {
 protected:
     int m_id;
@@ -19,5 +22,9 @@ public:
     void AssignWarehouse(const Warehouse*);
     virtual bool IsMatches(SupplyRequestDetail*) const = 0;
     virtual bool IsEmpty() const = 0;
+    virtual void Increase(T) = 0;
+    virtual T Decrease(T) = 0;
     virtual ~WarehouseEntry() = default;
 };
+template class WarehouseEntry<int>;
+template class WarehouseEntry<float>;

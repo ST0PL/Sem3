@@ -1,5 +1,8 @@
 #pragma once
 #include "Enums.hpp"
+#include <memory>
+#include <vector>
+#include <string>
 
 class SupplyRequestDetail {
 
@@ -16,6 +19,12 @@ public:
     FuelType GetFuelType() const;
     float GetCount() const;
     void SetCount(float);
+    static std::string ToString(std::vector<std::unique_ptr<SupplyRequestDetail>>&);
+    std::string ToString() const;
+    static std::string SupplyTypeToString(SupplyType);
+    static std::string CaliberToString(Caliber);
+    static std::string FuelTypeToString(FuelType);
+    static std::string VehicleTypeToString(VehicleType);
 private:
     int m_id;
     SupplyType m_supplyType;

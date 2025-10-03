@@ -1,9 +1,8 @@
 #include "Equipment.hpp"
-
+#include "WarehouseEntry.hpp"
 
 Equipment::Equipment(int id, std::string name, int count)
-    : WarehouseEntry(id, name), m_count(count) {
-}
+    : WarehouseEntry<int>(id, name), m_count(count) {}
 
 int Equipment::GetCount() const {
     return m_count;

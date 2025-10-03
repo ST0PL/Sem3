@@ -15,9 +15,9 @@ public:
     UnitType GetType() const;
     void SetId(int);
     void SetParent(Unit*);
-    SupplyResponse MakeSupplyRequest(SupplyRequest) override;
-    void AddChildUnit(const Unit*);
-    void AddChildUnits(std::vector<const Unit*>);
+    SupplyResponse MakeSupplyRequest(SupplyRequest&) override;
+    void AddChildUnit(Unit*);
+    void AddChildUnits(std::vector<Unit*>);
     void AssignWarehouse(Warehouse*);
     void AssignCommander(const Staff*);
     bool RemoveChildUnit(int);
@@ -31,7 +31,7 @@ private:
     const Staff* m_commander;
     int m_parentId;
     Unit* m_parent;
-    std::vector<const Unit*> m_children;
+    std::vector<Unit*> m_children;
     std::vector<const Staff*> m_personnel;
     int m_assignedWarehouseId;
     Warehouse* m_assignedWarehouse;

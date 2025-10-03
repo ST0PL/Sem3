@@ -45,38 +45,45 @@ void Warehouse::AddEquipment(std::vector<std::unique_ptr<Equipment>>& equipment)
     }
 }
 
-void Warehouse::ProcessSupplyRequestDetails(std::vector<std::unique_ptr<SupplyRequestDetail>>& details) {
+bool Warehouse::ProcessSupplyRequestDetails(std::vector<std::unique_ptr<SupplyRequestDetail>>& details) {
 
     if (details.empty())
-        return;
+        return false;
+
+    bool corrected = false;
 
     for (auto& detail : details) {
         switch (detail->GetSupplyType()) {
 
         case SupplyType::Ammunition:
         case SupplyType::Fuel:
-            WriteOff<Resource>(m_resources, detail.get());
+            WriteOff<Resource>(m_resources, detail.get(), corrected);
             break;
 
         case SupplyType::Weapon:
         case SupplyType::Vehicle:
-            WriteOff<Equipment>(m_equipments, detail.get());
+            WriteOff<Equipment>(m_equipments, detail.get(), corrected);
             break;
         }
     }
+
     RemoveEmptyEntries(m_resources);
     RemoveEmptyEntries(m_equipments);
     RemoveEmptyRequestDetails(details);
+
+    return corrected;
 }
 
 template<typename T>
-void Warehouse::WriteOff(std::vector<std::unique_ptr<T>>& collection, SupplyRequestDetail* detail) {
+void Warehouse::WriteOff(std::vector<std::unique_ptr<T>>& collection, SupplyRequestDetail* detail, bool& corrected) {
 
     float remaining = detail->GetCount();
 
     for (auto& item : collection) {
 
         if (item->IsMatches(detail)) {
+
+            corrected = true;
 
             remaining -= item->Decrease(remaining);
 
