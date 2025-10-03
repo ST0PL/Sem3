@@ -128,8 +128,11 @@
     <ClCompile Include="Fuel.cpp" />
     <ClCompile Include="lab3.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="Staff.cpp" />
     <ClCompile Include="SupplyRequest.cpp" />
     <ClCompile Include="SupplyRequestDetail.cpp" />
+    <ClCompile Include="SupplyResponse.cpp" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="Warehouse.cpp" />
     <ClCompile Include="WarehouseEntry.cpp" />
@@ -140,9 +143,13 @@
     <ClInclude Include="Enums.hpp" />
     <ClInclude Include="Equipment.hpp" />
     <ClInclude Include="Fuel.hpp" />
+    <ClInclude Include="IUnit.hpp" />
     <ClInclude Include="Resource.hpp" />
+    <ClInclude Include="Staff.hpp" />
     <ClInclude Include="SupplyRequest.hpp" />
     <ClInclude Include="SupplyRequestDetail.hpp" />
+    <ClInclude Include="SupplyResponse.hpp" />
+    <ClInclude Include="Unit.hpp" />
     <ClInclude Include="Vehicle.hpp" />
     <ClInclude Include="Warehouse.hpp" />
     <ClInclude Include="WarehouseEntry.hpp" />
