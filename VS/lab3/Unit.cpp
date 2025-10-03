@@ -54,9 +54,10 @@ SupplyResponse Unit::MakeSupplyRequest(SupplyRequest& request) {
 }
 
 void Unit::AddChildUnit(Unit* unit) {
-    if (unit && (unit->GetType() < m_type))
+    if (unit && (unit->GetType() < m_type)) {
         unit->SetParent(this);
-    m_children.push_back(unit);
+        m_children.push_back(unit);
+    }
 }
 
 void Unit::AddChildUnits(std::vector<Unit*> units) {
