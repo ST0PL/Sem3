@@ -113,7 +113,32 @@ public class Unit implements Suppliable {
 
     @Override
     public SupplyResponse makeSupplyRequest(SupplyRequest request){
-        return null;
+
+        Boolean isCorrected = false;
+
+        if(request == null)
+            return new SupplyResponse(SupplyResponseStatus.DENIED, "Передан пустой запрос"); 
+
+        
+        if(assignedWarehouse != null){
+            isCorrected = assignedWarehouse.processSupplyRequestDetails(request.getDetails());
+        }
+
+        if(!request.getDetails().isEmpty()){
+            if(parent != null){
+                var parentResponse = parent.makeSupplyRequest(request);
+                
+                if(parentResponse.getStatus() == SupplyResponseStatus.DENIED)
+                    return isCorrected ? new SupplyResponse(SupplyResponseStatus.PARTIAL, request.getDetails().toString()) :  parentResponse;
+
+                return parentResponse;
+
+            }
+            return new SupplyResponse(SupplyResponseStatus.DENIED, "Ни один из складов высших порядков не смог удовлетворить запрос");
+
+        }
+
+        return new SupplyResponse(SupplyResponseStatus.SUCCESS, "");
     }
 
     public SupplyRequest CreateRequest(ArrayList<SupplyRequestDetail> details){
