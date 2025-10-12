@@ -416,3 +416,8 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+# Scripts
+*.py
+*.bat
+# Compiled
+lab4/output/*
