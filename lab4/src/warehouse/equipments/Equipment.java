@@ -1,25 +1,31 @@
 package warehouse.equipments;
 
 import request.SupplyRequestDetail;
-import warehouse.Warehouse;
 import warehouse.WarehouseEntry;
 
 public abstract class Equipment extends WarehouseEntry<Integer> {
 
-    Integer count;
+    int count;
 
-    public Equipment(int id, String name, int count) {
+    public Equipment(int id, String name, int count) { 
         super(id, name);
+        if(count < 1){
+            throw new IllegalArgumentException("Недопустимое количество");
+        }         
         this.count = count;
     }
+
+    public int getCount(){
+        return count;
+    }
     @Override
-    public void increase(Integer value){
-        count+=value;
+    public void increase(Number value){
+        count+=value.intValue();
     }
 
     @Override
-    public Integer decrease(Integer value){
-        int taken = Math.min(count, value);
+    public Integer decrease(Number value){
+        int taken = Math.min(count, value.intValue());
         count-=taken;
         return taken;
     }
@@ -27,11 +33,6 @@ public abstract class Equipment extends WarehouseEntry<Integer> {
     @Override
     public Boolean isEmpty(){
         return count < 1;
-    }
-
-    @Override
-    public void assignWarehouse(Warehouse warehouse){
-        this.assignedWarehouseId = warehouse.getId();
     }
 
     @Override

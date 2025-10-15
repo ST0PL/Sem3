@@ -1,6 +1,7 @@
 package warehouse.resources;
 
 import enums.Caliber;
+import enums.MeasureUnit;
 import enums.SupplyType;
 import request.SupplyRequestDetail;
 
@@ -8,7 +9,7 @@ public class Ammunition extends Resource{
     Caliber caliber;
     public Ammunition(int id, String name, Caliber caliber, int count)
     {
-        super(id, name, count);
+        super(id, name, MeasureUnit.ITEM, count);
         this.caliber = caliber;
     }
 

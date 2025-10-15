@@ -1,6 +1,7 @@
 package warehouse.resources;
 
 import enums.FuelType;
+import enums.MeasureUnit;
 import enums.SupplyType;
 import request.SupplyRequestDetail;
 
@@ -9,7 +10,7 @@ public class Fuel extends Resource {
 
     public Fuel(int id, String name, FuelType type, int count)
     {
-        super(id, name, count);
+        super(id, name, MeasureUnit.LITER, count);
         this.type = type;
     }
 

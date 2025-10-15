@@ -3,6 +3,8 @@ package unit;
 import enums.SupplyResponseStatus;
 import enums.UnitType;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -61,8 +63,9 @@ public class Unit implements Suppliable {
     }
 
     public void addChildUnit(Unit unit){
-        if(unit != null && unit.getType().compareTo(type) < 0){
+        if(unit != null && !hasChild(unit) && unit.getType().compareTo(type) < 0){
             this.children.add(unit);
+            unit.setParent(this);
         }
     }
 
@@ -71,12 +74,24 @@ public class Unit implements Suppliable {
         copy.removeIf(i->i == null || i.getType().compareTo(type) > 0);
         copy.removeIf(i->children.stream().anyMatch(j -> j.getId() == i.getId()));
         var distincted = copy.stream().filter(distinctBy(u->u.getId())).collect(Collectors.toList());
+        for(Unit unit : distincted){
+            unit.setParent(this);
+        }
         children.addAll(distincted);
         return distincted.size();
     }
 
+    public Boolean removeChildUnit(int id){
+        return children.removeIf(c->c.getId() == id);
+    }
+
+    public List<Unit> getChildren(){
+        return Collections.unmodifiableList(children);
+    }    
+
     public void addSoldier(Staff soldier){
-        if(soldier != null && !personnel.stream().anyMatch(s->s.getId() == soldier.getId())){
+        if(soldier != null && !hasPersonnel(soldier)){
+            soldier.setUnit(this);
             personnel.add(soldier);
         }
     }
@@ -85,12 +100,19 @@ public class Unit implements Suppliable {
         var copy = new ArrayList<Staff>(soldiers);
         copy.removeIf(i->personnel.stream().anyMatch(j->j.getId() == i.getId()));
         var distincted = copy.stream().filter(distinctBy(s->s.getId())).collect(Collectors.toList());
+        for(Staff soldier : distincted){
+            soldier.setUnit(this);
+        }        
         personnel.addAll(distincted);
         return distincted.size();
     }
 
     public Boolean removeSoldier(int id){
         return personnel.removeIf(p->p.getId() == id);
+    }
+
+    public List<Staff> getPersonnel(){
+        return Collections.unmodifiableList(personnel);
     }
 
     public void assignWarehouse(Warehouse warehouse){
@@ -101,14 +123,11 @@ public class Unit implements Suppliable {
     }
 
     public void assignCommander(Staff commander){
+        // добавить в список staff
         if(commander != null){
             this.commanderId = commander.getId();
             this.commander = commander;
         }
-    }
-
-    public Boolean removeChildUnit(int id){
-        return children.removeIf(c->c.getId() == id);
     }
 
     @Override
@@ -129,21 +148,29 @@ public class Unit implements Suppliable {
                 var parentResponse = parent.makeSupplyRequest(request);
                 
                 if(parentResponse.getStatus() == SupplyResponseStatus.DENIED)
-                    return isCorrected ? new SupplyResponse(SupplyResponseStatus.PARTIAL, request.getDetails().toString()) :  parentResponse;
+                    return isCorrected ? new SupplyResponse(SupplyResponseStatus.PARTIAL, request.getDetails()) :  parentResponse;
 
                 return parentResponse;
 
             }
-            return new SupplyResponse(SupplyResponseStatus.DENIED, "Ни один из складов высших порядков не смог удовлетворить запрос");
+            return new SupplyResponse(SupplyResponseStatus.DENIED, "Ни один из складов дерева не смог удовлетворить запрос");
 
         }
 
         return new SupplyResponse(SupplyResponseStatus.SUCCESS, "");
     }
 
-    public SupplyRequest CreateRequest(ArrayList<SupplyRequestDetail> details){
+    public SupplyRequest createRequest(ArrayList<SupplyRequestDetail> details){
         return new SupplyRequest(0, details, this);
     }
+
+    Boolean hasPersonnel(Staff soldier){
+        return personnel.stream().anyMatch(s->s.getId() == soldier.getId());
+    }
+
+    Boolean hasChild(Unit child){
+        return children.stream().anyMatch(s->s.getId() == child.getId());
+    }    
 
     static <T> Predicate<T> distinctBy(Function<? super T, ?> keyExtractor) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();

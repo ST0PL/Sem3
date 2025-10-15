@@ -16,8 +16,8 @@ public class Warehouse {
     int id;
     WarehouseType type;
     String name;
-    public ArrayList<Resource> resources = new ArrayList<>();
-    public ArrayList<Equipment> equipments = new ArrayList<>();
+    ArrayList<Resource> resources = new ArrayList<>();
+    ArrayList<Equipment> equipments = new ArrayList<>();
 
     public int getId(){
         return id;
@@ -41,7 +41,7 @@ public class Warehouse {
 
 
     public Boolean addResource(Resource resource){
-        Boolean hasId = resources.stream().anyMatch(r->r.getId() == resource.id);
+        Boolean hasId = resources.stream().anyMatch(r->r.getId() == resource.getId());
         if(!hasId)
             resources.add(resource);
         return !hasId;
@@ -70,12 +70,15 @@ public class Warehouse {
         if (details.size() < 1)
             return false;
 
-        int origSize = details.size();
+        Boolean isCorrected = false;
 
         for (SupplyRequestDetail detail : details) {
-            switch (detail.getSupplyType()) {
+            Boolean detailCorrected = switch (detail.getSupplyType()) {
                 case AMMUNITION, FUEL -> writeOff(resources, detail);
                 case WEAPON, VEHICLE->writeOff(equipments, detail);
+            };            
+            if(!isCorrected && detailCorrected){
+                isCorrected = detailCorrected;
             }
         }
 
@@ -83,23 +86,25 @@ public class Warehouse {
         removeEmptyEntries(equipments);
         removeEmptyRequestDetails(details);
 
-        return origSize > details.size();
+        return isCorrected;
     }
 
     <T extends WarehouseEntry> Boolean writeOff(ArrayList<T> entries, SupplyRequestDetail detail){
 
-        Boolean isCorrected = false;
-        float remaining = detail.getCount();
+        float startCount = detail.getCount();
+        float remaining = startCount;
+
         for(WarehouseEntry entry: entries){
             if(entry.isMatches(detail)){
-                isCorrected = true;
-                remaining-=(float)entry.decrease(remaining);
+                Number taken = entry.decrease(remaining);
+                remaining -= taken.floatValue();
                 if (remaining == 0.0f)
                     break;
             }
         }
+
         detail.setCount(remaining);
-        return isCorrected;
+        return remaining < startCount;
     }
 
     <T extends WarehouseEntry> void removeEmptyEntries(ArrayList<T> entries){

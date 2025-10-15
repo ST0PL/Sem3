@@ -1,7 +1,7 @@
 package enums;
 
 public enum Rank {
-    PRIVATE, //
+    PRIVATE, // рядовой
     CORPORAL, // Ефрейтор
     JUNIOR_SERGEANT, // Младший сержант
     SERGEANT, // Cержант
@@ -14,10 +14,10 @@ public enum Rank {
     SENIOR_LIEUTENANT, // Старший лейтенант
     CAPTAIN, // Капитан
     MAJOR, // Майор
-    LIEUTENAHT_COLONEL, // Подполковник
+    LIEUTENANT_COLONEL, // Подполковник
     COLONEL, // Полковник
     MAJOR_GENERAL, // Генерал майор
-    LIEUTENAHT_GENERAL, // Генерал лейтенант
+    LIEUTENANT_GENERAL, // Генерал лейтенант
     COLONEL_GENERAL, // Генерал полковник
     ARMY_GENERAL // Генерал армии
 }

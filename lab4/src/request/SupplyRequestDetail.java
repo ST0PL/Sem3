@@ -12,9 +12,14 @@ public class SupplyRequestDetail {
     float count;
     
     public SupplyRequestDetail(int id, SupplyType supplyType, float count){
+        
+        if(count < 1){
+            throw new IllegalArgumentException("Недопустимое количество");
+        }        
+
         this.id = id;
         this.supplyType = supplyType;
-        this.count = count;
+        setCount(count);
     }
 
     public SupplyRequestDetail withCaliber(Caliber caliber){
@@ -31,51 +36,59 @@ public class SupplyRequestDetail {
         return this;
     }
 
-
     public int getId(){
         return id;
     }
+
     public SupplyType getSupplyType(){
         return supplyType;
     }
+
     public Caliber getCaliber(){
         return caliber;
     }
+
     public VehicleType getVehicleType(){
         return vehicleType;
     }
+
     public FuelType getFuelType(){
         return fuelType;
     }
+
     public float getCount(){
         return count;
     }
-    public void setCount(float count){
-        this.count = count;
+
+    public final void setCount(float count){
+        this.count = switch(supplyType){
+            case AMMUNITION, VEHICLE, WEAPON-> Math.round(count);
+            default->count;
+        };
     }
 
-    public static String ToString(ArrayList<SupplyRequestDetail> requestDetails){
-        String result = "";
-        for (SupplyRequestDetail detail: requestDetails) {
-            result += detail.ToString().concat("\n");
-        }
-
-        return result;
-    }
-    public String ToString(){
+    @Override
+    public String toString(){
         String result = SupplyTypeToString(supplyType) + ": ";
 
         result += switch (supplyType) {
-            case AMMUNITION -> result += CaliberToString(caliber) + ", " + count + "шт";
-            case FUEL -> result += FuelTypeToString(fuelType) + ", " + count + "л";
-            case VEHICLE -> VehicleTypeToString(vehicleType) + ", " +
-                            FuelTypeToString(fuelType) + ", " +
-                            count + "шт";
-            case WEAPON -> CaliberToString(caliber) + ", " + count + "шт";
+            case AMMUNITION, WEAPON ->  CaliberToString(caliber) + ", " + count + " шт";
+            case FUEL -> FuelTypeToString(fuelType) + ", " + count + " л";
+            case VEHICLE -> VehicleTypeToString(vehicleType) + ", " + FuelTypeToString(fuelType) + ", " + count + "шт";
         };
 
         return result;
     }
+
+    public static String toString(ArrayList<SupplyRequestDetail> requestDetails){
+        String result = "";
+        for (SupplyRequestDetail detail: requestDetails) {
+            result += detail.toString().concat("\n");
+        }
+
+        return result;
+    }
+
     static String SupplyTypeToString(SupplyType stype){
         return switch(stype){
             case AMMUNITION -> "Боеприпасы";
@@ -85,6 +98,7 @@ public class SupplyRequestDetail {
             default -> "Неизвестно";
         };        
     }
+
     static String CaliberToString(Caliber caliber){
         return switch(caliber){
             case C_122MM -> "122мм";
@@ -92,6 +106,7 @@ public class SupplyRequestDetail {
             default -> "Неизвестно";
         }; 
     }
+
     static String FuelTypeToString(FuelType ftype){
         return switch(ftype){
             case GASOLINE -> "Бензин";
@@ -99,6 +114,7 @@ public class SupplyRequestDetail {
             default -> "Неизвестно";
         };        
     }
+
     static String VehicleTypeToString(VehicleType vtype){
         return switch(vtype){
             case ARMORED_VEHICLE -> "Бронемашина";

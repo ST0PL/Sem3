@@ -4,8 +4,8 @@ import request.SupplyRequestDetail;
 
 public abstract class WarehouseEntry<T extends Number> {
 
-    protected int id;
-    protected String name;
+    int id;
+    String name;
     protected int assignedWarehouseId;
     protected Warehouse assignedWarehouse;
 
@@ -20,9 +20,15 @@ public abstract class WarehouseEntry<T extends Number> {
     public String getName(){
         return name;
     }
-    public abstract void assignWarehouse(Warehouse warehouse);
+    
+    public void assignWarehouse(Warehouse warehouse){
+        if(warehouse!=null){
+            this.assignedWarehouseId = warehouse.getId();
+            this.assignedWarehouse = warehouse;
+        }
+    }
     public abstract Boolean isMatches(SupplyRequestDetail detail);
     public abstract Boolean isEmpty();
-    public abstract void increase(T v);
-    public abstract T decrease(T v);
+    public abstract void increase(Number v);
+    public abstract T decrease(Number v);
 }
