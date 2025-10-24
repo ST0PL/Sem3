@@ -9,14 +9,14 @@ public:
     Staff(int, const std::string&, Rank, Speciality);
 
     int GetId() const;
-    std::string GetFullName() const;
+    const std::string& GetFullName() const;
     Rank GetRank() const;
     Speciality GetSpeciality() const;
     int GetUnitId() const;
     std::weak_ptr<Unit> GetUnit() const;
 
     void SetId(int);
-    void SetFullName(std::string);
+    void SetFullName(const std::string&);
     void SetRank(Rank);
     void SetSpeciality(Speciality);
     void SetUnitId(int);

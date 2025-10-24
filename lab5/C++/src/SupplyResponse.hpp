@@ -7,9 +7,9 @@
 
 class SupplyResponse {
 public:
-    SupplyResponse(SupplyResponseStatus, std::string);
+    SupplyResponse(SupplyResponseStatus, const std::string&);
     SupplyResponseStatus GetStatus() const;
-    std::string GetComment() const;
+    const std::string& GetComment() const;
     static std::string StatusToString(SupplyResponseStatus);
 private:
     SupplyResponseStatus m_status;

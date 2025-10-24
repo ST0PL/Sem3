@@ -1,7 +1,7 @@
 #include "Vehicle.hpp"
 #include "SupplyRequestDetail.hpp"
 
-Vehicle::Vehicle(int id, std::string name, VehicleType type, FuelType fuelType, int count)
+Vehicle::Vehicle(int id, const std::string& name, VehicleType type, FuelType fuelType, int count)
     : Equipment(id, name, count), m_type(type), m_fuelType(fuelType) {
 }
 

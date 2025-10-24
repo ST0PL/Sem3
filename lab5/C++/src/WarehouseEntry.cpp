@@ -2,7 +2,7 @@
 #include "Warehouse.hpp"
 
 template<typename T>
-WarehouseEntry<T>::WarehouseEntry(int id, std::string name)
+WarehouseEntry<T>::WarehouseEntry(int id, const std::string& name)
     : m_id(id), m_name(name) {
 }
 
@@ -12,7 +12,7 @@ const std::string& WarehouseEntry<T>::GetName() const {
 }
 
 template<typename T>
-void WarehouseEntry<T>::SetName(std::string name) {
+void WarehouseEntry<T>::SetName(const std::string& name) {
     m_name = name;
 }
 

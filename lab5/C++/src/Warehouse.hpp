@@ -19,11 +19,11 @@ private:
     template<typename T> void RemoveEmptyEntries(std::vector<std::unique_ptr<T>>&);
     void RemoveEmptyRequestDetails(std::vector<std::unique_ptr<SupplyRequestDetail>>&);
 public:
-    Warehouse(int, std::string, WarehouseType);
+    Warehouse(int, const std::string&, WarehouseType);
     int GetId() const;
     WarehouseType GetType() const;
-    const std::string GetName() const;
-    void SetName(std::string);
+    const std::string& GetName() const;
+    void SetName(const std::string&);
     void AddResource(std::unique_ptr<Resource>);
     void AddResources(std::vector<std::unique_ptr<Resource>>&);
     void AddEquipment(std::unique_ptr<Equipment>);

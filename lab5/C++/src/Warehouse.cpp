@@ -5,7 +5,7 @@
 #include <algorithm>
 
 
-Warehouse::Warehouse(int id, std::string name, WarehouseType type) :
+Warehouse::Warehouse(int id, const std::string& name, WarehouseType type) :
     m_id(id), m_name(name), m_type(type) {
 }
 
@@ -17,11 +17,11 @@ WarehouseType Warehouse::GetType() const {
     return m_type;
 }
 
-const std::string Warehouse::GetName() const {
+const std::string& Warehouse::GetName() const {
     return m_name;
 }
 
-void Warehouse::SetName(std::string name) {
+void Warehouse::SetName(const std::string& name) {
     m_name = name;
 }
 

@@ -9,7 +9,7 @@ int Staff::GetId() const {
     return m_id;
 }
 
-std::string Staff::GetFullName() const {
+const std::string& Staff::GetFullName() const {
     return m_fullName;
 }
 
@@ -33,7 +33,7 @@ void Staff::SetId(int id) {
     m_id = id;
 }
 
-void Staff::SetFullName(std::string fullName) {
+void Staff::SetFullName(const std::string& fullName) {
     m_fullName = fullName;
 }
 

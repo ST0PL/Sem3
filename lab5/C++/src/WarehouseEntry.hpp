@@ -14,9 +14,9 @@ protected:
     int m_assignedWarehouseId;
     const Warehouse* m_assignedWarehouse;
 public:
-    WarehouseEntry(int, std::string);
+    WarehouseEntry(int, const std::string&);
     const std::string& GetName() const;
-    void SetName(std::string);
+    void SetName(const std::string&);
     int GetId() const;
     void SetId(int id);
     void AssignWarehouse(const Warehouse*);

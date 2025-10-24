@@ -1,7 +1,7 @@
 #include "Resource.hpp"
 #include "WarehouseEntry.hpp"
 
-Resource::Resource(int id, std::string name, MeasureUnit measureUnit, float quantity)
+Resource::Resource(int id, const std::string& name, MeasureUnit measureUnit, float quantity)
     : WarehouseEntry<float>(id, name), m_measureUnit(measureUnit), m_quantity(quantity) {}
 
 MeasureUnit Resource::GetMeasureUnit() const {

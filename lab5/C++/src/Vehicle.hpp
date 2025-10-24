@@ -5,7 +5,7 @@
 
 class Vehicle : public Equipment {
 public:
-    Vehicle(int, std::string, VehicleType, FuelType, int);
+    Vehicle(int, const std::string&, VehicleType, FuelType, int);
     VehicleType GetType() const;
     FuelType GetFuelType() const;
     bool IsMatches(SupplyRequestDetail*) const override;

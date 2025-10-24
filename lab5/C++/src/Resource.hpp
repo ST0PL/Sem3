@@ -4,7 +4,7 @@
 
 class Resource : public WarehouseEntry<float> {
 public:
-    Resource(int id, std::string name, MeasureUnit measureUnit, float quantity);
+    Resource(int id, const std::string& name, MeasureUnit measureUnit, float quantity);
     virtual ~Resource() = default;
     MeasureUnit GetMeasureUnit() const;
     float GetQuantity() const;

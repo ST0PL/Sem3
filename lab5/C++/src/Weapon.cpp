@@ -1,7 +1,7 @@
 #include "Weapon.hpp"
 #include "SupplyRequestDetail.hpp"
 
-Weapon::Weapon(int id, std::string name, Caliber caliber, int count)
+Weapon::Weapon(int id, const std::string& name, Caliber caliber, int count)
     : Equipment(id, name, count), m_caliber(caliber) { }
 
 bool Weapon::IsMatches(SupplyRequestDetail* detail) const {

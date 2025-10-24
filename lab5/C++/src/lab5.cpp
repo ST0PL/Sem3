@@ -1,4 +1,4 @@
-п»ї#include <iostream>
+#include <iostream>
 #include <memory>
 #include <vector>
 #include "Unit.hpp"
@@ -15,156 +15,156 @@ using namespace std;
 int main()
 {
     setlocale(LC_ALL, "Rus");
-    srand(time(0)); // РґР»СЏ РіРµРЅРµСЂР°С†РёРё РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ Р·Р°РїСЂРѕСЃРѕРІ
+    srand(time(0)); // для генерации идентификаторов запросов
 
-    cout << "РЎС‚Р°С‚РёС‡РµСЃРєР°СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РѕР±СЉРµРєС‚РѕРІ\n" << endl;
+    cout << "Статическая инициализация объектов\n" << endl;
 
-    Unit static_army(1, "1-Р°СЏ Р°СЂРјРёСЏ", UnitType::eArmy);
-    Unit static_division(2, "1-Р°СЏ СЃС‚СЂРµР»РєРѕРІР°СЏ РґРёРІРёР·РёСЏ", UnitType::eDivision);
+    Unit static_army(1, "1-ая армия", UnitType::eArmy);
+    Unit static_division(2, "1-ая стрелковая дивизия", UnitType::eDivision);
 
-    // РЎС‚Р°С‚РёС‡РµСЃРєРёРµ РѕР±СЉРµРєС‚С‹ Staff
-    Staff staff1(1, "РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡", Rank::eArmyGeneral, Speciality::eTanker);
-    Staff staff2(2, "РџРµС‚СЂРѕРІ РџР°РІРµР» РџР°РІР»РѕРІРёС‡", Rank::eColonel, Speciality::eInfantry);
+    // Статические объекты Staff
+    Staff staff1(1, "Иванов Иван Иванович", Rank::eArmyGeneral, Speciality::eTanker);
+    Staff staff2(2, "Петров Павел Павлович", Rank::eColonel, Speciality::eInfantry);
 
-    // РЎС‚Р°С‚РёС‡РµСЃРєРёР№ РІРµРєС‚РѕСЂ
+    // Статический вектор
     vector<Staff*> soldiers;
     soldiers.push_back(&staff1);
     soldiers.push_back(&staff2);
     static_division.AddSoldiers(soldiers);
 
-    Warehouse static_warehouse(1, "1-С‹Р№ РїРѕР»РµРІРѕР№ СЃРєР»Р°Рґ", WarehouseType::eField);
+    Warehouse static_warehouse(1, "1-ый полевой склад", WarehouseType::eField);
 
-    cout << "РЎРѕР·РґР°РЅС‹ СЃС‚Р°С‚РёС‡РµСЃРєРёРµ РѕР±СЉРµРєС‚С‹:" << endl;
+    cout << "Созданы статические объекты:" << endl;
     cout << "  " << static_army.GetName() << endl;
-    cout << "  " << static_division.GetName() << " СЃ " << soldiers.size() << " СЃРѕР»РґР°С‚Р°РјРё" << endl;
+    cout << "  " << static_division.GetName() << " с " << soldiers.size() << " солдатами" << endl;
     cout << "  " << static_warehouse.GetName() << endl;
 
 
-    cout << "\nР”РёРЅР°РјРёС‡РµСЃРєР°СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РѕР±СЉРµРєС‚РѕРІ\n" << endl;
+    cout << "\nДинамическая инициализация объектов\n" << endl;
 
 
-    Unit* dynamic_army = new Unit(3, "2-Р°СЏ РґРёРЅР°РјРёС‡РµСЃРєР°СЏ Р°СЂРјРёСЏ", UnitType::eArmy);
-    Unit* dynamic_division = new Unit(4, "2-Р°СЏ РґРёРЅР°РјРёС‡РµСЃРєР°СЏ РґРёРІРёР·РёСЏ", UnitType::eDivision);
+    Unit* dynamic_army = new Unit(3, "2-ая динамическая армия", UnitType::eArmy);
+    Unit* dynamic_division = new Unit(4, "2-ая динамическая дивизия", UnitType::eDivision);
 
-    Staff* dynamic_staff1 = new Staff(3, "РЎРёРґРѕСЂРѕРІ РЎРµСЂРіРµР№ РЎРµСЂРіРµРµРІРёС‡", Rank::eMajor, Speciality::eSniper);
-    Staff* dynamic_staff2 = new Staff(4, "РљРѕР·Р»РѕРІ РљРѕРЅСЃС‚Р°РЅС‚РёРЅ РљРѕРЅСЃС‚Р°РЅС‚РёРЅРѕРІРёС‡", Rank::eCaptain, Speciality::eEngineer);
+    Staff* dynamic_staff1 = new Staff(3, "Сидоров Сергей Сергеевич", Rank::eMajor, Speciality::eSniper);
+    Staff* dynamic_staff2 = new Staff(4, "Козлов Константин Константинович", Rank::eCaptain, Speciality::eEngineer);
 
-    cout << "РЎРѕР·РґР°РЅС‹ РґРёРЅР°РјРёС‡РµСЃРєРёРµ РѕР±СЉРµРєС‚С‹:" << endl;
+    cout << "Созданы динамические объекты:" << endl;
     cout << "  " << dynamic_army->GetName() << endl;
     cout << "  " << dynamic_division->GetName() << endl;
     cout << "  " << dynamic_staff1->GetFullName() << endl;
     cout << "  " << dynamic_staff2->GetFullName() << endl;
 
-    // РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РїР°РјСЏС‚Рё
+    // Освобождение памяти
     delete dynamic_army;
     delete dynamic_division;
     delete dynamic_staff1;
     delete dynamic_staff2;
-    cout << "Р”РёРЅР°РјРёС‡РµСЃРєРёРµ РѕР±СЉРµРєС‚С‹ СѓРґР°Р»РµРЅС‹" << endl;
+    cout << "Динамические объекты удалены" << endl;
 
 
-    cout << "\nРћРїРµСЂР°С‚РѕСЂС‹ СЂР°Р±РѕС‚С‹ РїРѕ СЃСЃС‹Р»РєР°Рј Рё СѓРєР°Р·Р°С‚РµР»СЏРј\n" << endl;
+    cout << "\nОператоры работы по ссылкам и указателям\n" << endl;
 
 
-    // РЎРѕР·РґР°РЅРёРµ СЃСЃС‹Р»РєРё
+    // Создание ссылки
     Unit& divisionLink = static_division;
     divisionLink.SetId(100);
-    cout << "Р Р°Р±РѕС‚Р° С‡РµСЂРµР· СЃСЃС‹Р»РєСѓ:" << endl;
-    cout << "  РќР°Р·РІР°РЅРёРµ: " << divisionLink.GetName() << endl;
+    cout << "Работа через ссылку:" << endl;
+    cout << "  Название: " << divisionLink.GetName() << endl;
     cout << "  ID: " << divisionLink.GetId() << endl;
 
-    // РЎРѕР·РґР°РЅРёРµ СѓРєР°Р·Р°С‚РµР»СЏ
+    // Создание указателя
     Unit* divisionPtr = &static_division;
     divisionPtr->SetId(101);
     divisionPtr->AssignCommander(&staff1);
 
-    cout << "Р Р°Р±РѕС‚Р° С‡РµСЂРµР· СѓРєР°Р·Р°С‚РµР»СЊ:" << endl;
-    cout << "  РќР°Р·РІР°РЅРёРµ: " << divisionPtr->GetName() << endl;
+    cout << "Работа через указатель:" << endl;
+    cout << "  Название: " << divisionPtr->GetName() << endl;
     cout << "  ID: " << divisionPtr->GetId() << endl;
-    cout << "  РљРѕРјР°РЅРґРёСЂ: " << staff1.GetFullName() << endl;
+    cout << "  Командир: " << staff1.GetFullName() << endl;
 
-    cout << "\nР”РёРЅР°РјРёС‡РµСЃРєРёР№ РјР°СЃСЃРёРІ РѕР±СЉРµРєС‚РѕРІ\n" << endl;
+    cout << "\nДинамический массив объектов\n" << endl;
 
     const int warehouseCount = 3;
     Warehouse* warehouseArray = new Warehouse[warehouseCount]{
-        Warehouse(10, "РЎРєР»Р°Рґ Рђ", WarehouseType::eRear),
-        Warehouse(11, "РЎРєР»Р°Рґ Р‘", WarehouseType::eField),
-        Warehouse(12, "РЎРєР»Р°Рґ Р’", WarehouseType::eField)
+        Warehouse(10, "Склад А", WarehouseType::eRear),
+        Warehouse(11, "Склад Б", WarehouseType::eField),
+        Warehouse(12, "Склад В", WarehouseType::eField)
     };
 
-    cout << "Р”РёРЅР°РјРёС‡РµСЃРєРёР№ РјР°СЃСЃРёРІ СЃРєР»Р°РґРѕРІ:" << endl;
+    cout << "Динамический массив складов:" << endl;
     for (int i = 0; i < warehouseCount; i++) {
         cout << "  " << warehouseArray[i].GetName() << " (ID: " << warehouseArray[i].GetId() << ")" << endl;
     }
 
     delete[] warehouseArray;
-    cout << "РњР°СЃСЃРёРІ СѓРґР°Р»РµРЅ" << endl;
+    cout << "Массив удален" << endl;
 
 
-    cout << "\nРњР°СЃСЃРёРІ РґРёРЅР°РјРёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ:\n" << endl;
+    cout << "\nМассив динамических объектов:\n" << endl;
 
     const int unitCount = 2;
     Unit* unitPtrs[unitCount];
 
-    unitPtrs[0] = new Unit(20, "РўР°РЅРєРѕРІР°СЏ Р±СЂРёРіР°РґР°", UnitType::eBrigade);
-    unitPtrs[1] = new Unit(21, "РђСЂС‚РёР»Р»РµСЂРёР№СЃРєРёР№ РїРѕР»Рє", UnitType::eRegiment);
+    unitPtrs[0] = new Unit(20, "Танковая бригада", UnitType::eBrigade);
+    unitPtrs[1] = new Unit(21, "Артиллерийский полк", UnitType::eRegiment);
 
     Staff* staffPtrs[unitCount];
-    staffPtrs[0] = new Staff(30, "РќРёРєРѕР»Р°РµРІ РђР»РµРєСЃР°РЅРґСЂ Р’Р°СЃРёР»СЊРµРІРёС‡", Rank::eColonel, Speciality::eTanker);
-    staffPtrs[1] = new Staff(31, "РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡", Rank::eLieutenantColonel, Speciality::eAntiAircraft);
+    staffPtrs[0] = new Staff(30, "Николаев Александр Васильевич", Rank::eColonel, Speciality::eTanker);
+    staffPtrs[1] = new Staff(31, "Иванов Иван Иванович", Rank::eLieutenantColonel, Speciality::eAntiAircraft);
 
 
     for (int i = 0; i < unitCount; i++) {
         cout << "  " << unitPtrs[i]->GetName() << " - " << staffPtrs[i]->GetFullName() << endl;
     }
 
-    // РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РїР°РјСЏС‚Рё
+    // Освобождение памяти
     for (int i = 0; i < unitCount; i++) {
         delete unitPtrs[i];
         delete staffPtrs[i];
     }
-    cout << "Р”РёРЅР°РјРёС‡РµСЃРєРёРµ РѕР±СЉРµРєС‚С‹ СѓРґР°Р»РµРЅС‹" << endl;
+    cout << "Динамические объекты удалены" << endl;
 
 
-    cout << "\nР”РµРјРѕРЅСЃС‚СЂР°С†РёСЏ Р°Р»РіРѕСЂРёС‚РјР° СЃРЅР°Р±Р¶РµРЅРёСЏ\n" << endl;
+    cout << "\nДемонстрация алгоритма снабжения\n" << endl;
 
-    Unit army(100, "1-СЏ РђСЂРјРёСЏ", UnitType::eArmy);
-    Unit division(101, "2-СЏ РњРѕС‚РѕСЃС‚СЂРµР»РєРѕРІР°СЏ Р”РёРІРёР·РёСЏ", UnitType::eDivision);
+    Unit army(100, "1-я Армия", UnitType::eArmy);
+    Unit division(101, "2-я Мотострелковая Дивизия", UnitType::eDivision);
 
-    // РЎРєР»Р°РґС‹ РґР»СЏ Р°СЂРјРёРё Рё РґРёРІРёР·РёРё
-    Warehouse armyWarehouse(100, "РђСЂРјРµР№СЃРєРёР№ СЃРєР»Р°Рґ", WarehouseType::eRear);
-    Warehouse divisionWarehouse(101, "Р”РёРІРёР·РёРѕРЅРЅС‹Р№ СЃРєР»Р°Рґ", WarehouseType::eField);
+    // Склады для армии и дивизии
+    Warehouse armyWarehouse(100, "Армейский склад", WarehouseType::eRear);
+    Warehouse divisionWarehouse(101, "Дивизионный склад", WarehouseType::eField);
 
-    // РќР°РїРѕР»РЅРµРЅРёРµ СЃРєР»Р°РґР° РґРёРІРёР·РёРё
+    // Наполнение склада дивизии
     vector<unique_ptr<Resource>> divisionResources;
-    divisionResources.emplace_back(make_unique<Ammunition>(200, "РџР°С‚СЂРѕРЅС‹ 5.45РјРј", Caliber::e545mm, 100));
+    divisionResources.emplace_back(make_unique<Ammunition>(200, "Патроны 5.45мм", Caliber::e545mm, 100));
     divisionWarehouse.AddResources(divisionResources);
 
-    // РќР°РїРѕР»РЅРµРЅРёРµ СЃРєР»Р°РґР° РґРёРІРёР·РёРё
+    // Наполнение склада дивизии
     vector<unique_ptr<Resource>> armyResources;
-    armyResources.emplace_back(make_unique<Ammunition>(100, "РџР°С‚СЂРѕРЅС‹ 5.45РјРј", Caliber::e545mm, 2000));
+    armyResources.emplace_back(make_unique<Ammunition>(100, "Патроны 5.45мм", Caliber::e545mm, 2000));
     armyWarehouse.AddResources(armyResources);
 
-    // РЎРІСЏР·С‹РІР°РµРј РїРѕРґСЂР°Р·РґРµР»РµРЅРёСЏ СЃРѕ СЃРєР»Р°РґР°РјРё
+    // Связываем подразделения со складами
     army.AssignWarehouse(&armyWarehouse);
     division.AssignWarehouse(&divisionWarehouse);
 
-    // РЎРІСЏР·С‹РІР°РµРј СЃР°РјРё РїРѕРґСЂР°Р·РґРµР»РµРЅРёСЏ
+    // Связываем сами подразделения
     army.AddChildUnit(&division);
 
-    cout << "РЎРѕР·РґР°РЅР° РёРµСЂР°СЂС…РёСЏ: " << army.GetName() << " -> " << division.GetName() << endl;
+    cout << "Создана иерархия: " << army.GetName() << " -> " << division.GetName() << endl;
 
-    // Р”РёРІРёР·РёСЏ Р·Р°РїСЂР°С€РёРІР°РµС‚ Р±РѕР»СЊС€Рµ РїР°С‚СЂРѕРЅРѕРІ, С‡РµРј РµСЃС‚СЊ РЅР° РµС‘ СЃРєР»Р°РґРµ
-    cout << "\nР”РёРІРёР·РёСЏ Р·Р°РїСЂР°С€РёРІР°РµС‚ 2200 РїР°С‚СЂРѕРЅРѕРІ (РЅР° РµС‘ СЃРєР»Р°РґРµ С‚РѕР»СЊРєРѕ 100, РЅР° Р°СЂРјРµР№СЃРєРѕРј 2000):" << endl;
+    // Дивизия запрашивает больше патронов, чем есть на её складе
+    cout << "\nДивизия запрашивает 2200 патронов (на её складе только 100, на армейском 2000):" << endl;
     vector<unique_ptr<SupplyRequestDetail>> requestDetails;
     requestDetails.emplace_back(make_unique<SupplyRequestDetail>(1, SupplyType::Ammunition, 2200, Caliber::e545mm));
 
     SupplyRequest request = division.CreateRequest(requestDetails);
     SupplyResponse response = division.MakeSupplyRequest(request);
 
-    cout << "Р РµР·СѓР»СЊС‚Р°С‚:" << endl;
-    cout << "  РЎС‚Р°С‚СѓСЃ: " << SupplyResponse::StatusToString(response.GetStatus()) << endl;
-    cout << "  РљРѕРјРјРµРЅС‚Р°СЂРёР№: " << response.GetComment() << endl;
+    cout << "Результат:" << endl;
+    cout << "  Статус: " << SupplyResponse::StatusToString(response.GetStatus()) << endl;
+    cout << "  Комментарий: " << response.GetComment() << endl;
 
 }
 

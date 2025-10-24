@@ -1,7 +1,7 @@
 #include "Ammunition.hpp"
 #include "SupplyRequestDetail.hpp"
 
-Ammunition::Ammunition(int id, std::string name, Caliber caliber, float quantity)
+Ammunition::Ammunition(int id, const std::string& name, Caliber caliber, float quantity)
     : Resource(id, name, MeasureUnit::eItem, quantity), m_caliber(caliber) {
 }
 

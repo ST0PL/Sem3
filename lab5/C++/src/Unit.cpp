@@ -19,7 +19,7 @@ int Unit::GetId() const {
     return m_id;
 }
 
-std::string Unit::GetName() const {
+const std::string& Unit::GetName() const {
     return m_name;
 }
 

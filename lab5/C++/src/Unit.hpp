@@ -11,7 +11,7 @@ class Unit : public IUnit {
 public:
     Unit(int, const std::string&, UnitType);
     int GetId() const;
-    std::string GetName() const;
+    const std::string& GetName() const;
     UnitType GetType() const;
     void SetId(int);
     void SetParent(Unit*);

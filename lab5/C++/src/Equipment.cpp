@@ -1,7 +1,7 @@
 #include "Equipment.hpp"
 #include "WarehouseEntry.hpp"
 
-Equipment::Equipment(int id, std::string name, int count)
+Equipment::Equipment(int id, const std::string& name, int count)
     : WarehouseEntry<int>(id, name), m_count(count) {}
 
 int Equipment::GetCount() const {
