@@ -5,23 +5,19 @@ SupplyRequestDetail::SupplyRequestDetail(int id, SupplyType type, float count)
     : m_id(id), m_supplyType(type), m_count(count) {
 }
 
-SupplyRequestDetail::SupplyRequestDetail(int id, SupplyType type, float count, Caliber caliber)
-    : SupplyRequestDetail(id, type, count)
-{
+SupplyRequestDetail& SupplyRequestDetail::WithCaliber(Caliber caliber) {
     m_caliber = caliber;
+    return *this;
 }
 
-SupplyRequestDetail::SupplyRequestDetail(int id, SupplyType type, float count, FuelType fuelType)
-    : SupplyRequestDetail(id, type, count) {
+SupplyRequestDetail& SupplyRequestDetail::WithFuelType(FuelType fuelType) {
     m_fuelType = fuelType;
+    return *this;
 }
 
-SupplyRequestDetail SupplyRequestDetail::WithCaliber(Caliber caliber) {
-    return SupplyRequestDetail(this->m_id, this->m_supplyType, this->m_count, caliber);
-}
-
-SupplyRequestDetail SupplyRequestDetail::WithFuelType(FuelType fuelType) {
-    return SupplyRequestDetail(this->m_id, this->m_supplyType, this->m_count, fuelType);
+SupplyRequestDetail& SupplyRequestDetail::WithVehicleType(VehicleType vehicleType) {
+    m_vehicleType = vehicleType;
+    return *this;
 }
 
 int SupplyRequestDetail::GetId() const {

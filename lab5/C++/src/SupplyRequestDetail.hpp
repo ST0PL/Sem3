@@ -8,10 +8,9 @@ class SupplyRequestDetail {
 
 public:
     SupplyRequestDetail(int, SupplyType, float);
-    SupplyRequestDetail(int, SupplyType, float, Caliber);
-    SupplyRequestDetail(int, SupplyType, float, FuelType);
-    SupplyRequestDetail WithCaliber(Caliber);
-    SupplyRequestDetail WithFuelType(FuelType);
+    SupplyRequestDetail& WithCaliber(Caliber);
+    SupplyRequestDetail& WithFuelType(FuelType);
+    SupplyRequestDetail& WithVehicleType(VehicleType);
     int GetId() const;
     SupplyType GetSupplyType() const;
     Caliber GetCaliber() const;

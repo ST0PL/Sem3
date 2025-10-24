@@ -157,7 +157,9 @@ int main()
     // Дивизия запрашивает больше патронов, чем есть на её складе
     cout << "\nДивизия запрашивает 2200 патронов (на её складе только 100, на армейском 2000):" << endl;
     vector<unique_ptr<SupplyRequestDetail>> requestDetails;
-    requestDetails.emplace_back(make_unique<SupplyRequestDetail>(1, SupplyType::Ammunition, 2200, Caliber::e545mm));
+    unique_ptr<SupplyRequestDetail> detail = make_unique<SupplyRequestDetail>(1, SupplyType::Ammunition, 2200);
+    detail->WithCaliber(Caliber::e545mm);
+    requestDetails.emplace_back(move(detail));
 
     SupplyRequest request = division.CreateRequest(requestDetails);
     SupplyResponse response = division.MakeSupplyRequest(request);
