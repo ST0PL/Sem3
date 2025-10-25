@@ -4,7 +4,7 @@
 Weapon::Weapon(int id, const std::string& name, Caliber caliber, int count)
     : Equipment(id, name, count), m_caliber(caliber) { }
 
-bool Weapon::IsMatches(SupplyRequestDetail* detail) const {
+bool Weapon::IsMatches(std::unique_ptr<SupplyRequestDetail>& detail) const {
     return detail->GetSupplyType() == SupplyType::Weapon && detail->GetCaliber() == m_caliber;
 }
 

@@ -9,7 +9,7 @@ class Ammunition : public Resource {
 public:
     Ammunition(int, const std::string&, Caliber caliber, float);
     Caliber GetCaliber() const;
-    bool IsMatches(SupplyRequestDetail*) const override;
+    bool IsMatches(std::unique_ptr<SupplyRequestDetail>&) const override;
 private:
     Caliber m_caliber;
 };

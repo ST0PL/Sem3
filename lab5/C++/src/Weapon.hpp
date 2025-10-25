@@ -7,7 +7,7 @@ class Weapon : public Equipment
 public:
     Weapon(int, const std::string&, Caliber, int);
     Caliber GetCaliber() const;
-    bool IsMatches(SupplyRequestDetail* detail) const override;
+    bool IsMatches(std::unique_ptr<SupplyRequestDetail>&) const override;
 private:
     Caliber m_caliber;
 };

@@ -15,7 +15,7 @@ private:
     std::string m_name;
     std::vector<std::unique_ptr<Resource>> m_resources;
     std::vector<std::unique_ptr<Equipment>> m_equipments;
-    template<typename T> void WriteOff(std::vector<std::unique_ptr<T>>&, SupplyRequestDetail*, bool&);
+    template<typename T> void WriteOff(const std::vector<std::unique_ptr<T>>&, std::unique_ptr<SupplyRequestDetail>&, bool&);
     template<typename T> void RemoveEmptyEntries(std::vector<std::unique_ptr<T>>&);
     void RemoveEmptyRequestDetails(std::vector<std::unique_ptr<SupplyRequestDetail>>&);
 public:

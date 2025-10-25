@@ -19,7 +19,6 @@ public:
     void SetFullName(const std::string&);
     void SetRank(Rank);
     void SetSpeciality(Speciality);
-    void SetUnitId(int);
     void SetUnit(std::weak_ptr<Unit>);
 private:
     int m_id;

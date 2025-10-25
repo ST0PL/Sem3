@@ -3,13 +3,13 @@
 #include "Unit.hpp"
 
 
-SupplyRequest::SupplyRequest(int id, const Unit* requestUnit, std::vector<std::unique_ptr<SupplyRequestDetail>> details)
+SupplyRequest::SupplyRequest(int id, const std::weak_ptr<const Unit> unit, std::vector<std::unique_ptr<SupplyRequestDetail>>& details)
     : m_id(id), m_details(std::move(details))
 {
     m_createTime = std::chrono::system_clock::now();
-    if (requestUnit) {
+    if (auto requestUnit = unit.lock()) {
         m_requestUnitId = requestUnit->GetId();
-        m_requestUnit = requestUnit;
+        m_requestUnit = unit;
     }
 }
 
@@ -21,13 +21,13 @@ int SupplyRequest::GetRequestUnitId() const {
     return m_requestUnitId;
 }
 
-const Unit* SupplyRequest::GetRequestUnit() const {
+const std::weak_ptr<const Unit> SupplyRequest::GetRequestUnit() const {
     return m_requestUnit;
 }
 
-void SupplyRequest::SetRequestUnit(const Unit* unit) {
-    if (unit) {
-        m_requestUnitId = unit->GetId();
+void SupplyRequest::SetRequestUnit(const std::weak_ptr<const Unit> unit) {
+    if (auto requestUnit = unit.lock()) {
+        m_requestUnitId = requestUnit->GetId();
         m_requestUnit = unit;
     }
 }

@@ -45,10 +45,9 @@ void Staff::SetSpeciality(Speciality speciality) {
     m_speciality = speciality;
 }
 
-void Staff::SetUnitId(int unitId) {
-    m_unitId = unitId;
-}
-
 void Staff::SetUnit(std::weak_ptr<Unit> unit) {
-    m_unit = unit;
+    if (auto u = unit.lock()) {
+        m_unitId = u->GetId();
+        m_unit = unit;
+    }
 }

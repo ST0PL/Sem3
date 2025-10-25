@@ -57,12 +57,12 @@ bool Warehouse::ProcessSupplyRequestDetails(std::vector<std::unique_ptr<SupplyRe
 
         case SupplyType::Ammunition:
         case SupplyType::Fuel:
-            WriteOff<Resource>(m_resources, detail.get(), corrected);
+            WriteOff<Resource>(m_resources, detail, corrected);
             break;
 
         case SupplyType::Weapon:
         case SupplyType::Vehicle:
-            WriteOff<Equipment>(m_equipments, detail.get(), corrected);
+            WriteOff<Equipment>(m_equipments, detail, corrected);
             break;
         }
     }
@@ -75,7 +75,7 @@ bool Warehouse::ProcessSupplyRequestDetails(std::vector<std::unique_ptr<SupplyRe
 }
 
 template<typename T>
-void Warehouse::WriteOff(std::vector<std::unique_ptr<T>>& collection, SupplyRequestDetail* detail, bool& corrected) {
+void Warehouse::WriteOff(const std::vector<std::unique_ptr<T>>& collection, std::unique_ptr<SupplyRequestDetail>& detail, bool& corrected) {
 
     float remaining = detail->GetCount();
 
@@ -107,7 +107,7 @@ void Warehouse::RemoveEmptyEntries(std::vector<std::unique_ptr<T>>& pointers) {
 
 void Warehouse::RemoveEmptyRequestDetails(std::vector<std::unique_ptr<SupplyRequestDetail>>& pointers) {
 
-    auto newEnd = std::remove_if(pointers.begin(), pointers.end(), [](const std::unique_ptr<SupplyRequestDetail>& pointer)
+    auto newEnd = std::remove_if(pointers.begin(), pointers.end(), []( std::unique_ptr<SupplyRequestDetail>& pointer)
         {
             return pointer == nullptr || pointer->GetCount() == 0.0f;
         });

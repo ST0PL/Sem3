@@ -6,7 +6,7 @@ Vehicle::Vehicle(int id, const std::string& name, VehicleType type, FuelType fue
 }
 
 
-bool Vehicle::IsMatches(SupplyRequestDetail* detail) const {
+bool Vehicle::IsMatches(std::unique_ptr<SupplyRequestDetail>& detail) const {
     return detail->GetSupplyType() == SupplyType::Vehicle &&
         detail->GetVehicleType() == m_type &&
         detail->GetFuelType() == m_fuelType;

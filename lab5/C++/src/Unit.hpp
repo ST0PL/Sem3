@@ -7,22 +7,22 @@
 
 class Staff;
 
-class Unit : public IUnit {
+class Unit : public IUnit, public std::enable_shared_from_this<Unit> {
 public:
     Unit(int, const std::string&, UnitType);
     int GetId() const;
     const std::string& GetName() const;
     UnitType GetType() const;
     void SetId(int);
-    void SetParent(Unit*);
+    void SetParent(const std::weak_ptr<Unit>);
     SupplyResponse MakeSupplyRequest(SupplyRequest&) override;
-    void AddChildUnit(Unit*);
-    void AddChildUnits(std::vector<Unit*>&);
-    void AddSoldier(Staff*);
-    void AddSoldiers(std::vector<Staff*>&);
+    void AddChildUnit(const std::weak_ptr<Unit>);
+    void AddChildUnits(const std::vector<std::weak_ptr<Unit>>&);
+    void AddSoldier(const std::weak_ptr<Staff>);
+    void AddSoldiers(const std::vector<std::weak_ptr<Staff>>&);
     bool RemoveSoldier(int);
-    void AssignWarehouse(Warehouse*);
-    void AssignCommander(const Staff*);
+    void AssignWarehouse(std::weak_ptr<Warehouse>);
+    void AssignCommander(const std::weak_ptr<Staff>);
     bool RemoveChildUnit(int);
     SupplyRequest CreateRequest(std::vector<std::unique_ptr<SupplyRequestDetail>>&) const;
 
@@ -31,11 +31,11 @@ private:
     std::string m_name;
     UnitType m_type;
     int m_commanderId;
-    const Staff* m_commander;
+    std::weak_ptr<Staff> m_commander;
     int m_parentId;
-    Unit* m_parent;
-    std::vector<Unit*> m_children;
-    std::vector<const Staff*> m_personnel;
+    std::weak_ptr<Unit> m_parent;
+    std::vector<std::weak_ptr<Unit>> m_children;
+    std::vector<std::weak_ptr<Staff>> m_personnel;
     int m_assignedWarehouseId;
-    Warehouse* m_assignedWarehouse;
+    std::weak_ptr<Warehouse> m_assignedWarehouse;
 };

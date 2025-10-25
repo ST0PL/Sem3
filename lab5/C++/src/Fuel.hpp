@@ -7,7 +7,7 @@ class Fuel : public Resource {
 public:
     Fuel(int, const std::string&, FuelType, float);
     FuelType GetType() const;
-    bool IsMatches(SupplyRequestDetail*) const override;
+    bool IsMatches(std::unique_ptr<SupplyRequestDetail>&) const override;
 private:
     FuelType m_type;
 };
