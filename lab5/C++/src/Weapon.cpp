@@ -1,6 +1,11 @@
 #include "Weapon.hpp"
 #include "SupplyRequestDetail.hpp"
 
+
+Weapon::Weapon(const Weapon& other) :
+    Equipment(rand(), other.m_name, other.m_count), m_caliber(other.m_caliber) {
+}
+
 Weapon::Weapon(int id, const std::string& name, Caliber caliber, int count)
     : Equipment(id, name, count), m_caliber(caliber) { }
 

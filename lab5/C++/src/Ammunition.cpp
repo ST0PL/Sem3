@@ -1,6 +1,9 @@
 #include "Ammunition.hpp"
 #include "SupplyRequestDetail.hpp"
 
+Ammunition::Ammunition(const Ammunition& other) :
+    Resource(rand(), other.m_name, MeasureUnit::eItem, other.m_quantity), m_caliber(other.m_caliber) { }
+
 Ammunition::Ammunition(int id, const std::string& name, Caliber caliber, float quantity)
     : Resource(id, name, MeasureUnit::eItem, quantity), m_caliber(caliber) {
 }

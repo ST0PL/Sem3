@@ -7,6 +7,7 @@
 class SupplyRequestDetail {
 
 public:
+    SupplyRequestDetail(const SupplyRequestDetail&);
     SupplyRequestDetail(int, SupplyType, float);
     SupplyRequestDetail& WithCaliber(Caliber);
     SupplyRequestDetail& WithFuelType(FuelType);

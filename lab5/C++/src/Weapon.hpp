@@ -5,6 +5,7 @@
 class Weapon : public Equipment
 {
 public:
+    Weapon(const Weapon&);
     Weapon(int, const std::string&, Caliber, int);
     Caliber GetCaliber() const;
     bool IsMatches(std::unique_ptr<SupplyRequestDetail>&) const override;

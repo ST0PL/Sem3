@@ -9,6 +9,7 @@ class Staff;
 
 class Unit : public IUnit, public std::enable_shared_from_this<Unit> {
 public:
+    Unit(const Unit&) = delete;
     Unit(int, const std::string&, UnitType);
     int GetId() const;
     const std::string& GetName() const;

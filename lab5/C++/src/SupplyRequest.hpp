@@ -8,6 +8,7 @@ class SupplyRequestDetail;
 
 class SupplyRequest {
 public:
+    SupplyRequest(const SupplyRequest&);
     SupplyRequest(int, const std::weak_ptr<const Unit>, std::vector<std::unique_ptr<SupplyRequestDetail>>&);
     int GetId() const;
     int GetRequestUnitId() const;

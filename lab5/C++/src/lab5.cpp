@@ -15,7 +15,7 @@ using namespace std;
 int main()
 {
     setlocale(LC_ALL, "Rus");
-    srand(time(0)); // для генерации идентификаторов запросов
+    srand(time(0)); // для генерации идентификаторов   
 
     cout << "\nДемонстрация алгоритма снабжения\n" << endl;
 
@@ -53,11 +53,12 @@ int main()
     requestDetails.emplace_back(move(detail));
 
     SupplyRequest request = division->CreateRequest(requestDetails);
+    SupplyRequest request2 = SupplyRequest(request);
     SupplyResponse response = division->MakeSupplyRequest(request);
 
-    cout << "Результат:" << endl;
-    cout << "  Статус: " << SupplyResponse::StatusToString(response.GetStatus()) << endl;
-    cout << "  Комментарий: " << response.GetComment() << endl;
+    //cout << "Результат:" << endl;
+    //cout << "  Статус: " << SupplyResponse::StatusToString(response.GetStatus()) << endl;
+    //cout << "  Комментарий: " << response.GetComment() << endl;
 
 }
 

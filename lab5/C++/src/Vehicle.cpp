@@ -1,9 +1,11 @@
 #include "Vehicle.hpp"
 #include "SupplyRequestDetail.hpp"
 
+Vehicle::Vehicle(const Vehicle& other) : 
+    Equipment(rand(), other.m_name, other.m_count), m_type(other.m_type), m_fuelType(other.m_fuelType) { }
+
 Vehicle::Vehicle(int id, const std::string& name, VehicleType type, FuelType fuelType, int count)
-    : Equipment(id, name, count), m_type(type), m_fuelType(fuelType) {
-}
+    : Equipment(id, name, count), m_type(type), m_fuelType(fuelType) { }
 
 
 bool Vehicle::IsMatches(std::unique_ptr<SupplyRequestDetail>& detail) const {

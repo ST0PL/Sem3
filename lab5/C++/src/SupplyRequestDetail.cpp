@@ -1,6 +1,11 @@
 #include "SupplyRequestDetail.hpp"
 #include <string>
 
+SupplyRequestDetail::SupplyRequestDetail(const SupplyRequestDetail& other) : 
+    m_id(rand()), m_supplyType(other.m_supplyType), m_count(other.m_count),
+    m_caliber(other.m_caliber), m_fuelType(other.m_fuelType), m_vehicleType(other.m_vehicleType){
+}
+
 SupplyRequestDetail::SupplyRequestDetail(int id, SupplyType type, float count)
     : m_id(id), m_supplyType(type), m_count(count) {
 }

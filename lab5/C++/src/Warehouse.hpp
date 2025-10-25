@@ -19,6 +19,7 @@ private:
     template<typename T> void RemoveEmptyEntries(std::vector<std::unique_ptr<T>>&);
     void RemoveEmptyRequestDetails(std::vector<std::unique_ptr<SupplyRequestDetail>>&);
 public:
+    Warehouse(const Warehouse&) = delete;
     Warehouse(int, const std::string&, WarehouseType);
     int GetId() const;
     WarehouseType GetType() const;

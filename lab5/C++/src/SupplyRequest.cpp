@@ -2,6 +2,17 @@
 #include "SupplyRequestDetail.hpp"
 #include "Unit.hpp"
 
+SupplyRequest::SupplyRequest(const SupplyRequest& other) {
+    m_id = rand();
+    m_requestUnit = other.GetRequestUnit();
+    m_requestUnitId = other.GetRequestUnitId();
+
+    for (const auto& detail : other.m_details) {
+        m_details.push_back(std::make_unique<SupplyRequestDetail>(*detail));
+    }
+
+    m_createTime = std::chrono::system_clock::now();
+}
 
 SupplyRequest::SupplyRequest(int id, const std::weak_ptr<const Unit> unit, std::vector<std::unique_ptr<SupplyRequestDetail>>& details)
     : m_id(id), m_details(std::move(details))

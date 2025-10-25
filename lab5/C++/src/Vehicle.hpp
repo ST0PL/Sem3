@@ -5,6 +5,7 @@
 
 class Vehicle : public Equipment {
 public:
+    Vehicle(const Vehicle&);
     Vehicle(int, const std::string&, VehicleType, FuelType, int);
     VehicleType GetType() const;
     FuelType GetFuelType() const;
