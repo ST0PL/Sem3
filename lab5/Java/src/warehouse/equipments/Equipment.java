@@ -7,9 +7,11 @@ public abstract class Equipment extends WarehouseEntry<Integer> {
 
     int count;
 
+    public static final Integer MIN_COUNT = 1;
+
     public Equipment(int id, String name, int count) { 
         super(id, name);
-        if(count < 1){
+        if(count < MIN_COUNT){
             throw new IllegalArgumentException("Недопустимое количество");
         }         
         this.count = count;
@@ -32,7 +34,7 @@ public abstract class Equipment extends WarehouseEntry<Integer> {
     
     @Override
     public Boolean isEmpty(){
-        return count < 1;
+        return count < MIN_COUNT;
     }
 
     @Override

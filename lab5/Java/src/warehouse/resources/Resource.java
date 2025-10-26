@@ -9,9 +9,11 @@ public abstract class Resource extends WarehouseEntry<Float> {
     Float quantity;
     MeasureUnit measureUnit;
 
+    public static final float MIN_QUANTITY = 0.1f;
+
     public Resource(int id, String name, MeasureUnit measureUnit, float quantity) {
         super(id, name);
-        if(quantity < 1.0f){
+        if(quantity < MIN_QUANTITY){
             throw new IllegalArgumentException("Недопустимое количество");
         }            
         this.measureUnit = measureUnit;
@@ -40,7 +42,7 @@ public abstract class Resource extends WarehouseEntry<Float> {
     
     @Override
     public Boolean isEmpty(){
-        return quantity < 1.0f;
+        return quantity < MIN_QUANTITY;
     }
 
     @Override
