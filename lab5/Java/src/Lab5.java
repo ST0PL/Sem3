@@ -32,10 +32,22 @@ class Lab5 {
         Unit brigade = new Unit(3, "1-я Мотострелковая бригада", UnitType.BRIGADE);
         brigade.addSoldiers(new ArrayList<>(Arrays.asList(staff)));
 
+        var searchResult = brigade.findByName("антон");
+        out.println(String.format("Результаты поиска солдатов с именем \"Антон\": %s", searchResult));
+
+        // Попытка создать снаряжение с некорректным колличеством
+
+        try{
+            Weapon corrupted = new Weapon(1, "Самоходная артиллерийская установка 2С1 «Гвоздика»", Caliber.C_122MM, 0);
+        }
+        catch(IllegalArgumentException ex) { out.println(String.format("Обработано исключение при создании снаряжения: %s", ex.getMessage())); }
+        finally { out.println("Выполнен finally блок"); }
+
         army.assignCommander(staff[3]);
         
         Warehouse armyWarehouse = new Warehouse(1, "Армейский склад", WarehouseType.REAR);
         Warehouse divisionWarehouse = new Warehouse(2, "Дивизионный склад", WarehouseType.FIELD);
+
 
         armyWarehouse.addEquipment(new Weapon(1, "Самоходная артиллерийская установка 2С1 «Гвоздика»", Caliber.C_122MM, 20));
         armyWarehouse.addResource(new Ammunition(1, "Патроны 5.45мм", Caliber.C_545MM, 2000));
@@ -54,6 +66,7 @@ class Lab5 {
 
 
         out.println("\nБригада запрашивает 2200 патронов и 25 артиллерийских установок калибра 122мм (на складе дивизии только 100 патронов, на армейском 2000 патронов и 20 артиллерийских установок):");
+
 
         SupplyRequestDetail[] details = new SupplyRequestDetail[]{
             new SupplyRequestDetail(1, SupplyType.AMMUNITION, 2200).withCaliber(Caliber.C_545MM),
