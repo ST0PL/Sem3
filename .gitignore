@@ -419,5 +419,11 @@ FodyWeavers.xsd
 # Scripts
 *.py
 *.bat
+# Other
+lab5/C++/*.sln
+lab5/C++/src/*.vcxproj
+lab5/C++/src/*.vcxproj.filters
+lab5/C++/src/*.vcxproj.user
 # Compiled
 lab4/output/*
+lab5/Java/output/*
