@@ -6,7 +6,7 @@ Equipment::Equipment(int id, const std::string& name, int count)
     : WarehouseEntry<int>(id, name)
 {
     if (count < Equipment::MIN_COUNT)
-        throw new std::invalid_argument("Недопустимое количество");
+        throw std::invalid_argument("Недопустимое количество");
     m_count = count;
 }
 

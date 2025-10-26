@@ -5,7 +5,7 @@
 Resource::Resource(int id, const std::string& name, MeasureUnit measureUnit, float quantity)
     : WarehouseEntry<float>(id, name), m_measureUnit(measureUnit){
     if (quantity < Resource::MIN_QUANTITY)
-        throw new std::invalid_argument("Недопустимое количество");
+        throw std::invalid_argument("Недопустимое количество");
     m_quantity = quantity;
 }
 
