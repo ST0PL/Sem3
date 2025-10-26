@@ -115,6 +115,16 @@ public class Unit implements Suppliable {
         return Collections.unmodifiableList(personnel);
     }
 
+    public ArrayList<Staff> findByName(String name){
+        ArrayList<Staff> result = new ArrayList<>();
+        for(var soldier : personnel){
+            if(soldier.fullName.toLowerCase().contains(name)){
+                result.add(soldier);
+            }
+        }
+        return result;
+    }
+
     public void assignWarehouse(Warehouse warehouse){
         if(warehouse != null){
             this.assignedWarehouseId = warehouse.getId();
