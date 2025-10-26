@@ -109,7 +109,7 @@ void Unit::AssignWarehouse(std::weak_ptr<Warehouse> warehouse) {
 
 void Unit::AssignCommander(const std::weak_ptr<Staff> staff) {
     auto commander = staff.lock();
-    if (commander && commander->GetRank() >= Rank::eSergeant) {
+    if (commander && commander->GetRank() >= MIN_COMMANDER_RANK) {
         m_commanderId = commander->GetId();
         m_commander = staff;
     }

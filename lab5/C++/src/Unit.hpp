@@ -9,6 +9,7 @@ class Staff;
 
 class Unit : public IUnit, public std::enable_shared_from_this<Unit> {
 public:
+    static const Rank MIN_COMMANDER_RANK = Rank::eSergeant;
     Unit(const Unit&) = delete;
     Unit(int, const std::string&, UnitType);
     int GetId() const;

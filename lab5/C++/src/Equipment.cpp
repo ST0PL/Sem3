@@ -1,8 +1,14 @@
+#include <stdexcept>
 #include "Equipment.hpp"
 #include "WarehouseEntry.hpp"
 
 Equipment::Equipment(int id, const std::string& name, int count)
-    : WarehouseEntry<int>(id, name), m_count(count) {}
+    : WarehouseEntry<int>(id, name)
+{
+    if (count < Equipment::MIN_COUNT)
+        throw new std::invalid_argument("Недопустимое количество");
+    m_count = count;
+}
 
 int Equipment::GetCount() const {
     return m_count;

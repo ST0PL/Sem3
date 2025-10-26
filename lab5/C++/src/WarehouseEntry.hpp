@@ -8,11 +8,6 @@ class Warehouse;
 
 template<typename T>
 class WarehouseEntry {
-protected:
-    int m_id;
-    std::string m_name;
-    int m_assignedWarehouseId;
-    std::weak_ptr<const Warehouse> m_assignedWarehouse;
 public:
     WarehouseEntry(int, const std::string&);
     const std::string& GetName() const;
@@ -25,6 +20,12 @@ public:
     virtual void Increase(T) = 0;
     virtual T Decrease(T) = 0;
     virtual ~WarehouseEntry() = default;
+
+private:
+    int m_id;
+    std::string m_name;
+    int m_assignedWarehouseId;
+    std::weak_ptr<const Warehouse> m_assignedWarehouse;
 };
 template class WarehouseEntry<int>;
 template class WarehouseEntry<float>;
