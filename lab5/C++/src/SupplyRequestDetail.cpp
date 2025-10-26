@@ -1,4 +1,4 @@
-#include <string>
+п»ї#include <string>
 #include <algorithm>
 #include "SupplyRequestDetail.hpp"
 
@@ -81,18 +81,18 @@ std::string SupplyRequestDetail::ToString() const {
 
     switch (m_supplyType) {
     case SupplyType::Ammunition:
-        result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + " шт";
+        result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + " С€С‚";
         break;
     case SupplyType::Fuel:
-        result += FuelTypeToString(m_fuelType) + ", " + std::to_string(m_count) + " л";
+        result += FuelTypeToString(m_fuelType) + ", " + std::to_string(m_count) + " Р»";
         break;
     case SupplyType::Vehicle:
         result += VehicleTypeToString(m_vehicleType) + ", " +
             FuelTypeToString(m_fuelType) + ", " +
-            std::to_string(m_count) + " шт";
+            std::to_string(m_count) + " С€С‚";
         break;
     case SupplyType::Weapon:
-        result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + " шт";
+        result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + " С€С‚";
         break;
     }
 
@@ -102,47 +102,47 @@ std::string SupplyRequestDetail::ToString() const {
 std::string SupplyRequestDetail::SupplyTypeToString(SupplyType stype) {
     switch (stype) {
     case SupplyType::Ammunition:
-        return "Боеприпасы";
+        return "Р‘РѕРµРїСЂРёРїР°СЃС‹";
     case SupplyType::Fuel:
-        return "Топливо";
+        return "РўРѕРїР»РёРІРѕ";
     case SupplyType::Vehicle:
-        return "Транспорт";
+        return "РўСЂР°РЅСЃРїРѕСЂС‚";
     case SupplyType::Weapon:
-        return "Вооружение";
+        return "Р’РѕРѕСЂСѓР¶РµРЅРёРµ";
     default:
-        return "Неизвестно";
+        return "РќРµРёР·РІРµСЃС‚РЅРѕ";
     }
 }
 std::string SupplyRequestDetail::CaliberToString(Caliber caliber) {
     switch (caliber) {
     case Caliber::e545mm:
-        return "5.25мм";
+        return "5.25РјРј";
     case Caliber::e122mm:
-        return "122мм";
+        return "122РјРј";
     default:
-        return "Неизвестно";
+        return "РќРµРёР·РІРµСЃС‚РЅРѕ";
     }
 }
 std::string SupplyRequestDetail::FuelTypeToString(FuelType ftype) {
     switch (ftype) {
     case FuelType::Gasoline:
-        return "Бензин";
+        return "Р‘РµРЅР·РёРЅ";
     case FuelType::Diesel:
-        return "Дизель";
+        return "Р”РёР·РµР»СЊ";
     default:
-        return "Неизвестно";
+        return "РќРµРёР·РІРµСЃС‚РЅРѕ";
     }
 }
 
 std::string SupplyRequestDetail::VehicleTypeToString(VehicleType vtype) {
     switch (vtype) {
     case VehicleType::ArmoredVehicle:
-        return "Бронемашина";
+        return "Р‘СЂРѕРЅРµРјР°С€РёРЅР°";
     case VehicleType::Tank:
-        return "Танк";
+        return "РўР°РЅРє";
     case VehicleType::Motorbike:
-        return "Мотоцикл";
+        return "РњРѕС‚РѕС†РёРєР»";
     default:
-        return "Неизвестно";
+        return "РќРµРёР·РІРµСЃС‚РЅРѕ";
     }
 }

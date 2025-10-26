@@ -1,4 +1,4 @@
-#include "Staff.hpp"
+п»ї#include "Staff.hpp"
 
 Staff::Staff(const Staff& other) :
     m_id(rand()), m_fullName(other.m_fullName), m_rank(other.m_rank),
@@ -82,81 +82,81 @@ bool Staff::operator >= (const Staff& other) const {
 std::string Staff::RankToString(Rank rank) {
     switch (rank) {
     case Rank::ePrivate: 
-        return "Рядовой";
+        return "Р СЏРґРѕРІРѕР№";
     case Rank::eCorporal: 
-        return "Ефрейтор";
+        return "Р•С„СЂРµР№С‚РѕСЂ";
     case Rank::eJuniorSergeant: 
-        return "Младший сержант";
+        return "РњР»Р°РґС€РёР№ СЃРµСЂР¶Р°РЅС‚";
     case Rank::eSergeant: 
-        return "Сержант";
+        return "РЎРµСЂР¶Р°РЅС‚";
     case Rank::eSeniorSergeant: 
-        return "Старший сержант";
+        return "РЎС‚Р°СЂС€РёР№ СЃРµСЂР¶Р°РЅС‚";
     case Rank::eSergeantMajor:
-        return "Старшина";
+        return "РЎС‚Р°СЂС€РёРЅР°";
     case Rank::eWarrantOfficer: 
-        return "Прапорщик";
+        return "РџСЂР°РїРѕСЂС‰РёРє";
     case Rank::eSeniorWarrantOfficer: 
-        return "Старший прапорщик";
+        return "РЎС‚Р°СЂС€РёР№ РїСЂР°РїРѕСЂС‰РёРє";
     case Rank::eJuniorLieutenant: 
-        return "Младший лейтенант";
+        return "РњР»Р°РґС€РёР№ Р»РµР№С‚РµРЅР°РЅС‚";
     case Rank::eLieutenant:
-        return "Лейтенант";
+        return "Р›РµР№С‚РµРЅР°РЅС‚";
     case Rank::eSeniorLieutenant:
-        return "Старший лейтенант";
+        return "РЎС‚Р°СЂС€РёР№ Р»РµР№С‚РµРЅР°РЅС‚";
     case Rank::eCaptain:
-        return "Капитан";
+        return "РљР°РїРёС‚Р°РЅ";
     case Rank::eMajor: 
-        return "Майор";
-    case Rank::eLieutenantColonel: return "Подполковник";
+        return "РњР°Р№РѕСЂ";
+    case Rank::eLieutenantColonel: return "РџРѕРґРїРѕР»РєРѕРІРЅРёРє";
     case Rank::eColonel: 
-        return "Полковник";
+        return "РџРѕР»РєРѕРІРЅРёРє";
     case Rank::eMajorGeneral:
-        return "Генерал-майор";
+        return "Р“РµРЅРµСЂР°Р»-РјР°Р№РѕСЂ";
     case Rank::eLieutenantGeneral:
-        return "Генерал-лейтенант";
+        return "Р“РµРЅРµСЂР°Р»-Р»РµР№С‚РµРЅР°РЅС‚";
     case Rank::eColonelGeneral:
-        return "Генерал-полковник";
+        return "Р“РµРЅРµСЂР°Р»-РїРѕР»РєРѕРІРЅРёРє";
     case Rank::eArmyGeneral:
-        return "Генерал армии";
+        return "Р“РµРЅРµСЂР°Р» Р°СЂРјРёРё";
     default:
-        return "Неизвестно";
+        return "РќРµРёР·РІРµСЃС‚РЅРѕ";
     }
 }
 
 std::string Staff::SpecialityToString(Speciality speciality) {
     switch (speciality) {
     case Speciality::eNone:
-        return "Отсутствует";
+        return "РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚";
     case Speciality::eInfantry:
-        return "Пехотинец";
+        return "РџРµС…РѕС‚РёРЅРµС†";
     case Speciality::eMachineGunner:
-        return "Пулеметчик";
+        return "РџСѓР»РµРјРµС‚С‡РёРє";
     case Speciality::eGrenadeLauncher:
-        return "Гранатометчик";
+        return "Р“СЂР°РЅР°С‚РѕРјРµС‚С‡РёРє";
     case Speciality::eReconnaissance:
-        return "Разведчик";
+        return "Р Р°Р·РІРµРґС‡РёРє";
     case Speciality::eSpecialForces:
-        return "Спецназ";
+        return "РЎРїРµС†РЅР°Р·";
     case Speciality::eSniper:
-        return "Снайпер";
+        return "РЎРЅР°Р№РїРµСЂ";
     case Speciality::eTanker:
-        return "Танкист";
+        return "РўР°РЅРєРёСЃС‚";
     case Speciality::eAntiAircraft:
-        return "Зенитчик";
+        return "Р—РµРЅРёС‚С‡РёРє";
     case Speciality::eEngineer:
-        return "Инженер";
+        return "РРЅР¶РµРЅРµСЂ";
     case Speciality::eMedic:
-        return "Медик";
+        return "РњРµРґРёРє";
     default:
-        return "Неизвестно";
+        return "РќРµРёР·РІРµСЃС‚РЅРѕ";
     }
 }
 
 std::string Staff::ToString() const {
     std::string result;
-    result.append(m_fullName).append("[")
-        .append("Звание: ").append(RankToString(m_rank))
-        .append(", Специальность: ").append(SpecialityToString(m_speciality))
+    result.append(m_fullName).append(" [")
+        .append("Р—РІР°РЅРёРµ: ").append(RankToString(m_rank))
+        .append(", РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ: ").append(SpecialityToString(m_speciality))
         .append("]");
     return result;
 }

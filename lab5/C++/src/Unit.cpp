@@ -1,4 +1,4 @@
-#include "Unit.hpp"
+п»ї#include "Unit.hpp"
 #include "Staff.hpp"
 #include "SupplyRequestDetail.hpp"
 #include "SupplyResponse.hpp"
@@ -51,11 +51,11 @@ SupplyResponse Unit::MakeSupplyRequest(SupplyRequest& request) {
             return SupplyResponse(SupplyResponseStatus::Success, "");
 
         return detailsCorreted ? SupplyResponse(SupplyResponseStatus::Partial, SupplyRequestDetail::ToString(remainingDetails)) :
-            SupplyResponse(SupplyResponseStatus::Denied, "Ни один из складов высших порядков не смог удовлетворить запрос");
+            SupplyResponse(SupplyResponseStatus::Denied, "РќРё РѕРґРёРЅ РёР· СЃРєР»Р°РґРѕРІ РІС‹СЃС€РёС… РїРѕСЂСЏРґРєРѕРІ РЅРµ СЃРјРѕРі СѓРґРѕРІР»РµС‚РІРѕСЂРёС‚СЊ Р·Р°РїСЂРѕСЃ");
     }
 
     return detailsCorreted ? SupplyResponse(SupplyResponseStatus::Partial, SupplyRequestDetail::ToString(remainingDetails)) :
-        SupplyResponse(SupplyResponseStatus::Denied, warehouse == nullptr ? "Нет прикрепленного склада" : "Склад подразделения не смог удовлетворить запрос");
+        SupplyResponse(SupplyResponseStatus::Denied, warehouse == nullptr ? "РќРµС‚ РїСЂРёРєСЂРµРїР»РµРЅРЅРѕРіРѕ СЃРєР»Р°РґР°" : "РЎРєР»Р°Рґ РїРѕРґСЂР°Р·РґРµР»РµРЅРёСЏ РЅРµ СЃРјРѕРі СѓРґРѕРІР»РµС‚РІРѕСЂРёС‚СЊ Р·Р°РїСЂРѕСЃ");
 }
 
 void Unit::AddChildUnit(const std::weak_ptr<Unit> unit) {

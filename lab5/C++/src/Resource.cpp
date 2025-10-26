@@ -1,11 +1,11 @@
-#include "stdexcept"
+п»ї#include "stdexcept"
 #include "Resource.hpp"
 #include "WarehouseEntry.hpp"
 
 Resource::Resource(int id, const std::string& name, MeasureUnit measureUnit, float quantity)
     : WarehouseEntry<float>(id, name), m_measureUnit(measureUnit){
     if (quantity < Resource::MIN_QUANTITY)
-        throw std::invalid_argument("Недопустимое количество");
+        throw std::invalid_argument("РќРµРґРѕРїСѓСЃС‚РёРјРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ");
     m_quantity = quantity;
 }
 

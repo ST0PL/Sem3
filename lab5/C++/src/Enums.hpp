@@ -1,24 +1,24 @@
-#pragma once
+п»ї#pragma once
 enum class Rank {
     ePrivate = 0, //
-    eCorporal = 1, // Ефрейтор
-    eJuniorSergeant = 2, // Младший сержант
-    eSergeant = 3, // Cержант
-    eSeniorSergeant = 4, // Старший сержант
-    eSergeantMajor = 5, // Старшина
-    eWarrantOfficer = 6, // Прапорщик
-    eSeniorWarrantOfficer = 7, // Старший прапорщик
-    eJuniorLieutenant = 8, // Младший лейтенант
-    eLieutenant = 9, // Лейтенант
-    eSeniorLieutenant = 10, // Старший лейтенант
-    eCaptain = 11, // Капитан
-    eMajor = 12, // Майор
-    eLieutenantColonel = 13, // Подполковник
-    eColonel = 14, // Полковник
-    eMajorGeneral = 15, // Генерал майор
-    eLieutenantGeneral = 16, // Генерал лейтенант
-    eColonelGeneral = 17, // Генерал полковник
-    eArmyGeneral = 18 // Генерал армии
+    eCorporal = 1, // Р•С„СЂРµР№С‚РѕСЂ
+    eJuniorSergeant = 2, // РњР»Р°РґС€РёР№ СЃРµСЂР¶Р°РЅС‚
+    eSergeant = 3, // CРµСЂР¶Р°РЅС‚
+    eSeniorSergeant = 4, // РЎС‚Р°СЂС€РёР№ СЃРµСЂР¶Р°РЅС‚
+    eSergeantMajor = 5, // РЎС‚Р°СЂС€РёРЅР°
+    eWarrantOfficer = 6, // РџСЂР°РїРѕСЂС‰РёРє
+    eSeniorWarrantOfficer = 7, // РЎС‚Р°СЂС€РёР№ РїСЂР°РїРѕСЂС‰РёРє
+    eJuniorLieutenant = 8, // РњР»Р°РґС€РёР№ Р»РµР№С‚РµРЅР°РЅС‚
+    eLieutenant = 9, // Р›РµР№С‚РµРЅР°РЅС‚
+    eSeniorLieutenant = 10, // РЎС‚Р°СЂС€РёР№ Р»РµР№С‚РµРЅР°РЅС‚
+    eCaptain = 11, // РљР°РїРёС‚Р°РЅ
+    eMajor = 12, // РњР°Р№РѕСЂ
+    eLieutenantColonel = 13, // РџРѕРґРїРѕР»РєРѕРІРЅРёРє
+    eColonel = 14, // РџРѕР»РєРѕРІРЅРёРє
+    eMajorGeneral = 15, // Р“РµРЅРµСЂР°Р» РјР°Р№РѕСЂ
+    eLieutenantGeneral = 16, // Р“РµРЅРµСЂР°Р» Р»РµР№С‚РµРЅР°РЅС‚
+    eColonelGeneral = 17, // Р“РµРЅРµСЂР°Р» РїРѕР»РєРѕРІРЅРёРє
+    eArmyGeneral = 18 // Р“РµРЅРµСЂР°Р» Р°СЂРјРёРё
 };
 
 enum class Speciality {

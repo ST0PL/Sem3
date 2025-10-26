@@ -1,4 +1,4 @@
-#include "SupplyResponse.hpp"
+п»ї#include "SupplyResponse.hpp"
 
 SupplyResponse::SupplyResponse(SupplyResponseStatus status, const std::string& comment)
     : m_status(status), m_comment(comment) {
@@ -14,12 +14,12 @@ const std::string& SupplyResponse::GetComment() const {
 std::string SupplyResponse::StatusToString(SupplyResponseStatus status) {
     switch (status) {
     case SupplyResponseStatus::Success:
-        return "Удовлетворен";
+        return "РЈРґРѕРІР»РµС‚РІРѕСЂРµРЅ";
     case SupplyResponseStatus::Partial:
-        return "Удовлетворен частично";
+        return "РЈРґРѕРІР»РµС‚РІРѕСЂРµРЅ С‡Р°СЃС‚РёС‡РЅРѕ";
     case SupplyResponseStatus::Denied:
-        return "Неудовлетворен";
+        return "РќРµСѓРґРѕРІР»РµС‚РІРѕСЂРµРЅ";
     default:
-        return "Неизвестно";
+        return "РќРµРёР·РІРµСЃС‚РЅРѕ";
     }
 }

@@ -1,4 +1,4 @@
-#include <stdexcept>
+п»ї#include <stdexcept>
 #include "Equipment.hpp"
 #include "WarehouseEntry.hpp"
 
@@ -6,7 +6,7 @@ Equipment::Equipment(int id, const std::string& name, int count)
     : WarehouseEntry<int>(id, name)
 {
     if (count < Equipment::MIN_COUNT)
-        throw std::invalid_argument("Недопустимое количество");
+        throw std::invalid_argument("РќРµРґРѕРїСѓСЃС‚РёРјРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ");
     m_count = count;
 }
 
