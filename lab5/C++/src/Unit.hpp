@@ -24,8 +24,8 @@ public:
     bool RemoveSoldier(int);
     void AssignWarehouse(std::weak_ptr<Warehouse>);
     void AssignCommander(const std::weak_ptr<Staff>);
+    std::vector<std::weak_ptr<Staff>> FindByName(std::string&);
     bool RemoveChildUnit(int);
-    SupplyRequest CreateRequest(std::vector<std::unique_ptr<SupplyRequestDetail>>&) const;
 
 private:
     int m_id;

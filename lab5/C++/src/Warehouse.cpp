@@ -1,8 +1,8 @@
+#include <algorithm>
 #include "Warehouse.hpp"
 #include "SupplyRequestDetail.hpp"
 #include "Ammunition.hpp"
 #include "Fuel.hpp"
-#include <algorithm>
 
 
 Warehouse::Warehouse(int id, const std::string& name, WarehouseType type) :
@@ -57,12 +57,12 @@ bool Warehouse::ProcessSupplyRequestDetails(std::vector<std::unique_ptr<SupplyRe
 
         case SupplyType::Ammunition:
         case SupplyType::Fuel:
-            WriteOff<Resource>(m_resources, detail, corrected);
+            WriteOff<Resource>(m_resources, *detail, corrected);
             break;
 
         case SupplyType::Weapon:
         case SupplyType::Vehicle:
-            WriteOff<Equipment>(m_equipments, detail, corrected);
+            WriteOff<Equipment>(m_equipments, *detail, corrected);
             break;
         }
     }
@@ -75,9 +75,9 @@ bool Warehouse::ProcessSupplyRequestDetails(std::vector<std::unique_ptr<SupplyRe
 }
 
 template<typename T>
-void Warehouse::WriteOff(const std::vector<std::unique_ptr<T>>& collection, std::unique_ptr<SupplyRequestDetail>& detail, bool& corrected) {
+void Warehouse::WriteOff(const std::vector<std::unique_ptr<T>>& collection, SupplyRequestDetail& detail, bool& corrected) {
 
-    float remaining = detail->GetCount();
+    float remaining = detail.GetCount();
 
     for (auto& item : collection) {
 
@@ -91,7 +91,7 @@ void Warehouse::WriteOff(const std::vector<std::unique_ptr<T>>& collection, std:
                 break;
         }
     }
-    detail->SetCount(remaining);
+    detail.SetCount(remaining);
 }
 
 template<typename T>

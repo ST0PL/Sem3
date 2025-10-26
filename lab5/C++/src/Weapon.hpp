@@ -8,7 +8,7 @@ public:
     Weapon(const Weapon&);
     Weapon(int, const std::string&, Caliber, int);
     Caliber GetCaliber() const;
-    bool IsMatches(std::unique_ptr<SupplyRequestDetail>&) const override;
+    bool IsMatches(const SupplyRequestDetail&) const override;
 private:
     Caliber m_caliber;
 };

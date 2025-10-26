@@ -40,6 +40,7 @@ int main()
     army->AssignWarehouse(armyWarehouse);
     division->AssignWarehouse(divisionWarehouse);
 
+
     // Связываем сами подразделения
     army->AddChildUnit(division);
 
@@ -47,18 +48,26 @@ int main()
 
     // Дивизия запрашивает больше патронов, чем есть на её складе
     cout << "\nДивизия запрашивает 2200 патронов (на её складе только 100, на армейском 2000):" << endl;
-    vector<unique_ptr<SupplyRequestDetail>> requestDetails;
-    unique_ptr<SupplyRequestDetail> detail = make_unique<SupplyRequestDetail>(1, SupplyType::Ammunition, 2200);
-    detail->WithCaliber(Caliber::e545mm);
-    requestDetails.emplace_back(move(detail));
 
-    SupplyRequest request = division->CreateRequest(requestDetails);
-    SupplyRequest request2 = SupplyRequest(request);
-    SupplyResponse response = division->MakeSupplyRequest(request);
+    SupplyRequestBuilder requestBuilder;
+    unique_ptr<SupplyRequest> request = requestBuilder.WithAmmunition(Caliber::e545mm, 2200).Create();
+    SupplyResponse response = division->MakeSupplyRequest(*request);
 
-    //cout << "Результат:" << endl;
-    //cout << "  Статус: " << SupplyResponse::StatusToString(response.GetStatus()) << endl;
-    //cout << "  Комментарий: " << response.GetComment() << endl;
+    cout << "Результат:" << endl;
+    cout << "  Статус: " << SupplyResponse::StatusToString(response.GetStatus()) << endl;
+    cout << "  Комментарий: " << response.GetComment() << endl;
 
 }
 
+// Дружественная функция перегрузки оператора << для SupplyRequestDetail
+
+std::ostream& operator << (std::ostream& stream, const SupplyRequestDetail& detail) {
+    stream << detail.ToString();
+    return stream;
+}
+
+// Дружественная функция перегрузки оператора << для Staff
+std::ostream& operator <<(std::ostream& stream, const Staff& staff) {
+    stream << staff.ToString();
+    return stream;
+}

@@ -8,10 +8,10 @@ Vehicle::Vehicle(int id, const std::string& name, VehicleType type, FuelType fue
     : Equipment(id, name, count), m_type(type), m_fuelType(fuelType) { }
 
 
-bool Vehicle::IsMatches(std::unique_ptr<SupplyRequestDetail>& detail) const {
-    return detail->GetSupplyType() == SupplyType::Vehicle &&
-        detail->GetVehicleType() == m_type &&
-        detail->GetFuelType() == m_fuelType;
+bool Vehicle::IsMatches(const SupplyRequestDetail& detail) const {
+    return detail.GetSupplyType() == SupplyType::Vehicle &&
+        detail.GetVehicleType() == m_type &&
+        detail.GetFuelType() == m_fuelType;
 }
 
 VehicleType Vehicle::GetType() const {

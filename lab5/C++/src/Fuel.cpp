@@ -8,8 +8,8 @@ Fuel::Fuel(int id, const std::string& name, FuelType type, float quantity)
     : Resource(id, name, MeasureUnit::eLiter, quantity), m_type(type) {
 }
 
-bool Fuel::IsMatches(std::unique_ptr<SupplyRequestDetail>& detail) const {
-    return detail->GetSupplyType() == SupplyType::Fuel && detail->GetFuelType() == m_type;
+bool Fuel::IsMatches(const SupplyRequestDetail& detail) const {
+    return detail.GetSupplyType() == SupplyType::Fuel && detail.GetFuelType() == m_type;
 }
 
 FuelType Fuel::GetType() const {

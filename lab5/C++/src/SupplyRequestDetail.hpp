@@ -1,8 +1,9 @@
 #pragma once
-#include "Enums.hpp"
 #include <memory>
 #include <vector>
 #include <string>
+#include <iostream>
+#include "Enums.hpp"
 
 class SupplyRequestDetail {
 
@@ -21,6 +22,12 @@ public:
     void SetCount(float);
     static std::string ToString(std::vector<std::unique_ptr<SupplyRequestDetail>>&);
     std::string ToString() const;
+
+    SupplyRequestDetail& operator +=(float);
+    SupplyRequestDetail& operator -=(float);
+    friend std::ostream& operator << (std::ostream&, const SupplyRequestDetail& detail);
+    
+
     static std::string SupplyTypeToString(SupplyType);
     static std::string CaliberToString(Caliber);
     static std::string FuelTypeToString(FuelType);

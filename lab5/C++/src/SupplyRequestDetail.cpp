@@ -1,5 +1,6 @@
-#include "SupplyRequestDetail.hpp"
 #include <string>
+#include <algorithm>
+#include "SupplyRequestDetail.hpp"
 
 SupplyRequestDetail::SupplyRequestDetail(const SupplyRequestDetail& other) : 
     m_id(rand()), m_supplyType(other.m_supplyType), m_count(other.m_count),
@@ -64,6 +65,15 @@ std::string SupplyRequestDetail::ToString(std::vector<std::unique_ptr<SupplyRequ
     return result;
 }
 
+SupplyRequestDetail& SupplyRequestDetail::operator +=(float count) {
+    m_count += count;
+    return *this;
+}
+
+SupplyRequestDetail& SupplyRequestDetail::operator -=(float count) {
+    m_count -= std::min(m_count, count);
+    return *this;
+}
 
 std::string SupplyRequestDetail::ToString() const {
 
@@ -71,18 +81,18 @@ std::string SupplyRequestDetail::ToString() const {
 
     switch (m_supplyType) {
     case SupplyType::Ammunition:
-        result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + "רע";
+        result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + " רע";
         break;
     case SupplyType::Fuel:
-        result += FuelTypeToString(m_fuelType) + ", " + std::to_string(m_count) + "כ";
+        result += FuelTypeToString(m_fuelType) + ", " + std::to_string(m_count) + " כ";
         break;
     case SupplyType::Vehicle:
         result += VehicleTypeToString(m_vehicleType) + ", " +
             FuelTypeToString(m_fuelType) + ", " +
-            std::to_string(m_count) + "רע";
+            std::to_string(m_count) + " רע";
         break;
     case SupplyType::Weapon:
-        result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + "רע";
+        result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + " רע";
         break;
     }
 

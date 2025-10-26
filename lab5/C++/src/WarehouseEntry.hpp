@@ -20,7 +20,7 @@ public:
     int GetId() const;
     void SetId(int id);
     void AssignWarehouse(std::weak_ptr<const Warehouse>&);
-    virtual bool IsMatches(std::unique_ptr<SupplyRequestDetail>&) const = 0;
+    virtual bool IsMatches(const SupplyRequestDetail&) const = 0;
     virtual bool IsEmpty() const = 0;
     virtual void Increase(T) = 0;
     virtual T Decrease(T) = 0;

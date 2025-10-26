@@ -108,10 +108,21 @@ void Unit::AssignWarehouse(std::weak_ptr<Warehouse> warehouse) {
 }
 
 void Unit::AssignCommander(const std::weak_ptr<Staff> staff) {
-    if (auto commander = staff.lock()) {
+    auto commander = staff.lock();
+    if (commander && commander->GetRank() >= Rank::eSergeant) {
         m_commanderId = commander->GetId();
         m_commander = staff;
     }
+}
+
+std::vector<std::weak_ptr<Staff>> Unit::FindByName(std::string& query) {
+    std::vector<std::weak_ptr<Staff>> result;
+    for (auto& staff : m_personnel) {
+        auto soldier = staff.lock();
+        if (soldier && soldier->GetFullName().find(query) != std::string::npos)
+            result.push_back(staff);
+    }
+    return result;
 }
 
 bool Unit::RemoveChildUnit(int id) {
@@ -134,8 +145,4 @@ bool Unit::RemoveChildUnit(int id) {
     m_children.erase(newEnd, m_children.end());
 
     return m_children.size() < prevSize;
-}
-
-SupplyRequest Unit::CreateRequest(std::vector<std::unique_ptr<SupplyRequestDetail>>& details) const {
-    return SupplyRequest(rand(), weak_from_this(), details);
 }

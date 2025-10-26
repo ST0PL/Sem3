@@ -21,6 +21,23 @@ public:
     void SetRank(Rank);
     void SetSpeciality(Speciality);
     void SetUnit(std::weak_ptr<Unit>);
+    std::string ToString() const;
+
+
+    static std::string RankToString(Rank rank);
+    static std::string SpecialityToString(Speciality speciality);
+
+    bool operator < (const Staff& other) const;
+    bool operator > (const Staff& other) const;
+
+    bool operator == (const Staff& other) const;
+    bool operator != (const Staff& other) const;
+
+    bool operator <= (const Staff& other) const;
+    bool operator >= (const Staff& other) const;
+
+    friend std::ostream& operator <<(std::ostream&, const Staff&);
+
 private:
     int m_id;
     std::string m_fullName;

@@ -8,8 +8,8 @@ Ammunition::Ammunition(int id, const std::string& name, Caliber caliber, float q
     : Resource(id, name, MeasureUnit::eItem, quantity), m_caliber(caliber) {
 }
 
-bool Ammunition::IsMatches(std::unique_ptr<SupplyRequestDetail>& detail) const {
-    return detail->GetSupplyType() == SupplyType::Ammunition && detail->GetCaliber() == m_caliber;
+bool Ammunition::IsMatches(const SupplyRequestDetail& detail) const {
+    return detail.GetSupplyType() == SupplyType::Ammunition && detail.GetCaliber() == m_caliber;
 }
 
 Caliber Ammunition::GetCaliber() const {

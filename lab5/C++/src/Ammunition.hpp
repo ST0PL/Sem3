@@ -10,7 +10,7 @@ public:
     Ammunition(const Ammunition&);
     Ammunition(int, const std::string&, Caliber caliber, float);
     Caliber GetCaliber() const;
-    bool IsMatches(std::unique_ptr<SupplyRequestDetail>&) const override;
+    bool IsMatches(const SupplyRequestDetail&) const override;
 private:
     Caliber m_caliber;
 };
