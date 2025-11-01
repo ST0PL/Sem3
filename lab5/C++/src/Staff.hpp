@@ -1,0 +1,48 @@
+#pragma once
+#include "Unit.hpp"
+#include <string>
+#include <memory>
+#include "Enums.hpp"
+
+class Staff {
+public:
+    Staff(const Staff&);
+    Staff(int, const std::string&, Rank, Speciality);
+
+    int GetId() const;
+    const std::string& GetFullName() const;
+    Rank GetRank() const;
+    Speciality GetSpeciality() const;
+    int GetUnitId() const;
+    std::weak_ptr<Unit> GetUnit() const;
+
+    void SetId(int);
+    void SetFullName(const std::string&);
+    void SetRank(Rank);
+    void SetSpeciality(Speciality);
+    void SetUnit(std::weak_ptr<Unit>);
+    std::string ToString() const;
+
+
+    static std::string RankToString(Rank rank);
+    static std::string SpecialityToString(Speciality speciality);
+
+    bool operator < (const Staff& other) const;
+    bool operator > (const Staff& other) const;
+
+    bool operator == (const Staff& other) const;
+    bool operator != (const Staff& other) const;
+
+    bool operator <= (const Staff& other) const;
+    bool operator >= (const Staff& other) const;
+
+    friend std::ostream& operator <<(std::ostream&, const Staff&);
+
+private:
+    int m_id;
+    std::string m_fullName;
+    Rank m_rank;
+    Speciality m_speciality;
+    int m_unitId;
+    std::weak_ptr<Unit> m_unit;
+};
