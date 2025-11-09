@@ -12,4 +12,16 @@
     <ProjectReference Include="..\ControlsLib\ControlsLib\ControlsLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Core\" />
+    <Folder Include="Views\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10" />
+  </ItemGroup>
+
 </Project>

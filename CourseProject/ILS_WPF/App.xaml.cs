@@ -1,5 +1,8 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using ILS_WPF.Models.Database;
+using ILS_WPF.Services;
+using ILS_WPF.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Windows;
 
 namespace ILS_WPF
@@ -9,6 +12,27 @@ namespace ILS_WPF
     /// </summary>
     public partial class App : Application
     {
+        private IHost? _host;
+        private IHost InitHost()
+        {
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureServices(s =>
+                {
+                    s.AddDbContext<ILSContext>();
+                    s.AddTransient<IAccountService, AccountService>();
+                    s.AddSingleton<IUserService, UserService>();
+                    s.AddSingleton<MainWindow>();
+                })
+                .Build();
+            return _host;
+        }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            InitHost();
+            MainWindow = _host?.Services?.GetService<MainWindow>();
+            MainWindow?.Show();
+        }
     }
 
 }
