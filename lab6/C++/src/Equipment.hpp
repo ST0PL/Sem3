@@ -10,7 +10,7 @@ public:
     int Decrease(int) override;
     int GetCount() const;
     bool IsEmpty() const override;
-    ~Equipment() = default;
+    virtual ~Equipment() = default;
 protected:
     int m_count;
 };

@@ -13,6 +13,7 @@ public:
     bool IsEmpty() const override;
     void Increase(float);
     float Decrease(float);
+    virtual ~Resource() = default;
 protected:
     MeasureUnit m_measureUnit;
     float m_quantity;
