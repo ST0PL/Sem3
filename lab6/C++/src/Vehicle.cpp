@@ -1,4 +1,4 @@
-#include "Vehicle.hpp"
+п»ї#include "Vehicle.hpp"
 #include "SupplyRequestDetail.hpp"
 
 Vehicle::Vehicle(const Vehicle& other) : 
@@ -26,7 +26,7 @@ FuelType Vehicle::GetFuelType() const {
 
 Vehicle& Vehicle::operator = (const Equipment& base) {
     if (base.GetMaterialType() != GetMaterialType())
-        throw std::invalid_argument("Тип ресурса не соответствует типу экземпляра.");
+        throw std::invalid_argument("РўРёРї СЂРµСЃСѓСЂСЃР° РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ С‚РёРїСѓ СЌРєР·РµРјРїР»СЏСЂР°.");
     SetId(base.GetId());
     SetName(base.GetName());
     AssignWarehouse(base.GetWarehouse());

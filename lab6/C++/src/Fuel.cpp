@@ -1,4 +1,4 @@
-#include "Fuel.hpp"
+п»ї#include "Fuel.hpp"
 #include "SupplyRequestDetail.hpp"
 
 Fuel::Fuel(const Fuel& other) :
@@ -12,7 +12,7 @@ Fuel::Fuel(int id, const std::string& name, FuelType type, float quantity)
 
 Fuel& Fuel::operator = (const Resource& base) {
     if (base.GetMaterialType() != GetMaterialType())
-        throw std::invalid_argument("Тип ресурса не соответствует типу экземпляра.");
+        throw std::invalid_argument("РўРёРї СЂРµСЃСѓСЂСЃР° РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ С‚РёРїСѓ СЌРєР·РµРјРїР»СЏСЂР°.");
     SetId(base.GetId());
     SetName(base.GetName());
     AssignWarehouse(base.GetWarehouse());

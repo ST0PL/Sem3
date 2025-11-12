@@ -1,4 +1,4 @@
-#include "Weapon.hpp"
+п»ї#include "Weapon.hpp"
 #include "SupplyRequestDetail.hpp"
 
 
@@ -20,7 +20,7 @@ Caliber Weapon::GetCaliber() const {
 
 Weapon& Weapon::operator = (const Equipment& base) {
     if (base.GetMaterialType() != GetMaterialType())
-        throw std::invalid_argument("Тип ресурса не соответствует типу экземпляра.");
+        throw std::invalid_argument("РўРёРї СЂРµСЃСѓСЂСЃР° РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ С‚РёРїСѓ СЌРєР·РµРјРїР»СЏСЂР°.");
     SetId(base.GetId());
     SetName(base.GetName());
     AssignWarehouse(base.GetWarehouse());

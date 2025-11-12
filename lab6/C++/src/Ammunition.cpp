@@ -1,4 +1,4 @@
-#include <stdexcept>
+п»ї#include <stdexcept>
 #include "Ammunition.hpp"
 #include "SupplyRequestDetail.hpp"
 
@@ -13,7 +13,7 @@ Ammunition::Ammunition(int id, const std::string& name, Caliber caliber, float q
 
 Ammunition& Ammunition::operator = (const Resource& base){
     if (base.GetMaterialType() != GetMaterialType())
-        throw std::invalid_argument("Тип ресурса не соответствует типу экземпляра.");
+        throw std::invalid_argument("РўРёРї СЂРµСЃСѓСЂСЃР° РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ С‚РёРїСѓ СЌРєР·РµРјРїР»СЏСЂР°.");
     SetId(base.GetId());
     SetName(base.GetName());
 
