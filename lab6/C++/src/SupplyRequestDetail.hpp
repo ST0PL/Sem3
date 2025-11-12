@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <map>
 #include "Enums.hpp"
 
 class SupplyRequestDetail {
@@ -27,15 +28,19 @@ public:
     friend std::ostream& operator << (std::ostream&, const SupplyRequestDetail& detail);
     
 
-    static std::string SupplyTypeToString(MaterialType);
+    static std::string MaterialTypeToString(MaterialType);
     static std::string CaliberToString(Caliber);
     static std::string FuelTypeToString(FuelType);
     static std::string VehicleTypeToString(VehicleType);
 private:
     int m_id;
-    MaterialType m_supplyType;
+    MaterialType m_materialType;
     Caliber m_caliber;
     VehicleType m_vehicleType;
     FuelType m_fuelType;
     float m_count;
+    static const std::map<MaterialType, std::string> m_materialTypes;
+    static const std::map<Caliber, std::string> m_calibers;
+    static const std::map<FuelType, std::string> m_fuelTypes;
+    static const std::map<VehicleType, std::string> m_vehicleTypes;
 };

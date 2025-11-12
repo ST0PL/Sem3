@@ -84,3 +84,10 @@ enum class WarehouseType {
     eRear = 0,
     eField = 1
 };
+
+enum class LogLevel {
+    eInfo = 0,
+    eWarn = 1,
+    eDebug = 2,
+    eError = 3,
+};

@@ -19,6 +19,9 @@
     <Filter Include="Исходные файлы\Resources">
       <UniqueIdentifier>{780637e4-b4cb-4002-b463-6f9884d7b2a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Logger">
+      <UniqueIdentifier>{a02a31cd-3107-4160-b450-7ef78abefab4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WarehouseEntry.cpp">
@@ -60,11 +63,20 @@
     <ClCompile Include="Staff.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="lab5.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="SupplyRequestBuilder.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="lab6.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseLogger.cpp">
+      <Filter>Исходные файлы\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="AdvancedLogger.cpp">
+      <Filter>Исходные файлы\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLogger.cpp">
+      <Filter>Исходные файлы\Logger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +126,15 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="SupplyRequestBuilder.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseLogger.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="AdvancedLogger.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLogger.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <map>
 #include "Resource.hpp"
 #include "Equipment.hpp"
 #include "Enums.hpp"
@@ -16,6 +17,7 @@ public:
     static std::string GenerateComment(const std::vector<std::unique_ptr<SupplyRequestDetail>>&);
     static std::string StatusToString(SupplyResponseStatus);
 private:
+    static const std::map<SupplyResponseStatus, std::string> m_statuses;
     int m_requestId;
     std::weak_ptr<const SupplyRequest> m_request;
     SupplyResponseStatus m_status;

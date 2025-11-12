@@ -43,14 +43,11 @@ const std::string& SupplyResponse::GetComment() const {
 }
 
 std::string SupplyResponse::StatusToString(SupplyResponseStatus status) {
-    switch (status) {
-    case SupplyResponseStatus::Success:
-        return "Удовлетворен";
-    case SupplyResponseStatus::Partial:
-        return "Удовлетворен частично";
-    case SupplyResponseStatus::Denied:
-        return "Неудовлетворен";
-    default:
-        return "Неизвестно";
-    }
+    return m_statuses.at(status);
 }
+
+const std::map<SupplyResponseStatus, std::string> SupplyResponse::m_statuses = {
+    {SupplyResponseStatus::Success, "Удовлетворен"},
+    {SupplyResponseStatus::Partial, "Удовлетворен частично"},
+    {SupplyResponseStatus::Denied, "Неудовлетворен"}
+};

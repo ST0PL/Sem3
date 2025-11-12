@@ -1,8 +1,9 @@
 #pragma once
-#include "Unit.hpp"
 #include <string>
 #include <memory>
+#include <map>
 #include "Enums.hpp"
+#include "Unit.hpp"
 
 class Staff {
 public:
@@ -39,6 +40,8 @@ public:
     friend std::ostream& operator <<(std::ostream&, const Staff&);
 
 private:
+    static const std::map<Rank, std::string> m_ranks;
+    static const std::map<Speciality, std::string> m_specialities;
     int m_id;
     std::string m_fullName;
     Rank m_rank;

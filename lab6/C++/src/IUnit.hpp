@@ -8,5 +8,5 @@ public:
     IUnit(const IUnit&) = delete;
     IUnit() = default;
     virtual SupplyResponse MakeSupplyRequest(std::shared_ptr<SupplyRequest>&) = 0;
-    ~IUnit() = default;
+    virtual ~IUnit() = default;
 };

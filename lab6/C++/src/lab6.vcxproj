@@ -124,8 +124,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AdvancedLogger.cpp" />
     <ClCompile Include="Ammunition.cpp" />
+    <ClCompile Include="BaseLogger.cpp" />
     <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="Fuel.cpp" />
     <ClCompile Include="lab6.cpp" />
     <ClCompile Include="Resource.cpp" />
@@ -141,9 +144,12 @@
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdvancedLogger.hpp" />
     <ClInclude Include="Ammunition.hpp" />
+    <ClInclude Include="BaseLogger.hpp" />
     <ClInclude Include="Enums.hpp" />
     <ClInclude Include="Equipment.hpp" />
+    <ClInclude Include="FileLogger.hpp" />
     <ClInclude Include="Fuel.hpp" />
     <ClInclude Include="IUnit.hpp" />
     <ClInclude Include="Resource.hpp" />

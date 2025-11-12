@@ -3,12 +3,12 @@
 #include "SupplyRequestDetail.hpp"
 
 SupplyRequestDetail::SupplyRequestDetail(const SupplyRequestDetail& other) : 
-    m_id(rand()), m_supplyType(other.m_supplyType), m_count(other.m_count),
+    m_id(rand()), m_materialType(other.m_materialType), m_count(other.m_count),
     m_caliber(other.m_caliber), m_fuelType(other.m_fuelType), m_vehicleType(other.m_vehicleType){
 }
 
 SupplyRequestDetail::SupplyRequestDetail(int id, MaterialType type, float count)
-    : m_id(id), m_supplyType(type), m_count(count) {
+    : m_id(id), m_materialType(type), m_count(count) {
 }
 
 SupplyRequestDetail& SupplyRequestDetail::WithCaliber(Caliber caliber) {
@@ -31,7 +31,7 @@ int SupplyRequestDetail::GetId() const {
 }
 
 MaterialType SupplyRequestDetail::GetSupplyType() const {
-    return m_supplyType;
+    return m_materialType;
 }
 
 Caliber SupplyRequestDetail::GetCaliber() const {
@@ -66,9 +66,9 @@ SupplyRequestDetail& SupplyRequestDetail::operator -=(float count) {
 
 std::string SupplyRequestDetail::ToString() const {
 
-    std::string result = SupplyTypeToString(m_supplyType) + ": ";
+    std::string result = MaterialTypeToString(m_materialType) + ": ";
 
-    switch (m_supplyType) {
+    switch (m_materialType) {
     case MaterialType::Ammunition:
         result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + " шт";
         break;
@@ -88,50 +88,44 @@ std::string SupplyRequestDetail::ToString() const {
     return result;
 }
 
-std::string SupplyRequestDetail::SupplyTypeToString(MaterialType stype) {
-    switch (stype) {
-    case MaterialType::Ammunition:
-        return "Боеприпасы";
-    case MaterialType::Fuel:
-        return "Топливо";
-    case MaterialType::Vehicle:
-        return "Транспорт";
-    case MaterialType::Weapon:
-        return "Вооружение";
-    default:
-        return "Неизвестно";
-    }
+std::string SupplyRequestDetail::MaterialTypeToString(MaterialType mtype) {
+    return m_materialTypes.at(mtype);
 }
 std::string SupplyRequestDetail::CaliberToString(Caliber caliber) {
-    switch (caliber) {
-    case Caliber::e545mm:
-        return "5.25мм";
-    case Caliber::e122mm:
-        return "122мм";
-    default:
-        return "Неизвестно";
-    }
+    return m_calibers.at(caliber);
 }
 std::string SupplyRequestDetail::FuelTypeToString(FuelType ftype) {
-    switch (ftype) {
-    case FuelType::Gasoline:
-        return "Бензин";
-    case FuelType::Diesel:
-        return "Дизель";
-    default:
-        return "Неизвестно";
-    }
+    return m_fuelTypes.at(ftype);
 }
 
 std::string SupplyRequestDetail::VehicleTypeToString(VehicleType vtype) {
-    switch (vtype) {
-    case VehicleType::ArmoredVehicle:
-        return "Бронемашина";
-    case VehicleType::Tank:
-        return "Танк";
-    case VehicleType::Motorbike:
-        return "Мотоцикл";
-    default:
-        return "Неизвестно";
-    }
+    return m_vehicleTypes.at(vtype);
 }
+
+
+const std::map<MaterialType, std::string> SupplyRequestDetail::m_materialTypes {
+    {MaterialType::Ammunition, "Боеприпасы"},
+    {MaterialType::Fuel, "Топливо"},
+    {MaterialType::Vehicle, "Транспорт"},
+    {MaterialType::Weapon, "Вооружение"}
+};
+
+// Инициализация словаря калибров
+const std::map<Caliber, std::string> SupplyRequestDetail::m_calibers = {
+    {Caliber::e545mm, "5.45мм"},
+    {Caliber::e122mm, "122мм"}
+};
+
+// Инициализация словаря типов топлива
+const std::map<FuelType, std::string> SupplyRequestDetail::m_fuelTypes {
+    {FuelType::Gasoline, "Бензин"},
+    {FuelType::Diesel, "Дизель"}
+};
+
+// Инициализация словаря типов транспорта
+const std::map<VehicleType, std::string> SupplyRequestDetail::m_vehicleTypes = {
+    {VehicleType::Tank, "Танк"},
+    {VehicleType::ArmoredVehicle, "Бронемашина"},
+    {VehicleType::Motorbike, "Мотоцикл"},
+    {VehicleType::SelfPropelledLauncher, "Самоходная установка"}
+};

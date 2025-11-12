@@ -80,76 +80,11 @@ bool Staff::operator >= (const Staff& other) const {
 }
 
 std::string Staff::RankToString(Rank rank) {
-    switch (rank) {
-    case Rank::ePrivate: 
-        return "Рядовой";
-    case Rank::eCorporal: 
-        return "Ефрейтор";
-    case Rank::eJuniorSergeant: 
-        return "Младший сержант";
-    case Rank::eSergeant: 
-        return "Сержант";
-    case Rank::eSeniorSergeant: 
-        return "Старший сержант";
-    case Rank::eSergeantMajor:
-        return "Старшина";
-    case Rank::eWarrantOfficer: 
-        return "Прапорщик";
-    case Rank::eSeniorWarrantOfficer: 
-        return "Старший прапорщик";
-    case Rank::eJuniorLieutenant: 
-        return "Младший лейтенант";
-    case Rank::eLieutenant:
-        return "Лейтенант";
-    case Rank::eSeniorLieutenant:
-        return "Старший лейтенант";
-    case Rank::eCaptain:
-        return "Капитан";
-    case Rank::eMajor: 
-        return "Майор";
-    case Rank::eLieutenantColonel: return "Подполковник";
-    case Rank::eColonel: 
-        return "Полковник";
-    case Rank::eMajorGeneral:
-        return "Генерал-майор";
-    case Rank::eLieutenantGeneral:
-        return "Генерал-лейтенант";
-    case Rank::eColonelGeneral:
-        return "Генерал-полковник";
-    case Rank::eArmyGeneral:
-        return "Генерал армии";
-    default:
-        return "Неизвестно";
-    }
+    return m_ranks.at(rank);
 }
 
 std::string Staff::SpecialityToString(Speciality speciality) {
-    switch (speciality) {
-    case Speciality::eNone:
-        return "Отсутствует";
-    case Speciality::eInfantry:
-        return "Пехотинец";
-    case Speciality::eMachineGunner:
-        return "Пулеметчик";
-    case Speciality::eGrenadeLauncher:
-        return "Гранатометчик";
-    case Speciality::eReconnaissance:
-        return "Разведчик";
-    case Speciality::eSpecialForces:
-        return "Спецназ";
-    case Speciality::eSniper:
-        return "Снайпер";
-    case Speciality::eTanker:
-        return "Танкист";
-    case Speciality::eAntiAircraft:
-        return "Зенитчик";
-    case Speciality::eEngineer:
-        return "Инженер";
-    case Speciality::eMedic:
-        return "Медик";
-    default:
-        return "Неизвестно";
-    }
+    return m_specialities.at(speciality);
 }
 
 std::string Staff::ToString() const {
@@ -160,3 +95,40 @@ std::string Staff::ToString() const {
         .append("]");
     return result;
 }
+
+const std::map<Rank, std::string> Staff::m_ranks {
+    {Rank::ePrivate, "Рядовой"},
+    {Rank::eCorporal, "Ефрейтор"},
+    {Rank::eJuniorSergeant, "Младший сержант"},
+    {Rank::eSergeant, "Сержант"},
+    {Rank::eSeniorSergeant, "Старший сержант"},
+    {Rank::eSergeantMajor, "Старшина"},
+    {Rank::eWarrantOfficer, "Прапорщик"},
+    {Rank::eSeniorWarrantOfficer, "Старший прапорщик"},
+    {Rank::eJuniorLieutenant, "Младший лейтенант"},
+    {Rank::eLieutenant, "Лейтенант"},
+    {Rank::eSeniorLieutenant, "Старший лейтенант"},
+    {Rank::eCaptain, "Капитан"},
+    {Rank::eMajor, "Майор"},
+    {Rank::eLieutenantColonel, "Подполковник"},
+    {Rank::eColonel, "Полковник"},
+    {Rank::eMajorGeneral, "Генерал-майор"},
+    {Rank::eLieutenantGeneral, "Генерал-лейтенант"},
+    {Rank::eColonelGeneral, "Генерал-полковник"},
+    {Rank::eArmyGeneral, "Генерал армии"}
+};
+
+
+const std::map<Speciality, std::string> Staff::m_specialities {
+    {Speciality::eNone, "Отсутствует"},
+    {Speciality::eInfantry, "Пехотинец"},
+    {Speciality::eMachineGunner, "Пулеметчик"},
+    {Speciality::eGrenadeLauncher, "Гранатометчик"},
+    {Speciality::eReconnaissance, "Разведчик"},
+    {Speciality::eSpecialForces, "Спецназ"},
+    {Speciality::eSniper, "Снайпер"},
+    {Speciality::eTanker, "Танкист"},
+    {Speciality::eAntiAircraft, "Зенитчик"},
+    {Speciality::eEngineer, "Инженер"},
+    {Speciality::eMedic, "Медик"}
+};
