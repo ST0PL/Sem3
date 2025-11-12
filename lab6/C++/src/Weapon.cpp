@@ -4,6 +4,7 @@
 
 Weapon::Weapon(const Weapon& other) :
     Equipment(rand(), other.GetMaterialType(), other.GetName(), other.GetCount()), m_caliber(other.m_caliber) {
+    AssignWarehouse(other.GetWarehouse());
 }
 
 Weapon::Weapon(int id, const std::string& name, Caliber caliber, int count)

@@ -2,7 +2,9 @@
 #include "SupplyRequestDetail.hpp"
 
 Vehicle::Vehicle(const Vehicle& other) : 
-    Equipment(rand(), other.GetMaterialType(), other.GetName(), other.GetCount()), m_type(other.m_type), m_fuelType(other.m_fuelType) { }
+    Equipment(rand(), other.GetMaterialType(), other.GetName(), other.GetCount()), m_type(other.m_type), m_fuelType(other.m_fuelType) {
+    AssignWarehouse(other.GetWarehouse());
+}
 
 Vehicle::Vehicle(int id, const std::string& name, VehicleType type, FuelType fuelType, int count)
     : Equipment(id, MaterialType::Vehicle, name, count), m_type(type), m_fuelType(fuelType) { }

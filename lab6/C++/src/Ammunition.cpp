@@ -3,7 +3,9 @@
 #include "SupplyRequestDetail.hpp"
 
 Ammunition::Ammunition(const Ammunition& other) :
-    Resource(rand(), other.GetMaterialType(), other.GetName(), MeasureUnit::eItem, other.GetQuantity()), m_caliber(other.m_caliber) { }
+    Resource(rand(), other.GetMaterialType(), other.GetName(), MeasureUnit::eItem, other.GetQuantity()), m_caliber(other.m_caliber) {
+    AssignWarehouse(other.GetWarehouse());
+}
 
 Ammunition::Ammunition(int id, const std::string& name, Caliber caliber, float quantity)
     : Resource(id, MaterialType::Ammunition, name, MeasureUnit::eItem, quantity), m_caliber(caliber) {
