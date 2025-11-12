@@ -5,6 +5,7 @@
 class Resource : public WarehouseEntry<float> {
 public:
     static constexpr float MIN_QUANTITY = 0.1f;
+    Resource(const Resource&) = delete;
     Resource(int, MaterialType, const std::string&, MeasureUnit, float);
     virtual ~Resource() = default;
     MeasureUnit GetMeasureUnit() const;

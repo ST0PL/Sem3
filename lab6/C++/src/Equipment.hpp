@@ -4,6 +4,7 @@
 class Equipment : public WarehouseEntry<int> {
 public:
     static constexpr int MIN_COUNT = 1;
+    Equipment(const Equipment&) = delete;
     Equipment(int, MaterialType, const std::string&, int);
     void Increase(int) override;
     int Decrease(int) override;

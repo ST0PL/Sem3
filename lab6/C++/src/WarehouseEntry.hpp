@@ -10,6 +10,7 @@ class Warehouse;
 template<typename T>
 class WarehouseEntry {
 public:
+    WarehouseEntry(const WarehouseEntry&) = delete;
     WarehouseEntry(int, const std::string&, MaterialType);
     const std::string& GetName() const;
     void SetName(const std::string&);

@@ -9,6 +9,8 @@ class SupplyRequest;
 
 class SupplyRequestBuilder {
 public:
+    SupplyRequestBuilder(const SupplyRequestBuilder&) = delete;
+    SupplyRequestBuilder() = default;
     SupplyRequestBuilder& WithWeapon(Caliber caliber, float count);
     SupplyRequestBuilder& WithAmmunition(Caliber caliber, float count);
     SupplyRequestBuilder& WithFuel(FuelType type, float liters);

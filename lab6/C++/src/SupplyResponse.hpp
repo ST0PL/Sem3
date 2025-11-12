@@ -8,6 +8,7 @@
 
 class SupplyResponse {
 public:
+    SupplyResponse(const SupplyResponse&);
     SupplyResponse(SupplyResponseStatus, const std::string&, std::shared_ptr<SupplyRequest>& request);
     SupplyResponse(SupplyResponseStatus, std::shared_ptr<SupplyRequest>& request);
     SupplyResponseStatus GetStatus() const;
