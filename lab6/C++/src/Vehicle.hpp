@@ -10,6 +10,7 @@ public:
     VehicleType GetType() const;
     FuelType GetFuelType() const;
     bool IsMatches(const SupplyRequestDetail&) const override;
+    Vehicle& operator = (const Equipment& base);
 private:
     VehicleType m_type;
     FuelType m_fuelType;

@@ -13,7 +13,7 @@ public:
     bool IsEmpty() const override;
     void Increase(float);
     float Decrease(float);
-private:
+protected:
     MeasureUnit m_measureUnit;
     float m_quantity;
 };

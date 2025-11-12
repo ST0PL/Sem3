@@ -16,3 +16,13 @@ bool Weapon::IsMatches(const SupplyRequestDetail& detail) const {
 Caliber Weapon::GetCaliber() const {
     return m_caliber;
 }
+
+Weapon& Weapon::operator = (const Equipment& base) {
+    if (base.GetMaterialType() != GetMaterialType())
+        throw std::invalid_argument("“ип ресурса не соответствует типу экземпл€ра.");
+    SetId(base.GetId());
+    SetName(base.GetName());
+    AssignWarehouse(base.GetWarehouse());
+    m_count = base.GetCount();
+    return *this;
+}

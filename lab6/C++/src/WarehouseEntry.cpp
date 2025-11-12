@@ -37,9 +37,13 @@ void WarehouseEntry<T>::SetId(int id) {
 }
 
 template<typename T>
-void WarehouseEntry<T>::AssignWarehouse(std::weak_ptr<const Warehouse>& warehouse) {
+void WarehouseEntry<T>::AssignWarehouse(const std::weak_ptr<const Warehouse>& warehouse) {
     if (auto w = warehouse.lock()) {
         m_assignedWarehouseId = w->GetId();
         m_assignedWarehouse = warehouse;
     }
+}
+template<typename T>
+std::weak_ptr<const Warehouse> WarehouseEntry<T>::GetWarehouse() const {
+    return m_assignedWarehouse;
 }

@@ -11,6 +11,6 @@ public:
     int GetCount() const;
     bool IsEmpty() const override;
     ~Equipment() = default;
-private:
+protected:
     int m_count;
 };
