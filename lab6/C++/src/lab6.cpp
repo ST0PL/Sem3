@@ -1,16 +1,20 @@
 ﻿#include <iostream>
 #include <memory>
-#include <vector>
-#include "Unit.hpp"
-#include "Staff.hpp"
-#include "SupplyRequestDetail.hpp"
-#include "SupplyRequestBuilder.hpp"
-#include "SupplyResponse.hpp"
+#include "BaseLogger.hpp"
+#include "AdvancedLogger.hpp"
+#include "FileLogger.hpp"
+#include "Resource.hpp"
 #include "Ammunition.hpp"
 #include "Fuel.hpp"
-#include "Vehicle.hpp"
+#include "Equipment.hpp"
 #include "Weapon.hpp"
-#include "AdvancedLogger.hpp"
+#include "Vehicle.hpp"
+#include "Warehouse.hpp"
+#include "Unit.hpp"
+#include "SupplyRequest.hpp"
+#include "SupplyRequestBuilder.hpp"
+#include "SupplyResponse.hpp"
+#include "SupplyRequestDetail.hpp"
 
 using namespace std;
 
@@ -18,108 +22,92 @@ int main()
 {
     setlocale(LC_ALL, "Rus");
     srand(time(0)); // для генерации идентификаторов
+    // Производные от WarehouseEntry<T> классы
+    Ammunition ammo(1, "Патроны 5.45мм", Caliber::e545mm, 100);
+    Fuel fuel(2, "Дизель", FuelType::eDiesel, 500.0f);
+    Weapon weapon(3, "АК-12", Caliber::e545mm, 10);
+    Vehicle vehicle(4, "БТР-82А", VehicleType::eArmoredVehicle, FuelType::eDiesel, 2);
 
-    cout << "\nДемонстрация алгоритма снабжения\n" << endl;
+    // Перегрузка метода базового класса (без вызова базового и с вызовом базового)
+    AdvancedLogger advLogger;
+    FileLogger fileLogger("log.txt");
 
-    shared_ptr<Unit> army = make_shared<Unit>(100, "1-я Армия", UnitType::eArmy);
-    shared_ptr<Unit> division = make_shared<Unit>(101, "2-я Мотострелковая Дивизия", UnitType::eDivision);
+    advLogger.Log("AdvancedLogger — без вызова базового метода", LogLevel::eInfo);
+    fileLogger.Log("FileLogger — вызывает метод базового класса", LogLevel::eWarn, 1, true);
 
-    // Склады для армии и дивизии
-    shared_ptr<Warehouse> armyWarehouse = make_shared<Warehouse>(100, "Армейский склад", WarehouseType::eRear);
-    shared_ptr<Warehouse> divisionWarehouse = make_shared<Warehouse>(101, "Дивизионный склад", WarehouseType::eField);
+    // Виртуальные функции
+    BaseLogger baseLogger;
+    auto basePtr = make_unique<AdvancedLogger>();
 
-    // Наполнение склада дивизии
-    vector<unique_ptr<Resource>> divisionResources;
-    divisionResources.emplace_back(make_unique<Ammunition>(200, "Патроны 5.45мм", Caliber::e545mm, 100));
-    divisionWarehouse->AddResources(divisionResources);
+    cout << "\nBaseLogger::GetNowTimeVirtual(): " << baseLogger.GetNowTimeVirtual() << endl;
+    cout << "\nAdvancedLogger через указатель на BaseLogger:" << endl;
+    cout << "\nGetNowTime() (невиртуальная): " << basePtr->GetNowTime() << endl;
+    cout << "\nGetNowTimeVirtual() (виртуальная): " << basePtr->GetNowTimeVirtual() << endl << endl;;
 
-    // Наполнение склада дивизии
-    vector<unique_ptr<Resource>> armyResources;
-    armyResources.emplace_back(make_unique<Ammunition>(100, "Патроны 5.45мм", Caliber::e545mm, 2000));
-    armyWarehouse->AddResources(armyResources);
+    // Вызов виртуальной функции из невиртуальной
+    advLogger.BaseLogger::Log("Вызов базовой функии, вызывающей виртуальный и не виртуальный метод GetNowTime()");
 
-    // Связываем подразделения со складами
-    army->AssignWarehouse(armyWarehouse);
-    division->AssignWarehouse(divisionWarehouse);
 
-    // Связываем сами подразделения
-    army->AddChildUnit(division);
+    // Клонирование
+    auto unit = std::make_shared<Unit>(1, "1-я рота", UnitType::eBattalion);
+    SupplyRequestBuilder builder;
+    auto req = builder.WithAmmunition(Caliber::e545mm, 100)
+        .Create(unit);
 
-    cout << "Создана иерархия: " << army->GetName() << " -> " << division->GetName() << endl;
+    auto shallowClone = req->Clone(true);  // поверхностная копия
+    auto deepClone = req->Clone(false);    // глубокая копия
 
-    // Статические константыs
+    cout << "\nОригинал ID: " << req->GetId() << endl;
+    for (auto& d : req->GetDetails()) cout << "  " << d->ToString() << endl;
 
-    cout << "MIN_COUNT: " << Equipment::MIN_COUNT << endl;
-    cout << "MIN_QUANTITY: " << Resource::MIN_QUANTITY << endl;
-    cout << "MIN_COMMANDER_RANK: " << (int)Unit::MIN_COMMANDER_RANK << endl;
+    cout << "\nПоверхностная копия. ID: " << shallowClone->GetId() << endl;
+    for (auto& d : shallowClone->GetDetails()) cout << "  " << d->ToString() << endl;
 
-    // Обработка исключений
+    cout << "\nГлубокая копия. ID: " << deepClone->GetId() << endl;
+    for (auto& d : deepClone->GetDetails()) cout << "  " << d->ToString() << endl;
 
-    try {
-        // Попытка создать невалидное снаряжение
-        Weapon corrupted(rand(), "Оружие", Caliber::e545mm, -1);
+
+    // Вызов конструктора базового класса из производного
+    Ammunition ammo2(11, "Патроны 7.62мм", Caliber::e545mm, 200);
+
+    // Абстрактный класс и интерфейс
+
+    auto warehouse = make_shared<Warehouse>(5, "Тыловой склад", WarehouseType::eRear);
+    unit->AssignWarehouse(warehouse);
+    shared_ptr<SupplyRequest> request; // создаем пустой
+    auto response = unit->MakeSupplyRequest(request);
+
+    // Перегрузка оператора присваивания объекта базового класса производному типу
+
+    Fuel fuel2(12, "Бензин", FuelType::eGasoline, 1000.0f);
+    fuel2.AssignWarehouse(warehouse);
+    Resource& baseRef = fuel2;
+
+    Fuel fuel3(13, "Дизель", FuelType::eDiesel, 75.0f);
+
+    cout << "До присваивания:" << endl;
+    cout << "fuel3 ID: " << fuel3.GetId() << endl;
+    cout << "fuel3 Name: " << fuel3.GetName() << endl;
+    cout << "fuel3 Quantity: " << fuel3.GetQuantity() << endl;
+    cout << "fuel3 MeasureUnit: " << static_cast<int>(fuel3.GetMeasureUnit()) << endl;
+
+    fuel3 = baseRef;
+
+    cout << "\nПосле присваивания:" << endl;
+    cout << "fuel3 ID: " << fuel3.GetId() << endl;
+    cout << "fuel3 Name: " << fuel3.GetName() << endl;
+    cout << "fuel3 Quantity: " << fuel3.GetQuantity() << endl;
+    cout << "fuel3 MeasureUnit: " << static_cast<int>(fuel3.GetMeasureUnit()) << endl;
+    cout << "fuel3 Warehouse ID: "
+        << fuel3.GetWarehouse().lock()->GetId() << endl;
+
+    // Виртуальные деструкторы
+
+    {
+        cout << "\nДемонстрация вызова цепочки деструкторов" << endl;
+        unique_ptr<BaseLogger> virtLogger = make_unique<FileLogger>("file.txt");
     }
-    catch (const std::invalid_argument& e) {
-        cout << "Перехвачено исключение: " << e.what() << endl;
-    }
 
-    auto soldier1 = make_shared<Staff>(1, "Иванов Иван Иванович", Rank::ePrivate, Speciality::eInfantry);
-    auto soldier2 = make_shared<Staff>(2, "Петров Петр Сергеевич", Rank::eSergeant, Speciality::eMachineGunner);
-    auto soldier3 = make_shared<Staff>(3, "Иванов Алексей Владимирович", Rank::eCaptain, Speciality::eTanker);
-
-    division->AddSoldier(soldier1);
-    division->AddSoldier(soldier2);
-    division->AddSoldier(soldier3);
-
-    // Поиск по имени
-    string searchQuery = "Иванов";
-    auto foundSoldiers = division->FindByName(searchQuery);
-    for (auto& weakSoldier : foundSoldiers) {
-        if (auto soldier = weakSoldier.lock()) {
-            cout << "Найден: " << *soldier << endl;
-        }
-    }
-
-    // Перегрузка операторов сравнения
-    cout << "\n=== Сравнение солдат по званию ===" << endl;
-    cout << "солдат1 < солдат2: " << (*soldier1 < *soldier2) << endl;
-    cout << "солдат2 > солдат1: " << (*soldier2 > *soldier3) << endl;
-
-    // Перегрузка арифметических операторов
-
-    SupplyRequestDetail testDetail(999, MaterialType::eAmmunition, 100);
-    testDetail.WithCaliber(Caliber::e545mm);
-    cout << "Исходно: " << testDetail << endl;
-    testDetail += 50;
-    cout << "После += 50: " << testDetail << endl;
-    testDetail -= 30;
-    cout << "После -= 30: " << testDetail << endl;
-    // Логика снабжения
-    cout << "Дивизия запрашивает 2200 патронов (на её складе только 100, на армейском 2000):" << endl;
-
-    SupplyRequestBuilder requestBuilder;
-    shared_ptr<SupplyRequest> request = requestBuilder.WithAmmunition(Caliber::e545mm, 2200).Create(division);
-    SupplyResponse response = division->MakeSupplyRequest(request);
-
-    cout << "Результат:" << endl;
-    cout << "  Статус: " << SupplyResponse::StatusToString(response.GetStatus()) << endl;
-    cout << "  Комментарий: " << response.GetComment() << endl;
-
-    // Статические методы
-
-    cout << "Ранг капитана: " << Staff::RankToString(Rank::eCaptain) << endl;
-    cout << "Специальность танкиста: " << Staff::SpecialityToString(Speciality::eTanker) << endl;
-}
-
-// Дружественная функция перегрузки оператора << для SupplyRequestDetail
-
-std::ostream& operator << (std::ostream& stream, const SupplyRequestDetail& detail) {
-    stream << detail.ToString();
-    return stream;
-}
-
-// Дружественная функция перегрузки оператора << для Staff
-std::ostream& operator <<(std::ostream& stream, const Staff& staff) {
-    stream << staff.ToString();
-    return stream;
+    cout << "\nОстаточные деструкторы вызываемые при выходе из main\n" << endl;
+    return 0;
 }

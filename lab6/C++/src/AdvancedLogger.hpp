@@ -8,6 +8,7 @@ public:
     AdvancedLogger(const AdvancedLogger&) = delete;
     void Log(const std::string&, LogLevel) const;
     virtual std::string GetNowTimeVirtual() const override;
+    virtual ~AdvancedLogger();
 protected:
     static const std::map<LogLevel, std::string> m_levels;
 };

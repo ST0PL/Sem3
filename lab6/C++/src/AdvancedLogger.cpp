@@ -24,3 +24,7 @@ const std::map<LogLevel, std::string> AdvancedLogger::m_levels
     {LogLevel::eDebug, "Отладка"},
     {LogLevel::eError, "Ошибка"}
 };
+
+AdvancedLogger::~AdvancedLogger() {
+    std::cout << "Вызов деструктора AdvancedLogger" << std::endl;
+}

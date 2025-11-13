@@ -73,7 +73,7 @@ enum class MaterialType
     eWeapon = 2,
     eVehicle = 3
 };
-enum SupplyResponseStatus
+enum class SupplyResponseStatus
 {
     eSuccess = 0,
     ePartial = 1,
