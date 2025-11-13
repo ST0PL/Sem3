@@ -1,15 +1,22 @@
-#include <fstream>
+﻿#include <fstream>
+#include <iostream>
 #include "FileLogger.hpp"
 
+FileLogger::FileLogger(const std::string& fileName) : m_fileName(fileName) {}
 
-void FileLogger::Log(const std::string& filename, const std::string& text, LogLevel level, bool print) const {
+void FileLogger::Log(const std::string& text, LogLevel level, int mode, bool print) const {
     if (print)
+        // Вызов метода базового класса
         Log(text, level);
 
-    std::ofstream fileStream(filename,std::ios::app);
+    std::ofstream fileStream(m_fileName,mode);
 
     if (fileStream.is_open()) {
-        fileStream << "[" << GetNowTime("%H:%M:%S") << "]" << "[" << m_levels.at(level) << "] " << text << std::endl;
+        fileStream << "[" << GetNowTime() << "]" << "[" << m_levels.at(level) << "] " << text << std::endl;
         fileStream.close();
     }
+}
+
+FileLogger::~FileLogger() {
+    std::cout << "Вызов деструктора FileLogger" << std::endl;
 }
