@@ -18,11 +18,15 @@ SupplyRequest::SupplyRequest(int id, const std::weak_ptr<const Unit> unit, std::
     : m_id(id), m_details(std::move(details))
 {
     m_createTime = std::chrono::system_clock::now();
-    if (auto requestUnit = unit.lock()) {
-        m_requestUnitId = requestUnit->GetId();
-        m_requestUnit = unit;
-    }
+    SetRequestUnit(unit);
 }
+
+SupplyRequest::SupplyRequest(int id, const std::weak_ptr<const Unit> unit, std::chrono::system_clock::time_point createTime) :
+    m_id(id), m_createTime(createTime)
+{
+    SetRequestUnit(unit);
+}
+
 
 int SupplyRequest::GetId() const {
     return m_id;
@@ -49,4 +53,10 @@ std::vector<std::unique_ptr<SupplyRequestDetail>>& SupplyRequest::GetDetails() {
 
 std::chrono::system_clock::time_point SupplyRequest::GetCreateTime() const {
     return m_createTime;
+}
+
+std::unique_ptr<SupplyRequest> SupplyRequest::Clone(bool shallow) const {
+    return shallow ? 
+        std::make_unique<SupplyRequest>(m_id, m_requestUnit, this->GetCreateTime()) :
+        std::make_unique<SupplyRequest>(*this);
 }

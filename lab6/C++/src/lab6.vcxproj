@@ -151,6 +151,7 @@
     <ClInclude Include="Equipment.hpp" />
     <ClInclude Include="FileLogger.hpp" />
     <ClInclude Include="Fuel.hpp" />
+    <ClInclude Include="IClonable.hpp" />
     <ClInclude Include="IUnit.hpp" />
     <ClInclude Include="Resource.hpp" />
     <ClInclude Include="Staff.hpp" />
