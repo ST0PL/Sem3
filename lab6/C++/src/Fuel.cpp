@@ -7,7 +7,7 @@ Fuel::Fuel(const Fuel& other) :
 }
 
 Fuel::Fuel(int id, const std::string& name, FuelType type, float quantity)
-    : Resource(id, MaterialType::Fuel, name, MeasureUnit::eLiter, quantity), m_type(type) {
+    : Resource(id, MaterialType::eFuel, name, MeasureUnit::eLiter, quantity), m_type(type) {
 }
 
 Fuel& Fuel::operator = (const Resource& base) {
@@ -22,7 +22,7 @@ Fuel& Fuel::operator = (const Resource& base) {
 }
 
 bool Fuel::IsMatches(const SupplyRequestDetail& detail) const {
-    return detail.GetSupplyType() == MaterialType::Fuel && detail.GetFuelType() == m_type;
+    return detail.GetSupplyType() == MaterialType::eFuel && detail.GetFuelType() == m_type;
 }
 
 FuelType Fuel::GetType() const {

@@ -47,7 +47,7 @@ std::string SupplyResponse::StatusToString(SupplyResponseStatus status) {
 }
 
 const std::map<SupplyResponseStatus, std::string> SupplyResponse::m_statuses = {
-    {SupplyResponseStatus::Success, "Удовлетворен"},
-    {SupplyResponseStatus::Partial, "Удовлетворен частично"},
-    {SupplyResponseStatus::Denied, "Неудовлетворен"}
+    {SupplyResponseStatus::eSuccess, "Удовлетворен"},
+    {SupplyResponseStatus::ePartial, "Удовлетворен частично"},
+    {SupplyResponseStatus::eDenied, "Неудовлетворен"}
 };

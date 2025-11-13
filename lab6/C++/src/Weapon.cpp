@@ -8,10 +8,10 @@ Weapon::Weapon(const Weapon& other) :
 }
 
 Weapon::Weapon(int id, const std::string& name, Caliber caliber, int count)
-    : Equipment(id, MaterialType::Weapon, name, count), m_caliber(caliber) { }
+    : Equipment(id, MaterialType::eWeapon, name, count), m_caliber(caliber) { }
 
 bool Weapon::IsMatches(const SupplyRequestDetail& detail) const {
-    return detail.GetSupplyType() == MaterialType::Weapon && detail.GetCaliber() == m_caliber;
+    return detail.GetSupplyType() == MaterialType::eWeapon && detail.GetCaliber() == m_caliber;
 }
 
 Caliber Weapon::GetCaliber() const {

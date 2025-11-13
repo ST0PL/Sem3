@@ -5,7 +5,7 @@
 
 
 SupplyRequestBuilder& SupplyRequestBuilder::WithVehicle(VehicleType type, FuelType fuel, float count) {
-    std::unique_ptr<SupplyRequestDetail> detail = std::make_unique<SupplyRequestDetail>(rand(), MaterialType::Vehicle, count);
+    std::unique_ptr<SupplyRequestDetail> detail = std::make_unique<SupplyRequestDetail>(rand(), MaterialType::eVehicle, count);
     detail->WithVehicleType(type);
     detail->WithFuelType(fuel);
     m_details.push_back(std::move(detail));
@@ -13,21 +13,21 @@ SupplyRequestBuilder& SupplyRequestBuilder::WithVehicle(VehicleType type, FuelTy
 }
 
 SupplyRequestBuilder& SupplyRequestBuilder::WithFuel(FuelType fuel, float count) {
-    std::unique_ptr<SupplyRequestDetail> detail = std::make_unique<SupplyRequestDetail>(rand(), MaterialType::Fuel, count);
+    std::unique_ptr<SupplyRequestDetail> detail = std::make_unique<SupplyRequestDetail>(rand(), MaterialType::eFuel, count);
     detail->WithFuelType(fuel);
     m_details.push_back(std::move(detail));
     return *this;
 }
 
 SupplyRequestBuilder& SupplyRequestBuilder::WithAmmunition(Caliber caliber, float count) {
-    std::unique_ptr<SupplyRequestDetail> detail = std::make_unique<SupplyRequestDetail>(rand(), MaterialType::Ammunition, count);
+    std::unique_ptr<SupplyRequestDetail> detail = std::make_unique<SupplyRequestDetail>(rand(), MaterialType::eAmmunition, count);
     detail->WithCaliber(caliber);
     m_details.push_back(std::move(detail));
     return *this;
 }
 
 SupplyRequestBuilder& SupplyRequestBuilder::WithWeapon(Caliber caliber, float count) {
-    std::unique_ptr<SupplyRequestDetail> detail = std::make_unique<SupplyRequestDetail>(rand(), MaterialType::Weapon, count);
+    std::unique_ptr<SupplyRequestDetail> detail = std::make_unique<SupplyRequestDetail>(rand(), MaterialType::eWeapon, count);
     detail->WithCaliber(caliber);
     m_details.push_back(std::move(detail));
     return *this;

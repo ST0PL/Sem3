@@ -55,13 +55,13 @@ bool Warehouse::ProcessSupplyRequestDetails(std::vector<std::unique_ptr<SupplyRe
     for (auto& detail : details) {
         switch (detail->GetSupplyType()) {
 
-        case MaterialType::Ammunition:
-        case MaterialType::Fuel:
+        case MaterialType::eAmmunition:
+        case MaterialType::eFuel:
             WriteOff<Resource>(m_resources, *detail, corrected);
             break;
 
-        case MaterialType::Weapon:
-        case MaterialType::Vehicle:
+        case MaterialType::eWeapon:
+        case MaterialType::eVehicle:
             WriteOff<Equipment>(m_equipments, *detail, corrected);
             break;
         }

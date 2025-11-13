@@ -8,7 +8,7 @@ Ammunition::Ammunition(const Ammunition& other) :
 }
 
 Ammunition::Ammunition(int id, const std::string& name, Caliber caliber, float quantity)
-    : Resource(id, MaterialType::Ammunition, name, MeasureUnit::eItem, quantity), m_caliber(caliber) {
+    : Resource(id, MaterialType::eAmmunition, name, MeasureUnit::eItem, quantity), m_caliber(caliber) {
 }
 
 Ammunition& Ammunition::operator = (const Resource& base){
@@ -24,7 +24,7 @@ Ammunition& Ammunition::operator = (const Resource& base){
 }
 
 bool Ammunition::IsMatches(const SupplyRequestDetail& detail) const {
-    return detail.GetSupplyType() == MaterialType::Ammunition && detail.GetCaliber() == m_caliber;
+    return detail.GetSupplyType() == MaterialType::eAmmunition && detail.GetCaliber() == m_caliber;
 }
 
 Caliber Ammunition::GetCaliber() const {

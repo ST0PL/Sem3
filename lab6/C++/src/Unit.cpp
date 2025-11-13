@@ -35,7 +35,7 @@ void Unit::SetParent(const std::weak_ptr<Unit> unit) {
 SupplyResponse Unit::MakeSupplyRequest(std::shared_ptr<SupplyRequest>& request) {
 
     if (request == nullptr) {
-        return SupplyResponse(SupplyResponseStatus::Denied, "Передан пустой запрос.", request);
+        return SupplyResponse(SupplyResponseStatus::eDenied, "Передан пустой запрос.", request);
     }
 
     auto warehouse = m_assignedWarehouse.lock();
@@ -47,21 +47,21 @@ SupplyResponse Unit::MakeSupplyRequest(std::shared_ptr<SupplyRequest>& request) 
 
 
     if (remainingDetails.empty())
-        return SupplyResponse(SupplyResponseStatus::Success, "", request);
+        return SupplyResponse(SupplyResponseStatus::eSuccess, "", request);
 
 
     if (parent != nullptr) {
         auto parentResponse = parent->MakeSupplyRequest(request);
 
-        if (parentResponse.GetStatus() == SupplyResponseStatus::Success)
-            return SupplyResponse(SupplyResponseStatus::Success, "", request);
+        if (parentResponse.GetStatus() == SupplyResponseStatus::eSuccess)
+            return SupplyResponse(SupplyResponseStatus::eSuccess, "", request);
 
-        return detailsCorreted ? SupplyResponse(SupplyResponseStatus::Partial, request) :
-            SupplyResponse(SupplyResponseStatus::Denied, "Ни один из складов высших порядков не смог удовлетворить запрос", request);
+        return detailsCorreted ? SupplyResponse(SupplyResponseStatus::ePartial, request) :
+            SupplyResponse(SupplyResponseStatus::eDenied, "Ни один из складов высших порядков не смог удовлетворить запрос", request);
     }
 
-    return detailsCorreted ? SupplyResponse(SupplyResponseStatus::Partial, request) :
-        SupplyResponse(SupplyResponseStatus::Denied, warehouse == nullptr ? "Нет прикрепленного склада" : "Склад подразделения не смог удовлетворить запрос", request);
+    return detailsCorreted ? SupplyResponse(SupplyResponseStatus::ePartial, request) :
+        SupplyResponse(SupplyResponseStatus::eDenied, warehouse == nullptr ? "Нет прикрепленного склада" : "Склад подразделения не смог удовлетворить запрос", request);
 }
 
 void Unit::AddChildUnit(const std::weak_ptr<Unit> unit) {

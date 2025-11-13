@@ -49,8 +49,8 @@ enum class Caliber {
 };
 
 enum class FuelType {
-    Gasoline = 0,
-    Diesel = 1
+    eGasoline = 0,
+    eDiesel = 1
 };
 
 enum class MeasureUnit {
@@ -61,23 +61,23 @@ enum class MeasureUnit {
 
 enum class VehicleType
 {
-    Tank = 0,
-    ArmoredVehicle = 1,
-    Motorbike = 2,
-    SelfPropelledLauncher = 3
+    eTank = 0,
+    eArmoredVehicle = 1,
+    eMotorbike = 2,
+    eSelfPropelledLauncher = 3
 };
 enum class MaterialType
 {
-    Ammunition = 0,
-    Fuel = 1,
-    Weapon = 2,
-    Vehicle = 3
+    eAmmunition = 0,
+    eFuel = 1,
+    eWeapon = 2,
+    eVehicle = 3
 };
 enum SupplyResponseStatus
 {
-    Success = 0,
-    Partial = 1,
-    Denied = 2
+    eSuccess = 0,
+    ePartial = 1,
+    eDenied = 2
 };
 
 enum class WarehouseType {

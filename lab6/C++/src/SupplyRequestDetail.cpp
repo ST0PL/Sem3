@@ -69,18 +69,18 @@ std::string SupplyRequestDetail::ToString() const {
     std::string result = MaterialTypeToString(m_materialType) + ": ";
 
     switch (m_materialType) {
-    case MaterialType::Ammunition:
+    case MaterialType::eAmmunition:
         result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + " шт";
         break;
-    case MaterialType::Fuel:
+    case MaterialType::eFuel:
         result += FuelTypeToString(m_fuelType) + ", " + std::to_string(m_count) + " л";
         break;
-    case MaterialType::Vehicle:
+    case MaterialType::eVehicle:
         result += VehicleTypeToString(m_vehicleType) + ", " +
             FuelTypeToString(m_fuelType) + ", " +
             std::to_string(m_count) + " шт";
         break;
-    case MaterialType::Weapon:
+    case MaterialType::eWeapon:
         result += CaliberToString(m_caliber) + ", " + std::to_string(m_count) + " шт";
         break;
     }
@@ -104,10 +104,10 @@ std::string SupplyRequestDetail::VehicleTypeToString(VehicleType vtype) {
 
 
 const std::map<MaterialType, std::string> SupplyRequestDetail::m_materialTypes {
-    {MaterialType::Ammunition, "Боеприпасы"},
-    {MaterialType::Fuel, "Топливо"},
-    {MaterialType::Vehicle, "Транспорт"},
-    {MaterialType::Weapon, "Вооружение"}
+    {MaterialType::eAmmunition, "Боеприпасы"},
+    {MaterialType::eFuel, "Топливо"},
+    {MaterialType::eVehicle, "Транспорт"},
+    {MaterialType::eWeapon, "Вооружение"}
 };
 
 // Инициализация словаря калибров
@@ -118,14 +118,14 @@ const std::map<Caliber, std::string> SupplyRequestDetail::m_calibers = {
 
 // Инициализация словаря типов топлива
 const std::map<FuelType, std::string> SupplyRequestDetail::m_fuelTypes {
-    {FuelType::Gasoline, "Бензин"},
-    {FuelType::Diesel, "Дизель"}
+    {FuelType::eGasoline, "Бензин"},
+    {FuelType::eDiesel, "Дизель"}
 };
 
 // Инициализация словаря типов транспорта
 const std::map<VehicleType, std::string> SupplyRequestDetail::m_vehicleTypes = {
-    {VehicleType::Tank, "Танк"},
-    {VehicleType::ArmoredVehicle, "Бронемашина"},
-    {VehicleType::Motorbike, "Мотоцикл"},
-    {VehicleType::SelfPropelledLauncher, "Самоходная установка"}
+    {VehicleType::eTank, "Танк"},
+    {VehicleType::eArmoredVehicle, "Бронемашина"},
+    {VehicleType::eMotorbike, "Мотоцикл"},
+    {VehicleType::eSelfPropelledLauncher, "Самоходная установка"}
 };

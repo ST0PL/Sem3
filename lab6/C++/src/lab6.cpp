@@ -10,6 +10,7 @@
 #include "Fuel.hpp"
 #include "Vehicle.hpp"
 #include "Weapon.hpp"
+#include "AdvancedLogger.hpp"
 
 using namespace std;
 
@@ -86,7 +87,7 @@ int main()
 
     // Перегрузка арифметических операторов
 
-    SupplyRequestDetail testDetail(999, MaterialType::Ammunition, 100);
+    SupplyRequestDetail testDetail(999, MaterialType::eAmmunition, 100);
     testDetail.WithCaliber(Caliber::e545mm);
     cout << "Исходно: " << testDetail << endl;
     testDetail += 50;

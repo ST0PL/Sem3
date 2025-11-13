@@ -7,11 +7,11 @@ Vehicle::Vehicle(const Vehicle& other) :
 }
 
 Vehicle::Vehicle(int id, const std::string& name, VehicleType type, FuelType fuelType, int count)
-    : Equipment(id, MaterialType::Vehicle, name, count), m_type(type), m_fuelType(fuelType) { }
+    : Equipment(id, MaterialType::eVehicle, name, count), m_type(type), m_fuelType(fuelType) { }
 
 
 bool Vehicle::IsMatches(const SupplyRequestDetail& detail) const {
-    return detail.GetSupplyType() == MaterialType::Vehicle &&
+    return detail.GetSupplyType() == MaterialType::eVehicle &&
         detail.GetVehicleType() == m_type &&
         detail.GetFuelType() == m_fuelType;
 }
