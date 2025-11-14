@@ -47,9 +47,9 @@ public class SupplyRequest implements Cloneable {
     public SupplyRequest clone(Boolean shallow) throws CloneNotSupportedException{
         // Поверхностное клонирование
         var clone = (SupplyRequest)super.clone();
-        // глубокое копирование при shallow = false
+        // глубокое клонирование при shallow = false
         if(!shallow){
-            clone.id = new Random().nextInt();
+            clone.id = new Random().nextInt(0,9999);
             clone.creationTime = LocalDateTime.now();
             clone.details = new ArrayList<>();
             for(var detail : details){

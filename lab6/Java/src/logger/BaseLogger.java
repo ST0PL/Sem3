@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 
 public class BaseLogger{
     public void Log(String text){
-        System.out.println(String.format("[LOGS][%s] %s", GetNowTime(), "LOGS", text));
+        System.out.println(String.format("[LOGS][%s] %s", GetNowTime(), text, text));
 
     }
     public String GetNowTime(){

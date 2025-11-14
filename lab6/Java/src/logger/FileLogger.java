@@ -20,7 +20,7 @@ public class FileLogger extends AdvancedLogger{
     public void Log(String text, LogLevel level, Boolean print) throws IOException{
         String formatted = String.format("[%s][%s] %s", GetNowTime(), levels.get(level), text);
         if(print){
-            Log(text, level);
+            super.Log(text, level);
         }
         Files.writeString(path, (Files.exists(path) && Files.size(path) > 0 ? System.lineSeparator() : "") + formatted, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
