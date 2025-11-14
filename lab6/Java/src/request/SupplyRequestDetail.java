@@ -2,8 +2,9 @@ package request;
 
 import enums.*;
 import java.util.ArrayList;
+import java.util.Random;
 
-public class SupplyRequestDetail {
+public class SupplyRequestDetail implements Cloneable{
     int id;
     SupplyType supplyType;
     Caliber caliber;
@@ -78,6 +79,12 @@ public class SupplyRequestDetail {
         };
 
         return result;
+    }
+    @Override
+    public SupplyRequestDetail clone() throws CloneNotSupportedException{
+        var clone = (SupplyRequestDetail)super.clone();
+        clone.id = new Random().nextInt();
+        return clone;
     }
 
     public static String toString(ArrayList<SupplyRequestDetail> requestDetails){

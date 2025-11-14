@@ -4,8 +4,8 @@ import request.SupplyRequestDetail;
 
 public abstract class WarehouseEntry<T extends Number> {
 
-    int id;
     String name;
+    protected int id;
     protected int assignedWarehouseId;
     protected Warehouse assignedWarehouse;
 

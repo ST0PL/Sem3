@@ -3,9 +3,10 @@ package warehouse.resources;
 import enums.FuelType;
 import enums.MeasureUnit;
 import enums.SupplyType;
+import java.util.Random;
 import request.SupplyRequestDetail;
 
-public class Fuel extends Resource {
+public class Fuel extends Resource implements Cloneable {
     FuelType type;
 
     public Fuel(int id, String name, FuelType type, int count)
@@ -23,4 +24,12 @@ public class Fuel extends Resource {
     public FuelType getType() {
         return type;
     }
+
+    @Override
+    public Fuel clone() throws CloneNotSupportedException{
+        var clone = (Fuel)super.clone();
+        clone.id = new Random().nextInt(0,9999);
+        return clone;
+    }
+    
 }

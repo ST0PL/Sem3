@@ -1,16 +1,17 @@
 
-import enums.LogLevel;
+import enums.Caliber;
 import java.io.IOException;
 import static java.lang.System.out;
-import logger.*;
 import unit.Unit;
+import warehouse.resources.Ammunition;
 
 class Lab6 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, CloneNotSupportedException {
+        var ammo = new Ammunition(1, "патроны 5.45мм", Caliber.C_545MM,100);
 
-        FileLogger logger = new FileLogger("logs.txt");
-        logger.Log("Test", LogLevel.WARN, true);
-        
+        var ammoClone = ammo.clone();
+        out.println(ammo.getId());
+        out.println(ammoClone.getId());
     }
 
     public static void printTree(Unit parent, String tabs){

@@ -3,10 +3,10 @@ package warehouse.equipments;
 import enums.FuelType;
 import enums.SupplyType;
 import enums.VehicleType;
+import java.util.Random;
 import request.SupplyRequestDetail;
 
-
-public class Vehicle extends Equipment {
+public class Vehicle extends Equipment implements Cloneable {
     VehicleType type;
     FuelType fuelType;
 
@@ -30,5 +30,12 @@ public class Vehicle extends Equipment {
 
     public  FuelType getFuelType() {
         return fuelType;
+    }
+
+    @Override
+    public Vehicle clone() throws CloneNotSupportedException{
+        var clone = (Vehicle)super.clone();
+        clone.id = new Random().nextInt(0,9999);
+        return clone;
     }
 }

@@ -2,9 +2,10 @@ package request;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Random;
 import unit.Unit;
 
-public class SupplyRequest {
+public class SupplyRequest implements Cloneable {
     int id;
     int requestUnitId;
     Unit requestUnit;
@@ -19,22 +20,43 @@ public class SupplyRequest {
             this.requestUnit = requestUnit;
         }
     }
+
     public int getId(){
         return id;
     }
+
     public Unit getRequestUnit(){
         return requestUnit;
     }
+
     public void setRequestUnit(Unit unit){
         if(unit != null){
             requestUnitId = unit.getId();
             requestUnit = unit;
         }
     }
+
     public ArrayList<SupplyRequestDetail> getDetails(){
         return details;
     }
+
     public LocalDateTime getCreationTime(){
         return creationTime;
+    }
+
+    public SupplyRequest clone(Boolean shallow) throws CloneNotSupportedException{
+        // Поверхностное клонирование
+        var clone = (SupplyRequest)super.clone();
+        // глубокое копирование при shallow = false
+        if(!shallow){
+            clone.id = new Random().nextInt();
+            clone.creationTime = LocalDateTime.now();
+            clone.details = new ArrayList<>();
+            for(var detail : details){
+                clone.details.add((SupplyRequestDetail)detail.clone());
+            }
+        }
+        return clone;
+
     }
 }
