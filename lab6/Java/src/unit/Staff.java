@@ -2,6 +2,8 @@ package unit;
 
 import enums.Rank;
 import enums.Speciality;
+import java.util.Map;
+import static java.util.Map.entry;
 
 public class Staff {
     int id;
@@ -10,6 +12,40 @@ public class Staff {
     Speciality speciality;
     int unitId;
     Unit unit;
+
+    static final Map<Rank, String> ranks = Map.ofEntries(
+        entry(Rank.PRIVATE, "Рядовой"),
+        entry(Rank.CORPORAL, "Ефрейтор"),
+        entry(Rank.JUNIOR_SERGEANT, "Младший сержант"),
+        entry(Rank.SERGEANT, "Сержант"),
+        entry(Rank.SENIOR_SERGEANT, "Старший сержант"),
+        entry(Rank.SERGEANT_MAJOR, "Старшина"),
+        entry(Rank.WARRANT_OFFICER, "Прапорщик"),
+        entry(Rank.SENIOR_WARRANT_OFFICER, "Старший прапорщик"),
+        entry(Rank.JUNIOR_LIEUTENANT, "Младший лейтенант"),
+        entry(Rank.LIEUTENANT, "Лейтенант"),
+        entry(Rank.SENIOR_LIEUTENANT, "Старший лейтенант"),
+        entry(Rank.CAPTAIN, "Капитан"),
+        entry(Rank.MAJOR, "Майор"),
+        entry(Rank.LIEUTENANT_COLONEL, "Подполковник"),
+        entry(Rank.COLONEL, "Полковник"),
+        entry(Rank.MAJOR_GENERAL, "Генерал-майор"),
+        entry(Rank.LIEUTENANT_GENERAL, "Генерал-лейтенант"),
+        entry(Rank.COLONEL_GENERAL, "Генерал-полковник"),
+        entry(Rank.ARMY_GENERAL, "Генерал армии"));
+
+    static final Map<Speciality, String> specialities = Map.ofEntries(
+        entry(Speciality.NONE, "Отсутствует"),
+        entry(Speciality.INFANTRY, "Пехотинец"),
+        entry(Speciality.MACHINE_GUNNER, "Пулеметчик"),
+        entry(Speciality.GRENADE_LAUNCHER, "Гранатометчик"),
+        entry(Speciality.RECONNAISSANCE, "Разведчик"),
+        entry(Speciality.SPECIAL_FORCES, "Спецназ"),
+        entry(Speciality.SNIPER, "Снайпер"),
+        entry(Speciality.TANKER, "Танкист"),
+        entry(Speciality.ANTI_AIRCRAFT, "Зенитчик"),
+        entry(Speciality.ENGINEER, "Инженер"),
+        entry(Speciality.MEDIC, "Медик"));
 
     public Staff(int id, String fullName, Rank rank, Speciality speciality){
         this.id = id;
@@ -64,43 +100,11 @@ public class Staff {
     }
 
     static String rankToString(Rank rank) {
-        return switch(rank) {
-            case PRIVATE -> "Рядовой";
-            case CORPORAL -> "Ефрейтор";
-            case JUNIOR_SERGEANT -> "Младший сержант";
-            case SERGEANT -> "Сержант";
-            case SENIOR_SERGEANT -> "Старший сержант";
-            case SERGEANT_MAJOR -> "Старшина";
-            case WARRANT_OFFICER -> "Прапорщик";
-            case SENIOR_WARRANT_OFFICER -> "Старший прапорщик";
-            case JUNIOR_LIEUTENANT -> "Младший лейтенант";
-            case LIEUTENANT -> "Лейтенант";
-            case SENIOR_LIEUTENANT -> "Старший лейтенант";
-            case CAPTAIN -> "Капитан";
-            case MAJOR -> "Майор";
-            case LIEUTENANT_COLONEL -> "Подполковник";
-            case COLONEL -> "Полковник";
-            case MAJOR_GENERAL -> "Генерал-майор";
-            case LIEUTENANT_GENERAL -> "Генерал-лейтенант";
-            case COLONEL_GENERAL -> "Генерал-полковник";
-            case ARMY_GENERAL -> "Генерал армии";
-        };
+        return ranks.getOrDefault(rank, "Неизвестно");
     }
 
     static String specialityToString(Speciality speciality){
-        return switch(speciality){
-            case NONE -> "Отсутствует";
-            case INFANTRY -> "Пехотинец";
-            case MACHINE_GUNNER -> "Пулеметчик";
-            case GRENADE_LAUNCHER -> "Гранатометчик";
-            case RECONNAISSANCE -> "Разведчик";
-            case SPECIAL_FORCES -> "Спецназ";
-            case SNIPER -> "Снайпер";
-            case TANKER -> "Танкист";
-            case ANTI_AIRCRAFT -> "Зенитчик";
-            case ENGINEER -> "Инженер";
-            case MEDIC -> "Медик";
-        };
+        return specialities.getOrDefault(speciality, "Неизвестно");
     }
 
 }

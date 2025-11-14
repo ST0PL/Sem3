@@ -3,6 +3,8 @@ package request;
 import enums.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Map;
+import static java.util.Map.entry;
 
 public class SupplyRequestDetail implements Cloneable{
     int id;
@@ -11,6 +13,25 @@ public class SupplyRequestDetail implements Cloneable{
     VehicleType vehicleType;
     FuelType fuelType;
     float count;
+
+    static final Map<SupplyType, String> supplyTypes = Map.of(
+        SupplyType.AMMUNITION, "Боеприпасы",
+        SupplyType.FUEL, "Топливо",
+        SupplyType.VEHICLE, "Транспорт",
+        SupplyType.WEAPON, "Вооружение");
+
+    static final Map<Caliber, String> calibers = Map.of(
+        Caliber.C_122MM, "122мм",
+        Caliber.C_545MM, "5.45мм");
+
+    static final Map<FuelType, String> fuelTypes = Map.of(
+        FuelType.GASOLINE, "Бензин",
+        FuelType.DIESEL, "Дизель");
+
+    static final Map<VehicleType, String> vehicleTypes = Map.of(
+        VehicleType.ARMORED_VEHICLE, "Бронемашина",
+        VehicleType.TANK, "Танк",
+        VehicleType.MOTORBIKE, "Мотоцикл");
     
     public SupplyRequestDetail(int id, SupplyType supplyType, float count){
         
@@ -97,38 +118,19 @@ public class SupplyRequestDetail implements Cloneable{
     }
 
     static String SupplyTypeToString(SupplyType stype){
-        return switch(stype){
-            case AMMUNITION -> "Боеприпасы";
-            case FUEL -> "Топливо";
-            case VEHICLE -> "Транспорт";
-            case WEAPON -> "Вооружение";
-            default -> "Неизвестно";
-        };        
+        return supplyTypes.getOrDefault(stype, "Неизвестно");
     }
 
     static String CaliberToString(Caliber caliber){
-        return switch(caliber){
-            case C_122MM -> "122мм";
-            case C_545MM -> "5.45мм";
-            default -> "Неизвестно";
-        }; 
+        return calibers.getOrDefault(caliber, "Неизвестно");
     }
 
     static String FuelTypeToString(FuelType ftype){
-        return switch(ftype){
-            case GASOLINE -> "Бензин";
-            case DIESEL -> "Дизель";
-            default -> "Неизвестно";
-        };        
+        return fuelTypes.getOrDefault(ftype, "Неизвестно");     
     }
 
     static String VehicleTypeToString(VehicleType vtype){
-        return switch(vtype){
-            case ARMORED_VEHICLE -> "Бронемашина";
-            case TANK -> "Танк";
-            case MOTORBIKE -> "Мотоцикл";
-            default -> "Неизвестно";
-        };
+        return vehicleTypes.getOrDefault(vtype, "Неизвестно");
     }
 
 }

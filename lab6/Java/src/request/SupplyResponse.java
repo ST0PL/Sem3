@@ -3,12 +3,19 @@ package request;
 import enums.SupplyResponseStatus;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.Map;
+import static java.util.Map.entry;
 
 public class SupplyResponse {
     SupplyResponseStatus status;
     ArrayList<SupplyRequestDetail> unsatisfiedDetails;
     String comment;
-    
+
+    static final Map<SupplyResponseStatus, String> statuses = Map.of(
+        SupplyResponseStatus.SUCCESS, "Удовлетворен",
+        SupplyResponseStatus.PARTIAL, "Удовлетворен частично",
+        SupplyResponseStatus.DENIED, "Неудовлетворен");
+        
     public SupplyResponse(SupplyResponseStatus status, String comment) {
         this.status = status;
         this.comment = comment;
@@ -38,12 +45,7 @@ public class SupplyResponse {
         return status;
     }
     public static String statusToString(SupplyResponseStatus status){
-        return switch(status){
-            case SUCCESS -> "Удовлетворен";
-            case PARTIAL -> "Удовлетворен частично";
-            case DENIED -> "Неудовлетворен";
-            default -> "Неизвестно";
-        };
+        return statuses.getOrDefault(status, "Неизвестно");
     }
 
     final String generateComment(){
