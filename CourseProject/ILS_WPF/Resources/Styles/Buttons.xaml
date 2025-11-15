@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib">
     <Style x:Key="CloseButtonStyle" TargetType="{x:Type clib:Button}" BasedOn="{StaticResource {x:Type clib:Button}}">
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Background" Value="Red"/>
         <Setter Property="HoverBackgroundColor" Value="#cc0000"/>
         <Setter Property="ClickBackgroundColor" Value="#990000"/>
@@ -16,6 +17,7 @@
         </Setter>
     </Style>
     <Style x:Key="MinimuzeButtonStyle" TargetType="{x:Type clib:Button}" BasedOn="{StaticResource {x:Type clib:Button}}">
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Background" Value="#233148"/>
         <Setter Property="HoverBackgroundColor" Value="#1d293c"/>
         <Setter Property="ClickBackgroundColor" Value="#1a2436"/>

@@ -2,6 +2,8 @@
 using ILS_WPF.ViewModels;
 using System.Windows.Input;
 using System.Windows;
+using System.Windows.Controls;
+using ILS_WPF.Models;
 
 namespace ILS_WPF
 {
@@ -10,9 +12,14 @@ namespace ILS_WPF
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow(IUserService userService, IAccountService accountService)
+        public LoginWindow(
+            IConfigurationService<Configuration?> configurationService,
+            IUserService userService,
+            IAccountService accountService)
         {
-            DataContext = new LoginVM(userService, accountService);
+            var vm = new LoginVM(configurationService, userService, accountService);
+            vm.LoginPerformed += (_, isSuccess) => CloseIfSuccess(isSuccess);
+            DataContext = vm;
             InitializeComponent();
         }
 
@@ -29,6 +36,15 @@ namespace ILS_WPF
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+            => ((LoginVM)DataContext).Password = ((PasswordBox)sender).Password;
+
+        private void CloseIfSuccess(bool loginSuccess)
+        {
+            if (loginSuccess)
+                DialogResult = true;
         }
     }
 }

@@ -14,9 +14,9 @@ namespace ILS_WPF.Services
 
         public async Task<User?> LoginAsync(string username, string password)
         {
-            var user = await GetUserOrThrowAsync(username);
-            byte[] hashed = SHA256.HashData(Encoding.UTF8.GetBytes(password+user.Salt));
-            return user.Hash == Convert.ToBase64String(hashed) ? user : null;
+            var user = await GetUserAsync(username);
+            byte[] hashed = SHA256.HashData(Encoding.UTF8.GetBytes(password+user?.Salt));
+            return user?.Hash == Convert.ToBase64String(hashed) ? user : null;
         }
 
         public async Task<User> RegisterAsync(string username, string password, Role role)
@@ -67,8 +67,8 @@ namespace ILS_WPF.Services
 
         public async Task<User?> LoginWithHashAsync(string username, string hash)
         {
-            var user = await GetUserOrThrowAsync(username);
-            return user.Hash == hash ? user : null;
+            var user = await GetUserAsync(username);
+            return user?.Hash == hash ? user : null;
         }
     }
 }
