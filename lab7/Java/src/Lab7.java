@@ -7,8 +7,8 @@ public class Lab7 {
         Logger logger = new Logger();
         logger.RegisterLogger(new FileLogger("logs.txt"));
         logger.RegisterLogger(new ConsoleLogger());
-        logger.Log("Демонстраци мульти-логгера", LogLevel.INFO);
+        logger.Log("Демонстрация мульти-логгера", LogLevel.INFO);
         logger.RemoveLogger(logger.GetWrappers().get(1).getId());
-        logger.Log("Сообщение после удаления коснольного логгера", LogLevel.WARN);
+        logger.Log("Сообщение после удаления консольного логгера", LogLevel.WARN);
     }
 }
