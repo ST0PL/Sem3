@@ -66,16 +66,16 @@
     <ClCompile Include="SupplyRequestBuilder.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="lab6.cpp">
+    <ClCompile Include="FileLogger.cpp">
+      <Filter>Исходные файлы\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="lab7.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="BaseLogger.cpp">
+    <ClCompile Include="ConsoleLogger.cpp">
       <Filter>Исходные файлы\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="AdvancedLogger.cpp">
-      <Filter>Исходные файлы\Logger</Filter>
-    </ClCompile>
-    <ClCompile Include="FileLogger.cpp">
+    <ClCompile Include="Logger.cpp">
       <Filter>Исходные файлы\Logger</Filter>
     </ClCompile>
   </ItemGroup>
@@ -138,6 +138,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="IClonable.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ILogger.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

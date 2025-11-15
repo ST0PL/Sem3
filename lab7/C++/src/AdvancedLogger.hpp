@@ -1,14 +1,14 @@
 #pragma once
 #include <map>
 #include "Enums.hpp"
-#include "BaseLogger.hpp"
-class AdvancedLogger : public BaseLogger {
+#include "ILogger.hpp"
+class ConsoleLogger : public ILogger {
 public:
-    AdvancedLogger() = default;
-    AdvancedLogger(const AdvancedLogger&) = delete;
-    void Log(const std::string&, LogLevel) const;
-    virtual std::string GetNowTimeVirtual() const override;
-    virtual ~AdvancedLogger();
+    ConsoleLogger() = default;
+    ConsoleLogger(const ConsoleLogger&) = delete;
+    void Log(const std::string&, LogLevel) const override;
+    virtual std::string GetNowTime() const;
+    virtual ~ConsoleLogger() = default;
 protected:
     static const std::map<LogLevel, std::string> m_levels;
 };

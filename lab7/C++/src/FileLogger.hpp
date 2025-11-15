@@ -1,13 +1,12 @@
 #pragma once
 #include "AdvancedLogger.hpp"
 
-class FileLogger : public AdvancedLogger {
-    using AdvancedLogger::Log;
+class FileLogger : public ConsoleLogger {
 public:
     FileLogger(const std::string&);
     FileLogger(const FileLogger&) = delete;
-    void Log(const std::string&, LogLevel, int, bool = false) const;
-    ~FileLogger();
+    void Log(const std::string&, LogLevel, int) const;
+    void Log(const std::string&, LogLevel) const override;
 private:
     std::string m_fileName;
 };
