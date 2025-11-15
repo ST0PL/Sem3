@@ -21,6 +21,7 @@ namespace ILS_WPF
                     s.AddDbContext<ILSContext>();
                     s.AddTransient<IAccountService, AccountService>();
                     s.AddSingleton<IUserService, UserService>();
+                    s.AddTransient<LoginWindow>();
                     s.AddSingleton<MainWindow>();
                 })
                 .Build();
@@ -30,8 +31,12 @@ namespace ILS_WPF
         {
             base.OnStartup(e);
             InitHost();
-            MainWindow = _host?.Services?.GetService<MainWindow>();
-            MainWindow?.Show();
+            var loginWindow = _host?.Services?.GetService<LoginWindow>();
+            if (loginWindow?.ShowDialog() ?? false)
+            {
+                MainWindow = _host?.Services?.GetService<MainWindow>();
+                MainWindow?.Show();
+            }
         }
     }
 

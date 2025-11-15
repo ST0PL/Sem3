@@ -1,0 +1,122 @@
+﻿<Window x:Class="ILS_WPF.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
+        xmlns:prop="clr-namespace:ControlsLib.AttachedProperties;assembly=ControlsLib"
+        xmlns:local="clr-namespace:ILS_WPF"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="480" Width="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Border CornerRadius="15">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#030713" Offset="0.24"/>
+                <GradientStop Color="#1D2838" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Background="#80141d2b"
+                    BorderThickness="0,0,0,1"
+                    CornerRadius="15,15,0,0"
+                    BorderBrush="#806b6b6b"
+                    Padding="10"
+                    MouseDown="Border_MouseDown">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            prop:PanelChildrenProperties.Margin="10,0,0,0">
+                    <clib:Button Style="{StaticResource MinimuzeButtonStyle}"
+                                 Click="MinimizeButton_Click"/>
+                    <clib:Button Style="{StaticResource CloseButtonStyle}"
+                                 Click="CloseButton_Click"
+                                 Opacity="0.8"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1"
+                    Background="#101828"
+                    BorderBrush="#333E50"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Margin="180,65,180,65"
+                    Effect="{StaticResource MainShadowEffect}"
+                    UseLayoutRounding="True">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="ИЛС ВС РФ"
+                               Margin="30"
+                               FontSize="20"
+                               Foreground="#4FC09A"/>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Margin="30,0,30,0">
+                            <clib:TextBox Title="Имя пользователя"
+                                          TitleFontSize="14"
+                                          TitleForeground="#80FFFFFF"
+                                          Background="#1E2939"
+                                          BorderBrush="#333E50"
+                                          Foreground="White"
+                                          Padding="8"
+                                          FontSize="15"
+                                          CornerRadius="8"/>
+                            <StackPanel>
+                                <TextBlock Text="Пароль"
+                                           Margin="5,8,0,5"
+                                           FontSize="14"
+                                           Foreground="#80FFFFFF"/>
+                                <Border Background="#1E2939"
+                                        BorderBrush="#333E50"
+                                        BorderThickness="1"
+                                        CornerRadius="8">
+                                    <PasswordBox Background="Transparent"
+                                                 CaretBrush="White"
+                                                 BorderThickness="0"
+                                                 Foreground="White"
+                                                 Padding="8"
+                                                 FontSize="15"/>
+                                </Border>                                
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid Grid.Row="1"
+                              Margin="0,15,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <clib:CheckBox Margin="20,0,0,0"
+                                           Cursor="Hand"
+                                           Title="Запомнить меня"
+                                           VerticalContentAlignment="Center"
+                                           TitleForeground="#80FFFFFF"
+                                           TitleFontSize="12"
+                                           Background="#00A76F"
+                                           BorderThickness="0"
+                                           Foreground="White"
+                                           CornerRadius="2"
+                                           CheckHeight="12"
+                                           CheckWidth="12"/>
+                            <clib:Button Style="{StaticResource GreenButtonStyle}"
+                                         Grid.Column="1"
+                                         HorizontalAlignment="Right"
+                                         Margin="0,0,30,0"
+                                         Content="Войти"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

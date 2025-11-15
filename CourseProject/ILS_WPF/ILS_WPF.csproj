@@ -15,7 +15,6 @@
   <ItemGroup>
     <Folder Include="Models\Core\" />
     <Folder Include="Views\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>

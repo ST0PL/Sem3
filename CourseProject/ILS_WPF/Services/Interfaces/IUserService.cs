@@ -2,7 +2,7 @@
 
 namespace ILS_WPF.Services.Interfaces
 {
-    internal interface IUserService
+    public interface IUserService
     {
         void SetUser(User user);
         User? GetUser();

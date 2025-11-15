@@ -8,7 +8,7 @@ namespace ILS_WPF.Services
 {
     class AccountService : IAccountService
     {
-        private ILSContext _context;
+        private readonly ILSContext _context;
         public AccountService(ILSContext context)
             => _context = context;
 
@@ -63,6 +63,12 @@ namespace ILS_WPF.Services
             RandomNumberGenerator.Fill(saltBytes);
             var salt = Convert.ToBase64String(saltBytes);
             return (Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(password + salt))),salt);
+        }
+
+        public async Task<User?> LoginWithHashAsync(string username, string hash)
+        {
+            var user = await GetUserOrThrowAsync(username);
+            return user.Hash == hash ? user : null;
         }
     }
 }

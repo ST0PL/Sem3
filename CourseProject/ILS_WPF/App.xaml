@@ -7,6 +7,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ControlsLib;component/Styles/Generic.xaml"/>
                 <ResourceDictionary Source="/Resources/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="/Resources/Icons/XamlIcons.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles/Effects.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

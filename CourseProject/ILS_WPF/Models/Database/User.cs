@@ -1,6 +1,6 @@
 ﻿namespace ILS_WPF.Models.Database
 {
-    internal class User
+    public class User
     {
         public int Id { get; private set; }
         public string Username { get; private set; } = null!;

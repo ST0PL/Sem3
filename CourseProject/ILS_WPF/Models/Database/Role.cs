@@ -1,6 +1,6 @@
 ﻿namespace ILS_WPF.Models.Database
 {
-    internal enum Role
+    public enum Role
     {
         Administator,
         Commander
