@@ -1,5 +1,6 @@
 package logger;
 import enums.LogLevel;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -13,7 +14,7 @@ public class ConsoleLogger implements Loggable{
         LogLevel.DEBUG, "Отладка",
         LogLevel.ERROR, "Ошибка");
 
-    public void Log(String text, LogLevel level){
+    public void Log(String text, LogLevel level) throws IOException{
         System.out.println(String.format("[%s][%s] %s", GetNowTime(), levels.get(level), text));
     }
     

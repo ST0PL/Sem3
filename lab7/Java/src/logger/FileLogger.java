@@ -16,8 +16,8 @@ public class FileLogger extends ConsoleLogger{
     public FileLogger(String path){
         this.path = Paths.get(path);
     }
-
-    public void Log(String text, LogLevel level, Boolean print) throws IOException{
+    @Override
+    public void Log(String text, LogLevel level) throws IOException{
         String formatted = String.format("[%s][%s] %s", GetNowTime(), levels.get(level), text);
         Files.writeString(path, (Files.exists(path) && Files.size(path) > 0 ? System.lineSeparator() : "") + formatted, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
