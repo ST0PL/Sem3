@@ -1,0 +1,19 @@
+#pragma once
+#include "WarehouseEntry.hpp"
+#include "Enums.hpp"
+
+class Resource : public WarehouseEntry<float> {
+public:
+    static constexpr float MIN_QUANTITY = 0.1f;
+    Resource(const Resource&) = delete;
+    Resource(int, MaterialType, const std::string&, MeasureUnit, float);
+    MeasureUnit GetMeasureUnit() const;
+    float GetQuantity() const;
+    bool IsEmpty() const override;
+    void Increase(float);
+    float Decrease(float);
+    virtual ~Resource() = default;
+protected:
+    MeasureUnit m_measureUnit;
+    float m_quantity;
+};
