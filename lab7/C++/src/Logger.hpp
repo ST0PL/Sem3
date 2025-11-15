@@ -16,6 +16,7 @@ public:
     void Log(const std::string&, LogLevel level) const override;
     void RegisterLogger(std::unique_ptr<ILogger>);
     void RemoveLogger(int id);
+    const std::vector<std::unique_ptr<LoggerWrap>>& GetLoggers() const;
 private:
     std::vector<std::unique_ptr<LoggerWrap>> m_loggers;
 };

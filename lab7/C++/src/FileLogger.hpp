@@ -1,5 +1,5 @@
 #pragma once
-#include "AdvancedLogger.hpp"
+#include "ConsoleLogger.hpp"
 
 class FileLogger : public ConsoleLogger {
 public:

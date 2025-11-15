@@ -25,3 +25,7 @@ void Logger::RemoveLogger(int id) {
     m_loggers.erase(std::remove_if(m_loggers.begin(), m_loggers.end(),
         [&id](const std::unique_ptr<LoggerWrap>& wrap) { return wrap->GetId() == id; }), m_loggers.end());
 }
+const std::vector<std::unique_ptr<Logger::LoggerWrap>>& Logger::GetLoggers() const
+{
+    return m_loggers;
+};

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include "AdvancedLogger.hpp"
+#include "ConsoleLogger.hpp"
 
 void ConsoleLogger::Log(const std::string& text, LogLevel level) const {
     std::cout << "[" << GetNowTime() << "]" << "[" << m_levels.at(level) << "] " << text << std::endl;

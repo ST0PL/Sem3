@@ -144,9 +144,8 @@
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdvancedLogger.hpp" />
+    <ClInclude Include="ConsoleLogger.hpp" />
     <ClInclude Include="Ammunition.hpp" />
-    <ClInclude Include="BaseLogger.hpp" />
     <ClInclude Include="Enums.hpp" />
     <ClInclude Include="Equipment.hpp" />
     <ClInclude Include="FileLogger.hpp" />
