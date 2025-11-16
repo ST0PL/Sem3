@@ -45,4 +45,22 @@
         <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 
+    <Style x:Key="NavButtonStyle" TargetType="{x:Type clib:ImageRadioButton}" BasedOn="{StaticResource {x:Type clib:ImageRadioButton}}">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="ImageHeight" Value="12"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="{StaticResource Inter}"/>
+        <Setter Property="CheckedForegroundColor" Value="#34D399"/>
+        <Setter Property="CheckedBackgroundColor" Value="#09262A"/>
+        <Setter Property="HoverBackgroundColor" Value="#0a2b30"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="205"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="Padding" Value="40,9,0,9"/>
+        <Setter Property="CornerRadius" Value="9"/>
+        <Setter Property="ContentMargin" Value="10,0,0,0"/>
+    </Style>
+
 </ResourceDictionary>

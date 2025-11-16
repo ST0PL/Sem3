@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="/Resources/Icons/XamlIcons.xaml"/>
                 <ResourceDictionary Source="/Resources/Styles/Effects.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="Inter">/ILS_WPF;component/Fonts/#Inter</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

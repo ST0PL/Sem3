@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\Inter-Regular.otf" />
+    <None Remove="Resources\Fonts\Inter-SemiBold.otf" />
+    <None Remove="Resources\Icons\ils.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ControlsLib\ControlsLib\ControlsLib.csproj" />
   </ItemGroup>
 
@@ -21,6 +27,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Fonts\Inter-Regular.otf" />
+    <Resource Include="Resources\Fonts\Inter-SemiBold.otf" />
+    <Resource Include="Resources\Icons\ils.png" />
   </ItemGroup>
 
 </Project>
