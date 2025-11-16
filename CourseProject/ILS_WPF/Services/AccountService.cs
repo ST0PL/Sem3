@@ -8,9 +8,9 @@ namespace ILS_WPF.Services
 {
     class AccountService : IAccountService
     {
-        private readonly ILSContext _context;
-        public AccountService(ILSContext context)
-            => _context = context;
+        private readonly IDbContextFactory<ILSContext> _dbFactory;
+        public AccountService(IDbContextFactory<ILSContext> context)
+            => _dbFactory = context;
 
         public async Task<User?> LoginAsync(string username, string password)
         {
@@ -21,32 +21,38 @@ namespace ILS_WPF.Services
 
         public async Task<User> RegisterAsync(string username, string password, Role role)
         {
+            using var context = await _dbFactory.CreateDbContextAsync();
             if (await GetUserAsync(username) != null)
                 throw new InvalidOperationException("Пользователь с данным именем уже существует.");
             var user = CreateUser(username, password, role);
-            await _context.AddAsync(user);
-            await _context.SaveChangesAsync();
+            await context.AddAsync(user);
+            await context.SaveChangesAsync();
             return user;
         }
 
         public async Task ChangePasswordAsync(string username, string newPassword)
         {
+            using var context = await _dbFactory.CreateDbContextAsync();
             var user = await GetUserOrThrowAsync(username);
             var (Password, Salt) = ComputeCreds(newPassword);
             user.Hash = Password;
             user.Salt = Salt;
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(string username)
         {
+            using var context = await _dbFactory.CreateDbContextAsync();
             var user = await GetUserOrThrowAsync(username);
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            context.Users.Remove(user);
+            await context.SaveChangesAsync();
         }
 
         private async Task<User?> GetUserAsync(string username)
-            =>  await _context.Users.Where(u => u.Username == username.ToLower()).FirstOrDefaultAsync();
+        {
+            using var context = await _dbFactory.CreateDbContextAsync();
+            return await context.Users.Where(u => u.Username == username.ToLower()).FirstOrDefaultAsync();
+        }
         
         private async Task<User> GetUserOrThrowAsync(string username)
             => (await GetUserAsync(username)) ?? throw new InvalidOperationException($"Пользователь с именем \"{username}\" не найден.");

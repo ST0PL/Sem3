@@ -5,10 +5,9 @@ using System.Windows.Input;
 
 namespace ILS_WPF.ViewModels
 {
-    internal class LoginVM : BaseVM
+    public class LoginVM : BaseVM
     {
-        public event EventHandler<bool>? LoginPerformed;
-
+        private readonly IWindowService _windowService;
         private readonly IConfigurationService<Configuration?> _configurationService;
         private readonly IUserService? _userService;
         private readonly IAccountService? _accountService;
@@ -37,10 +36,12 @@ namespace ILS_WPF.ViewModels
         public ICommand LoginCommand { get; set; }
 
         public LoginVM(
+            IWindowService windowService,
             IConfigurationService<Configuration?> configurationService,
             IUserService userService,
             IAccountService accountService)
         {
+            _windowService = windowService;
             _configurationService = configurationService;
             _userService = userService;
             _accountService = accountService;
@@ -62,10 +63,15 @@ namespace ILS_WPF.ViewModels
                     _configurationService.Configuration.Username ?? "",
                     _configurationService.Configuration.Hash ?? "");
 
-                LoginPerformed?.Invoke(this, user != null);
+                
 
                 if (user != null)
+                {
                     _userService!.SetUser(user);
+                    _windowService.CloseApplicationWindow();
+                    _windowService.OpenMainWindow();
+
+                }
             }
         }
         private async Task PerformLogin()
@@ -73,7 +79,6 @@ namespace ILS_WPF.ViewModels
             var user = await _accountService!.LoginAsync(Username!, Password!);
 
             IsPasswordCorrect = user != null;
-            LoginPerformed?.Invoke(this, IsPasswordCorrect);
 
             if (user != null && _configurationService.Configuration != null)
             {
@@ -85,6 +90,8 @@ namespace ILS_WPF.ViewModels
                 _configurationService.Configuration.RememberMe = RememberMe;
                 await _configurationService.SaveAsync();
                 _userService!.SetUser(user);
+                _windowService?.CloseApplicationWindow();
+                _windowService?.OpenMainWindow();
             }
         }
 

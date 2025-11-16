@@ -12,14 +12,9 @@ namespace ILS_WPF
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow(
-            IConfigurationService<Configuration?> configurationService,
-            IUserService userService,
-            IAccountService accountService)
+        public LoginWindow(LoginVM viewModel)
         {
-            var vm = new LoginVM(configurationService, userService, accountService);
-            vm.LoginPerformed += (_, isSuccess) => CloseIfSuccess(isSuccess);
-            DataContext = vm;
+            DataContext = viewModel;
             InitializeComponent();
         }
 
@@ -36,15 +31,10 @@ namespace ILS_WPF
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+            Application.Current.Shutdown();
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
             => ((LoginVM)DataContext).Password = ((PasswordBox)sender).Password;
-
-        private void CloseIfSuccess(bool loginSuccess)
-        {
-            if (loginSuccess)
-                DialogResult = true;
-        }
     }
 }

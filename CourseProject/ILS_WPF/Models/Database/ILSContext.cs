@@ -2,7 +2,7 @@
 
 namespace ILS_WPF.Models.Database
 {
-    internal class ILSContext : DbContext
+    public class ILSContext : DbContext
     {
         public DbSet<User> Users { get; set; } = null!;
         public ILSContext()

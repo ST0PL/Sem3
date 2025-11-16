@@ -2,6 +2,7 @@
 using ILS_WPF.Models.Database;
 using ILS_WPF.Services;
 using ILS_WPF.Services.Interfaces;
+using ILS_WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Windows;
@@ -20,11 +21,14 @@ namespace ILS_WPF
                 .ConfigureServices(s =>
                 {
                     s.AddSingleton<IConfigurationService<Configuration?>, ConfigurationService>(_=>new ConfigurationService("config.json"));
-                    s.AddDbContext<ILSContext>();
+                    s.AddDbContextFactory<ILSContext>();
                     s.AddTransient<IAccountService, AccountService>();
                     s.AddSingleton<IUserService, UserService>();
+                    s.AddSingleton<IWindowService, WindowService>();
+                    s.AddTransient<LoginVM>();
                     s.AddTransient<LoginWindow>();
-                    s.AddSingleton<MainWindow>();
+                    s.AddTransient<MainVM>();
+                    s.AddTransient<MainWindow>();
                 })
                 .Build();
             return _host;
@@ -32,17 +36,14 @@ namespace ILS_WPF
         protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
             InitHost();
 
             var configService = _host?.Services?.GetService<IConfigurationService<Configuration?>>();
             if (configService != null)
                 await configService.LoadAsync();
 
-            MainWindow = _host?.Services?.GetService<MainWindow>();
-            var loginWindow = _host?.Services?.GetService<LoginWindow>();
-
-            if (loginWindow?.ShowDialog() ?? false)
-                MainWindow?.Show();
+            _host?.Services.GetService<IWindowService>()?.OpenLoginWindow();
         }
     }
 

@@ -10,7 +10,8 @@
         Title="MainWindow" Height="680" Width="1366"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent">
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
     <Border CornerRadius="10">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -72,7 +73,8 @@
                             <clib:ImageRadioButton Style="{StaticResource NavButtonStyle}"
                                                    ImageSource="{StaticResource MainPageIcon}"
                                                    CheckedImageSource="{StaticResource MainPageIcon_Checked}"
-                                                   Content="Главная"/>
+                                                   Content="Главная"
+                                                   IsChecked="True"/>
                             <clib:ImageRadioButton Style="{StaticResource NavButtonStyle}"
                                                    ImageSource="{StaticResource TasksIcon}"
                                                    CheckedImageSource="{StaticResource TasksIcon_Checked}"
@@ -101,7 +103,8 @@
                                          Margin="20"
                                          Padding="70,8,70,8"
                                          BorderThickness="0"
-                                         CornerRadius="8">
+                                         CornerRadius="8"
+                                         Command="{Binding LogoutCommand}">
                                 <clib:Button.Content>
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="{StaticResource LogoutIcon}"

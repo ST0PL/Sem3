@@ -5,5 +5,6 @@
         public T Configuration { get; }
         public Task SaveAsync();
         public Task LoadAsync();
+        public void Reset();
     }
 }

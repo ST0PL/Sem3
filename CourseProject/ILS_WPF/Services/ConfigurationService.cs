@@ -27,5 +27,13 @@ namespace ILS_WPF.Services
             using FileStream fs = File.Create(_filePath);
             await JsonSerializer.SerializeAsync(fs, Configuration);
         }
+
+        public void Reset()
+        {
+            Configuration ??= new();
+            Configuration.Username = null;
+            Configuration.Hash = null;
+            Configuration.RememberMe = false;
+        }
     }
 }

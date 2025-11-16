@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using ILS_WPF.Models;
+using ILS_WPF.Models.Database;
+using ILS_WPF.Services.Interfaces;
+using ILS_WPF.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ILS_WPF
@@ -8,8 +13,9 @@ namespace ILS_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(MainVM viewModel)
         {
+            DataContext = viewModel;
             InitializeComponent();
         }
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -25,6 +31,7 @@ namespace ILS_WPF
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+            Application.Current.Shutdown();
         }
     }
 }
