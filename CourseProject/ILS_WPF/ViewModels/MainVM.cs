@@ -35,7 +35,6 @@ namespace ILS_WPF.ViewModels
             _views =
                 [
                     userService?.GetUser()?.Role < Role.Administator ? new MainViewCommander() : new MainView(),
-
                 ];
             _currentView = _views[0];
             SetViewCommand = new RelayCommand(index => CurrentView = _views[(index as int?) ?? 0]);

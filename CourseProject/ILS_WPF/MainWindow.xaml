@@ -11,7 +11,8 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Border CornerRadius="10">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -74,23 +75,33 @@
                                                    ImageSource="{StaticResource MainPageIcon}"
                                                    CheckedImageSource="{StaticResource MainPageIcon_Checked}"
                                                    Content="Главная"
-                                                   IsChecked="True"/>
+                                                   IsChecked="True"
+                                                   Command="{Binding SetViewCommand}"
+                                                   CommandParameter="0"/>
                             <clib:ImageRadioButton Style="{StaticResource NavButtonStyle}"
                                                    ImageSource="{StaticResource TasksIcon}"
                                                    CheckedImageSource="{StaticResource TasksIcon_Checked}"
-                                                   Content="Заявки"/>
+                                                   Content="Заявки"
+                                                   Command="{Binding SetViewCommand}"
+                                                   CommandParameter="1"/>
                             <clib:ImageRadioButton Style="{StaticResource NavButtonStyle}"
                                                    ImageSource="{StaticResource BoxIcon}"
                                                    CheckedImageSource="{StaticResource BoxIcon_Checked}"
-                                                   Content="Склады"/>
+                                                   Content="Склады"
+                                                   Command="{Binding SetViewCommand}"
+                                                   CommandParameter="2"/>
                             <clib:ImageRadioButton Style="{StaticResource NavButtonStyle}"
                                                    ImageSource="{StaticResource StructureIcon}"
                                                    CheckedImageSource="{StaticResource StructureIcon_Checked}"
-                                                   Content="Подразделения"/>
+                                                   Content="Подразделения"
+                                                   Command="{Binding SetViewCommand}"
+                                                   CommandParameter="3"/>
                             <clib:ImageRadioButton Style="{StaticResource NavButtonStyle}"
                                                    ImageSource="{StaticResource PeopleIcon}"
                                                    CheckedImageSource="{StaticResource PeopleIcon_Checked}"
-                                                   Content="Военнослужащие"/>
+                                                   Content="Военнослужащие"
+                                                   Command="{Binding SetViewCommand}"
+                                                   CommandParameter="4"/>
                         </StackPanel>
                         <Border Grid.Row="2"
                                 VerticalAlignment="Bottom"
@@ -119,7 +130,8 @@
                         </Border>
                     </Grid>
                 </Border>
-                <ContentPresenter Grid.Column="1"/>
+                <ContentPresenter Grid.Column="1"
+                                  Content="{Binding CurrentView}"/>
             </Grid>
         </Grid>
     </Border>

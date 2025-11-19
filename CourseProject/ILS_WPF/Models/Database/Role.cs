@@ -2,7 +2,7 @@
 {
     public enum Role
     {
-        Administator,
-        Commander
+        Commander,
+        Administator
     }
 }

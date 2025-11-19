@@ -45,6 +45,19 @@
         <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 
+    <Style x:Key="DarkGreenButtonStyle" TargetType="{x:Type clib:Button}" BasedOn="{StaticResource {x:Type clib:Button}}">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Background" Value="#0F2F33"/>
+        <Setter Property="HoverBackgroundColor" Value="#0d2b2e"/>
+        <Setter Property="ClickBackgroundColor" Value="#0a2225"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="0,8,0,8"/>
+        <Setter Property="Foreground" Value="#34D399"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+
     <Style x:Key="NavButtonStyle" TargetType="{x:Type clib:ImageRadioButton}" BasedOn="{StaticResource {x:Type clib:ImageRadioButton}}">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Background" Value="Transparent"/>
