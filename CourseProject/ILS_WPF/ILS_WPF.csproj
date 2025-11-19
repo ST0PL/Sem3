@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Core\" />
     <Folder Include="Views\Tasks\" />
     <Folder Include="Views\Personnel\" />
     <Folder Include="Views\Structures\" />
