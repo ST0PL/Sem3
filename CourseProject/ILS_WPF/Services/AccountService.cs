@@ -1,4 +1,5 @@
-﻿using ILS_WPF.Models.Database;
+﻿using ILS_WPF.Models.Core;
+using ILS_WPF.Models.Database;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -19,12 +20,12 @@ namespace ILS_WPF.Services
             return user?.Hash == Convert.ToBase64String(hashed) ? user : null;
         }
 
-        public async Task<User> RegisterAsync(string username, string password, Role role)
+        public async Task<User> RegisterAsync(string username, string password, Role role, Staff? profile = null)
         {
             using var context = await _dbFactory.CreateDbContextAsync();
             if (await GetUserAsync(username) != null)
                 throw new InvalidOperationException("Пользователь с данным именем уже существует.");
-            var user = CreateUser(username, password, role);
+            var user = CreateUser(username, password, role, profile);
             await context.AddAsync(user);
             await context.SaveChangesAsync();
             return user;
@@ -57,10 +58,10 @@ namespace ILS_WPF.Services
         private async Task<User> GetUserOrThrowAsync(string username)
             => (await GetUserAsync(username)) ?? throw new InvalidOperationException($"Пользователь с именем \"{username}\" не найден.");
 
-        private static User CreateUser(string username, string password, Role role)
+        private static User CreateUser(string username, string password, Role role, Staff? profile = null)
         {
             var (Password, Salt) = ComputeCreds(password);
-            return new User(username, Password, Salt, role);
+            return new User(username, Password, Salt, role, profile);
         }
 
         private static (string, string) ComputeCreds(string password)

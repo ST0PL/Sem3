@@ -38,7 +38,6 @@ namespace ILS_WPF
             base.OnStartup(e);
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
             InitHost();
-
             var configService = _host?.Services?.GetService<IConfigurationService<Configuration?>>();
             if (configService != null)
                 await configService.LoadAsync();

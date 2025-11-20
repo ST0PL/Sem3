@@ -10,6 +10,5 @@ namespace ILS_WPF.Models.Core
         public Speciality Speciality { get; set; }
         public int? UnitId { get; set; }
         public virtual Unit? Unit { get; set; }
-        public virtual IList<Unit> CommandedUnits { get; set; } = [];
     }
 }
