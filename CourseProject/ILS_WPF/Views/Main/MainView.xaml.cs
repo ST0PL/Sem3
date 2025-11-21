@@ -8,9 +8,9 @@ namespace ILS_WPF.Views.Main
     /// </summary>
     public partial class MainView : UserControl
     {
-        public MainView()
+        public MainView(StatVM viewModel)
         {
-            DataContext = new StatVM();
+            DataContext = viewModel;
             InitializeComponent();
         }
     }
