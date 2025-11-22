@@ -2,6 +2,7 @@
 {
     public enum Speciality
     {
+        AnySpeciality = -1,
         None = 0,
         Infantry = 1,
         MachineGunner = 2,

@@ -1,4 +1,7 @@
-﻿using ILS_WPF.Services.Interfaces;
+﻿using ILS_WPF.Models.Core;
+using ILS_WPF.Models.Database;
+using ILS_WPF.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -15,7 +18,6 @@ namespace ILS_WPF.ViewModels
         {
             Application.Current.MainWindow = _serviceProvider.GetService<LoginWindow>();
             Application.Current.MainWindow?.Show();
-
         }
 
         public void OpenMainWindow()
@@ -25,5 +27,10 @@ namespace ILS_WPF.ViewModels
         }
         public void CloseApplicationWindow()
             => Application.Current.MainWindow?.Close();
+
+        public void OpenPersonnelRegisterWindow(IDbContextFactory<ILSContext> dbFactory)
+            => new Views.Personnel.AddWindow(new PersonnelWindowVM(dbFactory));
+        public void OpenPersonnelEditWindow(IDbContextFactory<ILSContext> dbFactory, Staff soldier)
+            => new Views.Personnel.AddWindow(new PersonnelWindowVM(dbFactory));
     }
 }

@@ -2,6 +2,7 @@
 {
     public enum UnitType
     {
+        AnyType = -1,
         Battalion = 0,
         Regiment = 1,
         Brigade = 2,

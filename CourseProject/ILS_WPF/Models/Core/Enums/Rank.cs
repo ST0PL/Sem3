@@ -2,6 +2,7 @@
 {
     public enum Rank
     {
+        AnyRank = -1,
         Private = 0, //
         Corporal = 1, // Ефрейтор
         JuniorSergeant = 2, // Младший сержант

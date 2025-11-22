@@ -21,10 +21,8 @@
 
   <ItemGroup>
     <Folder Include="Views\Tasks\" />
-    <Folder Include="Views\Personnel\" />
     <Folder Include="Views\Structures\" />
     <Folder Include="Views\Warehouses\" />
-    <Folder Include="Converters\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,6 +2,7 @@
 {
     public enum SupplyResponseStatus
     {
+        AnyStatus = -1,
         Success = 0,
         Partial = 1,
         Denied = 2

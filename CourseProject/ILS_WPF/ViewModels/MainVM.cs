@@ -3,6 +3,7 @@ using ILS_WPF.Models.Database;
 using ILS_WPF.MVMM;
 using ILS_WPF.Services.Interfaces;
 using ILS_WPF.Views.Main;
+using ILS_WPF.Views.Personnel;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,8 +12,6 @@ namespace ILS_WPF.ViewModels
 {
     public class MainVM : BaseVM
     {
-        private readonly IWindowService _windowService;
-
         private readonly UserControl[] _views;
         private UserControl? _currentView;
 
@@ -31,14 +30,21 @@ namespace ILS_WPF.ViewModels
             IConfigurationService<Configuration> configurationService,
             IDbContextFactory<ILSContext> dbFactory)
         {
-            _windowService = windowService;
             _views =
                 [
                     userService?.GetUser()?.Role < Role.Administator ?
                         new MainViewCommander() : new MainView(new StatVM(dbFactory)),
+                    null,
+                    null,
+                    null,
+                    new PersonnelView(new PersonnelVM(windowService, dbFactory))
                 ];
             _currentView = _views[0];
-            SetViewCommand = new RelayCommand(index => CurrentView = _views[(index as int?) ?? 0]);
+            SetViewCommand = new RelayCommand(arg =>
+            {
+                if(int.TryParse(arg as string, out var index))
+                    CurrentView = _views[index];
+            });
             LogoutCommand = new RelayCommand(async _=>
             {
                 configurationService.Reset();

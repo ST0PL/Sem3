@@ -1,0 +1,46 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="AnyType">Все типы</sys:String>
+    <sys:String x:Key="AnyStatus">Все статусы</sys:String>
+    
+    <sys:String x:Key="Battalion">Батальон</sys:String>
+    <sys:String x:Key="Regiment">Полк</sys:String>
+    <sys:String x:Key="Brigade">Бригада</sys:String>
+    <sys:String x:Key="Division">Дивизия</sys:String>
+    <sys:String x:Key="Army">Армия</sys:String>
+
+    <sys:String x:Key="AnyRank">Все звания</sys:String>
+    <sys:String x:Key="Private">Рядовой</sys:String>
+    <sys:String x:Key="Corporal">Ефрейтор</sys:String>
+    <sys:String x:Key="JuniorSergeant">Младший сержант</sys:String>
+    <sys:String x:Key="Sergeant">Сержант</sys:String>
+    <sys:String x:Key="SeniorSergeant">Старший сержант</sys:String>
+    <sys:String x:Key="SergeantMajor">Старшина</sys:String>
+    <sys:String x:Key="WarrantOfficer">Прапорщик</sys:String>
+    <sys:String x:Key="SeniorWarrantOfficer">Старший прапорщик</sys:String>
+    <sys:String x:Key="JuniorLieutenant">Младший лейтенант</sys:String>
+    <sys:String x:Key="Lieutenant">Лейтенант</sys:String>
+    <sys:String x:Key="SeniorLieutenant">Старший лейтенант</sys:String>
+    <sys:String x:Key="Captain">Капитан</sys:String>
+    <sys:String x:Key="Major">Майор</sys:String>
+    <sys:String x:Key="LieutenantColonel">Подполковник</sys:String>
+    <sys:String x:Key="Colonel">Полковник</sys:String>
+    <sys:String x:Key="MajorGeneral">Генерал майор</sys:String>
+    <sys:String x:Key="LieutenantGeneral">Генерал лейтенант</sys:String>
+    <sys:String x:Key="ColonelGeneral">Генерал полковник</sys:String>
+    <sys:String x:Key="ArmyGeneral">Генерал армии</sys:String>
+
+    <sys:String x:Key="AnySpeciality">Все специальности</sys:String>
+    <sys:String x:Key="None">Без специальности</sys:String>
+    <sys:String x:Key="Infantry">Пехота</sys:String>
+    <sys:String x:Key="MachineGunner">Пулемётчик</sys:String>
+    <sys:String x:Key="GrenadeLauncher">Гранатомётчик</sys:String>
+    <sys:String x:Key="Reconnaissance">Разведчик</sys:String>
+    <sys:String x:Key="SpecialForces">Спецназ</sys:String>
+    <sys:String x:Key="Sniper">Снайпер</sys:String>
+    <sys:String x:Key="Tanker">Танкист</sys:String>
+    <sys:String x:Key="AntiAircraft">Зенитчик</sys:String>
+    <sys:String x:Key="Engineer">Инженер</sys:String>
+    <sys:String x:Key="Medic">Медик</sys:String>
+</ResourceDictionary>
