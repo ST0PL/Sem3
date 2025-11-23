@@ -1,0 +1,74 @@
+﻿<Window x:Class="ILS_WPF.MessageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
+        xmlns:prop="clr-namespace:ControlsLib.AttachedProperties;assembly=ControlsLib"
+        xmlns:local="clr-namespace:ILS_WPF"
+        mc:Ignorable="d"
+        Title="PersonnelAddWindow" Height="200" Width="450"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Border CornerRadius="20"
+            BorderThickness="1"
+            BorderBrush="#333e50"
+            Background="#101828">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Background="#80141d2b"
+                    BorderThickness="0,0,0,1"
+                    CornerRadius="20,20,0,0"
+                    BorderBrush="#806b6b6b"
+                    Padding="10"
+                    MouseDown="Border_MouseDown">
+                <clib:Button Style="{StaticResource CloseButtonStyle}"
+                             Click="CloseButton_Click"
+                             Opacity="0.8"
+                             HorizontalAlignment="Right"/>
+            </Border>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding MessageTitle}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="#00D492"/>
+                <Border Grid.Row="1"
+                        Background="#121b2e"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="10"
+                        CornerRadius="15"
+                        Visibility="{Binding MessageText, Converter={StaticResource emptyVisibilityConverter}}"
+                        Padding="10,0,10,10">
+                    <clib:TextBox Text="{Binding MessageText}"
+                                  TextWrapping="Wrap"
+                                  Foreground="White"
+                                  IsReadOnly="True"
+                                  Background="Transparent"
+                                  FontSize="18"
+                                  BorderThickness="0"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  prop:ScrollViewerHelper.ScrollBarThumbWidth="7"
+                                  prop:ScrollViewerHelper.ScrollBarWidth="7"
+                                  prop:ScrollViewerHelper.ScrollBarThumbCornerRadius="4"
+                                  prop:ScrollViewerHelper.ScrollBarCornerRadius="4"
+                                  prop:ScrollViewerHelper.ClickScrollBarThumbBackground="#1c2b4a"
+                                  prop:ScrollViewerHelper.ScrollBarThumbBackground="#1c2b4a"
+                                  prop:ScrollViewerHelper.ScrollBarBackground="#0e1524"/>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

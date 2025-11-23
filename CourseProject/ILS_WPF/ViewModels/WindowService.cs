@@ -4,6 +4,7 @@ using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ILS_WPF.ViewModels
 {
@@ -28,9 +29,15 @@ namespace ILS_WPF.ViewModels
         public void CloseApplicationWindow()
             => Application.Current.MainWindow?.Close();
 
-        public void OpenPersonnelRegisterWindow(IDbContextFactory<ILSContext> dbFactory)
-            => new Views.Personnel.AddWindow(new PersonnelWindowVM(dbFactory));
-        public void OpenPersonnelEditWindow(IDbContextFactory<ILSContext> dbFactory, Staff soldier)
-            => new Views.Personnel.AddWindow(new PersonnelWindowVM(dbFactory));
+        public void OpenPersonnelRegisterWindow(ICommand dataRefreshCommand)
+            => new Views.Personnel.AddWindow(new AddPersonnelVM(this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!, dataRefreshCommand)).ShowDialog();
+
+        public void OpenPersonnelEditWindow(Staff soldier, ICommand dataRefreshCommand)
+            => new Views.Personnel.EditWindow(new EditPersonnelVM(soldier, this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!, dataRefreshCommand)).ShowDialog();
+
+        public void OpenMessageWindow(string title, string text)
+            => new MessageWindow(title, text).Show();
     }
 }

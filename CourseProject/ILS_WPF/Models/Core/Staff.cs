@@ -10,5 +10,15 @@ namespace ILS_WPF.Models.Core
         public Speciality Speciality { get; set; }
         public int? UnitId { get; set; }
         public virtual Unit? Unit { get; set; }
+
+        public Staff() { }
+
+        public Staff(string fullName, Rank rank, Speciality speciality, int? unitId)
+        {
+            FullName = fullName;
+            Rank = rank;
+            Speciality = speciality;
+            UnitId = unitId;
+        }
     }
 }

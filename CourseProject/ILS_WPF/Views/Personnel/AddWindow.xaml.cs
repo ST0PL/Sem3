@@ -22,10 +22,19 @@ namespace ILS_WPF.Views.Personnel
     /// </summary>
     public partial class AddWindow : Window
     {
-        public AddWindow(PersonnelWindowVM viewModel)
+        public AddWindow(AddPersonnelVM viewModel)
         {
             DataContext = viewModel;
             InitializeComponent();
+        }
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

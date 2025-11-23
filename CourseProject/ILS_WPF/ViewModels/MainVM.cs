@@ -37,7 +37,7 @@ namespace ILS_WPF.ViewModels
                     null,
                     null,
                     null,
-                    new PersonnelView(new PersonnelVM(windowService, dbFactory))
+                    new PersonnelView(new PersonnelVM(userService, windowService, dbFactory))
                 ];
             _currentView = _views[0];
             SetViewCommand = new RelayCommand(arg =>

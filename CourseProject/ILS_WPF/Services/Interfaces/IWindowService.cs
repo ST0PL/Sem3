@@ -1,6 +1,5 @@
 ﻿using ILS_WPF.Models.Core;
-using ILS_WPF.Models.Database;
-using Microsoft.EntityFrameworkCore;
+using System.Windows.Input;
 
 namespace ILS_WPF.Services.Interfaces
 {
@@ -9,7 +8,8 @@ namespace ILS_WPF.Services.Interfaces
         void OpenMainWindow();
         void CloseApplicationWindow();
         void OpenLoginWindow();
-        void OpenPersonnelRegisterWindow(IDbContextFactory<ILSContext> dbFactory);
-        void OpenPersonnelEditWindow(IDbContextFactory<ILSContext> dbFactory, Staff soldier);
+        void OpenPersonnelRegisterWindow(ICommand dataRefreshCommand);
+        void OpenPersonnelEditWindow(Staff soldier, ICommand dataRefreshCommand);
+        void OpenMessageWindow(string title, string text);
     }
 }

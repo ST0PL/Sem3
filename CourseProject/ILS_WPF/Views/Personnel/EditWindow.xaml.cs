@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ILS_WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,19 @@ namespace ILS_WPF.Views.Personnel
     /// </summary>
     public partial class EditWindow : Window
     {
-        public EditWindow()
+        public EditWindow(EditPersonnelVM viewModel)
         {
+            DataContext = viewModel;
             InitializeComponent();
+        }
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
