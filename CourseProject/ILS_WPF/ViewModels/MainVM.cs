@@ -4,6 +4,7 @@ using ILS_WPF.MVMM;
 using ILS_WPF.Services.Interfaces;
 using ILS_WPF.Views.Main;
 using ILS_WPF.Views.Personnel;
+using ILS_WPF.Views.Structures;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -36,7 +37,7 @@ namespace ILS_WPF.ViewModels
                         new MainViewCommander() : new MainView(new StatVM(dbFactory)),
                     null,
                     null,
-                    null,
+                    new StructuresView(new StructuresVM(userService, windowService, dbFactory)),
                     new PersonnelView(new PersonnelVM(userService, windowService, dbFactory))
                 ];
             _currentView = _views[0];

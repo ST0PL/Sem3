@@ -10,6 +10,8 @@ namespace ILS_WPF.Services.Interfaces
         void OpenLoginWindow();
         void OpenPersonnelRegisterWindow(ICommand dataRefreshCommand);
         void OpenPersonnelEditWindow(Staff soldier, ICommand dataRefreshCommand);
+        void OpenUnitRegisterWindow(ICommand dataRefreshCommand);
+        void OpenUnitEditWindow(Unit unit, ICommand dataRefreshCommand);
         void OpenMessageWindow(string title, string text);
     }
 }

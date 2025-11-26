@@ -58,7 +58,7 @@ namespace ILS_WPF.Models.Database
                 .HasMany(u => u.Children)
                 .WithOne(u => u.Parent)
                 .HasForeignKey(u => u.ParentId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             // Unit => AssignedWarehouse (прикрепленный склад)
             modelBuilder.Entity<Unit>()

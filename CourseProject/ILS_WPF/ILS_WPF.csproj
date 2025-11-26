@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Tasks\" />
-    <Folder Include="Views\Structures\" />
     <Folder Include="Views\Warehouses\" />
   </ItemGroup>
 

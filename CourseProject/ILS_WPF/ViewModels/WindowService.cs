@@ -39,5 +39,14 @@ namespace ILS_WPF.ViewModels
 
         public void OpenMessageWindow(string title, string text)
             => new MessageWindow(title, text).Show();
+
+        public void OpenUnitRegisterWindow(ICommand dataRefreshCommand)
+            => new Views.Structures.AddWindow(new AddUnitVM(this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!, dataRefreshCommand)).ShowDialog();
+
+        public void OpenUnitEditWindow(Unit unit, ICommand dataRefreshCommand)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
