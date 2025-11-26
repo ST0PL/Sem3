@@ -12,3 +12,9 @@ int main() {
     setlocale(LC_ALL, "Rus");
     return 0;
 }
+
+template<typename T>
+T CalculateRequirement(T count, T perUnit) {
+    static_assert(std::is_arithmetic_v<T>);
+    return count * perUnit;
+}
