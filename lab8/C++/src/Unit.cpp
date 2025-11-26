@@ -121,13 +121,27 @@ void Unit::AssignCommander(const std::weak_ptr<Staff> staff) {
     }
 }
 
-std::vector<std::weak_ptr<Staff>> Unit::FindByName(std::string& query) {
+std::vector<std::weak_ptr<Staff>> Unit::FindByName(std::string& query) const {
     std::vector<std::weak_ptr<Staff>> result;
-    for (auto& staff : m_personnel) {
-        auto soldier = staff.lock();
-        if (soldier && soldier->GetFullName().find(query) != std::string::npos)
-            result.push_back(staff);
-    }
+    std::copy_if(m_personnel.begin(), m_personnel.end(),
+        std::back_inserter(result), [&query](const std::weak_ptr<Staff>& staff)
+        {
+            if (auto soldier = staff.lock())
+                return soldier->GetFullName().find(query) != std::string::npos;
+            return false;
+        });
+    return result;
+}
+
+std::vector<std::string> Unit::GetStaffList() const {
+    std::vector<std::string> result;
+    std::transform(m_personnel.begin(), m_personnel.end(),
+        std::back_inserter(result), [](const std::weak_ptr<Staff>& staff)
+        {
+            if (auto soldier = staff.lock())
+                return soldier->ToString();
+            return std::string("<Нет данных>");
+        });
     return result;
 }
 

@@ -25,7 +25,8 @@ public:
     bool RemoveSoldier(int);
     void AssignWarehouse(std::weak_ptr<Warehouse>);
     void AssignCommander(const std::weak_ptr<Staff>);
-    std::vector<std::weak_ptr<Staff>> FindByName(std::string&);
+    std::vector<std::weak_ptr<Staff>> FindByName(std::string&) const;
+    std::vector<std::string> GetStaffList() const;
     bool RemoveChildUnit(int);
 
 private:
