@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <type_traits>
 #include "Enums.hpp"
 
 
@@ -9,6 +10,7 @@ class Warehouse;
 
 template<typename T>
 class WarehouseEntry {
+    static_assert(std::is_arithmetic_v<T>);
 public:
     WarehouseEntry(const WarehouseEntry&) = delete;
     WarehouseEntry(int, const std::string&, MaterialType);
