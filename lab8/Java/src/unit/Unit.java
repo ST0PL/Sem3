@@ -170,6 +170,13 @@ public class Unit implements Suppliable {
         return new SupplyResponse(SupplyResponseStatus.SUCCESS, "");
     }
 
+    public List<String> getStafflList(){
+        return personnel.stream().map(p->p.toString()).toList();
+    }
+    public List<Staff> findStaffByFullName(String fullName){
+        return personnel.stream().filter(p->p.getFullName().toLowerCase().contains(fullName.toLowerCase())).toList();
+    }
+
     public SupplyRequest createRequest(ArrayList<SupplyRequestDetail> details){
         return new SupplyRequest(0, details, this);
     }

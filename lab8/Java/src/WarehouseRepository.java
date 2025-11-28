@@ -14,7 +14,7 @@ class WarehouseRepository<T extends  WarehouseEntry<?>>{
         return items.size();
     }
     public boolean isEmpty(){
-        return items.size() < 1;
+        return items.isEmpty();
     }
     public void clear(){
         items.clear();
