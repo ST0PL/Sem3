@@ -12,7 +12,7 @@ public class Fuel extends Resource implements Cloneable {
 
     public Fuel(int id, String name, FuelType type, int count)
     {
-        super(id, name, MaterialType.Fuel, MeasureUnit.LITER, count);
+        super(id, name, MaterialType.FUEL, MeasureUnit.LITER, count);
         this.type = type;
     }
 

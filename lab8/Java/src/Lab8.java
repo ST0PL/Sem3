@@ -51,11 +51,11 @@ public class Lab8 {
         out.println(String.format("Боеприпасы в количестве более 100: %d", result1.count()));
 
         // Поиск по типу МТО
-        var result2 = ammoRepo.findByMaterialType(MaterialType.Ammunition);
+        var result2 = ammoRepo.findByMaterialType(MaterialType.AMMUNITION);
         out.println(String.format("Количество через поиск по типу: %d", result2.count()));
 
         // Подсчет количества записей МТО определенного типа
-        var count = ammoRepo.countByMaterialType(MaterialType.Ammunition);
+        var count = ammoRepo.countByMaterialType(MaterialType.AMMUNITION);
         out.println(String.format("Количество записей боеприпасов: %d", count, '\n'));
 
         // Удаление по идентификатору
@@ -71,7 +71,7 @@ public class Lab8 {
         fuelRepo.add(new Fuel(4, "Дизель", FuelType.DIESEL, 2000));
         fuelRepo.add(new Fuel(5, "Бензин", FuelType.GASOLINE, 1500));
 
-        var allFuel = fuelRepo.findByMaterialType(MaterialType.Fuel).toList();
+        var allFuel = fuelRepo.findByMaterialType(MaterialType.FUEL).toList();
 
         out.println(String.format("Количество записей с топливом: %d", allFuel.size()));
         

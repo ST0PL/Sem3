@@ -13,7 +13,7 @@ public class Vehicle extends Equipment implements Cloneable {
 
     public Vehicle(int id, String name, VehicleType type, FuelType fuelType, int count)
     {
-        super(id, name, MaterialType.Vehicle, count);
+        super(id, name, MaterialType.VEHICLE, count);
         this.type = type;
         this.fuelType = fuelType;
     }

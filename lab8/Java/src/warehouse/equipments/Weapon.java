@@ -10,7 +10,7 @@ public class Weapon extends Equipment implements Cloneable {
     Caliber caliber;
     public Weapon(int id, String name, Caliber caliber, int count)
     {
-        super(id, name, MaterialType.Weapon, count);
+        super(id, name, MaterialType.WEAPON, count);
         this.caliber = caliber;
     }
 
