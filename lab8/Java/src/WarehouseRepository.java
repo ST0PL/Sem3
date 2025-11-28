@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import warehouse.WarehouseEntry;
@@ -49,8 +50,8 @@ class WarehouseRepository<T extends  WarehouseEntry<?>>{
         return items.stream().filter(predicate);
     }
 
-    public Stream<T> findById(int id){
-        return find(item->item.getId() == id);
+    public Optional<T> findById(int id){
+        return find(item->item.getId() == id).findFirst();
     }
 
     public Stream<T> findByMaterialType(MaterialType materialType){
