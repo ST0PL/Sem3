@@ -1,4 +1,3 @@
-#include <algorithm>
 #include "WarehouseRepository.hpp"
 
 template<typename T>

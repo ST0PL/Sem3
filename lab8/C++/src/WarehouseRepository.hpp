@@ -2,7 +2,7 @@
 #include <type_traits>
 #include <vector>
 #include <memory>
-#include <unordered_map>
+#include <algorithm>
 #include "WarehouseEntry.hpp"
 #include "Ammunition.hpp"
 #include "Fuel.hpp"
@@ -37,9 +37,15 @@ public:
     void AddRange(std::vector<std::unique_ptr<T>>);
     bool RemoveRange(const std::vector<int>&);
 
+    template<typename Comporator>
+    std::vector<std::shared_ptr<T>> OrderBy(Comporator comporator) {
+        std::vector<std::shared_ptr<T>> result = m_items;
+        std::sort(result.begin(), result.end(), comporator);
+        return result;
+    }
+
     template<typename Predicate>
     std::vector<std::weak_ptr<T>> Find(Predicate predicate) const {
-        static_assert(std::is_invocable_r_v<bool, Predicate, const T*>);
         std::vector<std::weak_ptr<T>> result;
         for (const auto& item : m_items) {
             if (predicate(item.get())) {

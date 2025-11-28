@@ -24,7 +24,33 @@ int main() {
     ammoRepo.Add(make_unique<Ammunition>(3, "5.45mm", Caliber::e545mm, 500));
 
     cout << "Размер репозитория боеприпасов: " << ammoRepo.GetSize() << endl;
-    cout << "Репозиторий пуст?: " << boolalpha << ammoRepo.IsEmpty() << endl;
+    cout << "Репозиторий пуст?: " << (ammoRepo.IsEmpty() ? "да" : "нет") << endl;
+
+    cout << "До сортировки\n" << endl;
+
+    for (const auto& item : ammoRepo.Find([](const Ammunition* a) { return true; })) {
+        if (auto ammo = item.lock()) {
+            cout << "ID: " << ammo->GetId() << endl;
+            cout << "Название: " << ammo->GetName() << endl;
+            cout << "Калибр: " << (int)ammo->GetCaliber() << endl;
+            cout << "Количество: " << ammo->GetQuantity() << "\n" << endl;
+        }
+    }
+
+    cout << "После сортировки по количеству\n" << endl;
+
+    auto sorted = ammoRepo.OrderBy([](const shared_ptr<Ammunition>& a, const shared_ptr<Ammunition>& b)
+        {
+            return a->GetQuantity() > b->GetQuantity(); // Убывающий порядок
+        });
+
+    // Вывод отсортированных элементов
+    for (const auto& ammo : sorted) {
+        cout << "ID: " << ammo->GetId() << endl;
+        cout << "Название: " << ammo->GetName() << endl;
+        cout << "Калибр: " << static_cast<int>(ammo->GetCaliber()) << endl;
+        cout << "Количество: " << ammo->GetQuantity() << "\n" << endl;
+    }
 
     // Поиск по ID
     auto found = ammoRepo.FindById(1);
@@ -53,8 +79,8 @@ int main() {
     cout << "Удаление элемента с ID 2: " << removed << endl;
     cout << "Размер после удаления: " << ammoRepo.GetSize() << endl;
 
-    cout << "Содержит элемент с ID 1?: " << ammoRepo.ContainsId(1) << endl;
-    cout << "Содержит элемент с ID 2? " << ammoRepo.ContainsId(2) << endl;
+    cout << "Содержит элемент с ID 1?: " << (ammoRepo.ContainsId(1) ? "да" : "нет") << endl;
+    cout << "Содержит элемент с ID 2? " << (ammoRepo.ContainsId(2) ? "да" : "нет") << endl;
 
 
     WarehouseRepository<Fuel> fuelRepo;
@@ -70,7 +96,7 @@ int main() {
         if (auto fuel = weakFuel.lock()) {
             cout << "Название: " << fuel->GetName()
                 << ", Литры: " << fuel->GetQuantity()
-                << ", Проверка на пустоту: " << fuel->IsEmpty() << endl;
+                << ", Проверка на пустоту: " << (fuel->IsEmpty() ? "пустое" : "не пустое") << endl;
         }
     }
 
