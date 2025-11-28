@@ -1,5 +1,6 @@
 package warehouse.equipments;
 
+import enums.MaterialType;
 import request.SupplyRequestDetail;
 import warehouse.WarehouseEntry;
 
@@ -9,8 +10,8 @@ public abstract class Equipment extends WarehouseEntry<Integer> {
 
     public static final Integer MIN_COUNT = 1;
 
-    public Equipment(int id, String name, int count) { 
-        super(id, name);
+    public Equipment(int id, String name, MaterialType materialType, int count) { 
+        super(id, name, materialType);
         if(count < MIN_COUNT){
             throw new IllegalArgumentException("Недопустимое количество");
         }         

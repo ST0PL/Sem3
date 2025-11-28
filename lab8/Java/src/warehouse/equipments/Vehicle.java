@@ -1,6 +1,7 @@
 package warehouse.equipments;
 
 import enums.FuelType;
+import enums.MaterialType;
 import enums.SupplyType;
 import enums.VehicleType;
 import java.util.Random;
@@ -12,7 +13,7 @@ public class Vehicle extends Equipment implements Cloneable {
 
     public Vehicle(int id, String name, VehicleType type, FuelType fuelType, int count)
     {
-        super(id, name, count);
+        super(id, name, MaterialType.Vehicle, count);
         this.type = type;
         this.fuelType = fuelType;
     }

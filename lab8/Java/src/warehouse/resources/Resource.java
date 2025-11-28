@@ -1,5 +1,6 @@
 package warehouse.resources;
 
+import enums.MaterialType;
 import enums.MeasureUnit;
 import request.SupplyRequestDetail;
 import warehouse.WarehouseEntry;
@@ -11,8 +12,8 @@ public abstract class Resource extends WarehouseEntry<Float> {
 
     public static final float MIN_QUANTITY = 0.1f;
 
-    public Resource(int id, String name, MeasureUnit measureUnit, float quantity) {
-        super(id, name);
+    public Resource(int id, String name, MaterialType materialType, MeasureUnit measureUnit, float quantity) {
+        super(id, name, materialType);
         if(quantity < MIN_QUANTITY){
             throw new IllegalArgumentException("Недопустимое количество");
         }            

@@ -1,6 +1,7 @@
 package warehouse.resources;
 
 import enums.FuelType;
+import enums.MaterialType;
 import enums.MeasureUnit;
 import enums.SupplyType;
 import java.util.Random;
@@ -11,7 +12,7 @@ public class Fuel extends Resource implements Cloneable {
 
     public Fuel(int id, String name, FuelType type, int count)
     {
-        super(id, name, MeasureUnit.LITER, count);
+        super(id, name, MaterialType.Fuel, MeasureUnit.LITER, count);
         this.type = type;
     }
 

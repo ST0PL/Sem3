@@ -1,6 +1,7 @@
 package warehouse.equipments;
 
 import enums.Caliber;
+import enums.MaterialType;
 import enums.SupplyType;
 import java.util.Random;
 import request.SupplyRequestDetail;
@@ -9,7 +10,7 @@ public class Weapon extends Equipment implements Cloneable {
     Caliber caliber;
     public Weapon(int id, String name, Caliber caliber, int count)
     {
-        super(id, name, count);
+        super(id, name, MaterialType.Weapon, count);
         this.caliber = caliber;
     }
 
