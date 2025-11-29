@@ -184,7 +184,7 @@ namespace ILS_WPF.ViewModels
             Units = (await context.Units
                 .Include(u => u.Commander)
                 .Where(u => (u.Type == (SelectedUnitType - 1)) &&
-                    (string.IsNullOrWhiteSpace(UnitQuery) || EF.Functions.Like(u.Name, $"%{UnitQuery}%")) &&
+                    (string.IsNullOrWhiteSpace(UnitQuery) || EF.Functions.Like(u.Name, $"%{UnitQuery}%") || (u.Commander != null && EF.Functions.Like(u.Commander.FullName, $"%{UnitQuery}%"))) &&
                     u.ParentId == null)
                 .ToArrayAsync())
                 .Where(IsUnitRelationMatches)

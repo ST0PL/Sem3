@@ -51,7 +51,7 @@
                     </Grid.RowDefinitions>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
@@ -97,7 +97,7 @@
                                         <clib:TextBox Style="{StaticResource TextBoxStyle}"
                                                       Text="{Binding WarehouseQuery, UpdateSourceTrigger=PropertyChanged}"
                                                       Placeholder="Поиск по названию склада"
-                                                      Width="280"/>
+                                                      Width="330"/>
                                         <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
                                                        Width="120"
                                                        Margin="10,0,0,0"
@@ -143,7 +143,7 @@
                                                     Background="#101828"
                                                     Padding="10"
                                                     CornerRadius="15"
-                                                    Width="390">
+                                                    Width="430">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition/>
@@ -199,8 +199,8 @@
                                     <StackPanel Orientation="Horizontal">
                                         <clib:TextBox Style="{StaticResource TextBoxStyle}"
                                                       Text="{Binding UnitQuery, UpdateSourceTrigger=PropertyChanged}"
-                                                      Placeholder="Поиск по названию подразделения"
-                                                      Width="260"/>
+                                                      Placeholder="Поиск по названию/ФИО коммандира"
+                                                      Width="300"/>
                                         <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
                                                        Width="150"
                                                        Margin="10,0,0,0"
@@ -246,7 +246,7 @@
                                                     Background="#101828"
                                                     Padding="10"
                                                     CornerRadius="15"
-                                                    Width="360">
+                                                    Width="430">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition/>
@@ -258,22 +258,21 @@
                                                                    FontSize="15"
                                                                    FontWeight="SemiBold"
                                                                    TextWrapping="Wrap"/>
-
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="Тип: "
-                                                                    Foreground="#73FFFFFF"
-                                                                    FontSize="12"/>
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
                                                             <TextBlock Text="{Binding Value.Type, Converter={StaticResource enumConverter}}"
-                                                                    Foreground="#73FFFFFF"
-                                                                    FontSize="12"/>
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="Коммандир: "
-                                                                    Foreground="#73FFFFFF"
-                                                                    FontSize="12"/>
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
                                                             <TextBlock Text="{Binding Value.Commander.FullName, Converter={StaticResource abbreviationConverter}}"
-                                                                    Foreground="#73FFFFFF"
-                                                                    FontSize="12"/>
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
                                                         </StackPanel>
                                                     </StackPanel>
                                                     <clib:CheckBox Style="{DynamicResource SelectToggleButtonStyle}"

@@ -38,7 +38,7 @@
             <clib:TextBox Style="{StaticResource TextBoxStyle}"
                           Margin="0,20,0,0"
                           Width="705"
-                          Placeholder="Поиск по названию подразделения"
+                          Placeholder="Поиск по названию подразделения или ФИО коммандира"
                           Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"/>
             <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
                            SelectedValue="{Binding CurrentType}"
@@ -104,7 +104,9 @@
                                 <TextBlock Text="Коммандир: "
                                            Foreground="#66FFFFFF"
                                            FontSize="13"/>
-                                <TextBlock Text="{Binding Commander.FullName, Converter={StaticResource abbreviationConverter}}"
+                                <TextBlock Text="{Binding Commander.FullName}"
+                                           TextWrapping="Wrap"
+                                           MaxWidth="220"
                                            Foreground="#66FFFFFF"
                                            FontSize="13"/>
                             </StackPanel>

@@ -4,6 +4,7 @@ using ILS_WPF.Models.Database;
 using ILS_WPF.MVMM;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace ILS_WPF.ViewModels
@@ -18,7 +19,7 @@ namespace ILS_WPF.ViewModels
         private List<Unit> _actualUnits;
 
         public List<Unit> ActualUnits { get => _actualUnits; set { _actualUnits = value; OnPropertyChanged(); } }
-        public bool HasItems => ActualUnits.Count > 0;
+        public bool HasItems => ActualUnits?.Count > 0;
 
         public UnitType CurrentType
         {
@@ -65,16 +66,23 @@ namespace ILS_WPF.ViewModels
             var isAdmin = currentUser?.Role == Role.Administator;
             var commanderId = currentUser?.Staff?.Id;
 
-            ActualUnits = context.Units.Include(u=>u.Commander).ToList().Where(
-                u =>
-                (isAdmin || (commanderId != null && HasCommander(u, commanderId.Value))) &&
-                (CurrentType == UnitType.AnyType || u.Type == CurrentType) &&
-                (string.IsNullOrWhiteSpace(Query) || u.Name.Contains(Query, StringComparison.OrdinalIgnoreCase)))
-                .ToList();
+            try
+            {
+               ActualUnits =
+                    (await context.Units
+                    .Include(u => u.Commander)
+                    .Where(u => string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%") || (u.CommanderId != null && EF.Functions.Like(u.Commander.FullName, $"%{Query}%")))
+                    .ToArrayAsync())
+                    .Where(u =>
+                        (isAdmin || (commanderId != null && HasCommanderInTree(u, commanderId.Value))) &&
+                        (CurrentType == UnitType.AnyType || u.Type == CurrentType))
+                    .ToList();
+            }
+            catch(Exception ex) { Debug.WriteLine(ex); }
             OnPropertyChanged(nameof(HasItems));
         }
 
-        bool HasCommander(Unit unit, int commanderId)
+        bool HasCommanderInTree(Unit unit, int commanderId)
         {
             Unit currentUnit = unit;
             while(currentUnit != null)
