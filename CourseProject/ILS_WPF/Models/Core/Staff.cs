@@ -1,8 +1,9 @@
 ﻿using ILS_WPF.Models.Core.Enums;
+using ILS_WPF.Models.Database;
 
 namespace ILS_WPF.Models.Core
 {
-    public class Staff
+    public class Staff : IDbEntry
     {
         public int Id { get; set; }
         public string? FullName { get; set; }

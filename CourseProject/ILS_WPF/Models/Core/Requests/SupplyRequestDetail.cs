@@ -1,8 +1,9 @@
 ﻿using ILS_WPF.Models.Core.Enums;
+using ILS_WPF.Models.Database;
 
 namespace ILS_WPF.Models.Core.Requests
 {
-    public class SupplyRequestDetail
+    public class SupplyRequestDetail : IDbEntry
     {
         public int Id { get; set; }
         public MaterialType MaterialType { get; set; }

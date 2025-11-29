@@ -4,7 +4,6 @@ using ILS_WPF.Models.Database;
 using ILS_WPF.MVMM;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace ILS_WPF.ViewModels
@@ -26,8 +25,7 @@ namespace ILS_WPF.ViewModels
         private string _commanderQuery;
         private Wrap<Warehouse>[] _warehouses;
         private Wrap<Unit>[] _units;
-        private Wrap<Staff>[] _soldiers;
-
+        private Wrap<Staff>[] _personnel;
 
         public string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
@@ -125,18 +123,20 @@ namespace ILS_WPF.ViewModels
 
         public Wrap<Warehouse>[] Warehouses { get => _warehouses; set { _warehouses = value; OnPropertyChanged(); } }
         public Wrap<Unit>[] Units { get => _units; set { _units = value; OnPropertyChanged(); } }
-        public Wrap<Staff>[] Soldiers { get => _soldiers; set { _soldiers = value; OnPropertyChanged(); } }
+        public Wrap<Staff>[] Personnel { get => _personnel; set { _personnel = value; OnPropertyChanged(); } }
 
         public Warehouse? SelectedWarehouse { get; set; }
         public List<Unit> SelectedUnits { get; set; } = new();
+        public List<Staff> SelectedPersonnel { get; set; } = new();
         public Staff? SelectedCommander { get; set; }
 
         public bool HasWarehouses => Warehouses?.Length > 0;
         public bool HasUnits => Units?.Length > 0;
-        public bool HasSoldiers => Soldiers?.Length > 0;
+        public bool HasPersonnel => Personnel?.Length > 0;
 
         public ICommand WarehouseWrapCheckedCommand { get; set; }
         public ICommand UnitWrapCheckedCommand { get; set; }
+        public ICommand StaffWrapCheckedCommand { get; set; }
         public ICommand RegisterCommand { get; set; }
 
         public AddUnitVM(IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
@@ -156,12 +156,14 @@ namespace ILS_WPF.ViewModels
             InitCommands();
             _ = LoadWarehouses();
             _ = LoadUnits();
+            _ = LoadPersonnel();
         }
 
         void InitCommands()
         {
             WarehouseWrapCheckedCommand = new RelayCommand(wrap => OnWarehouseWrapCheckChanged((wrap as Wrap<Warehouse>)!));
-            UnitWrapCheckedCommand = new RelayCommand(wrap => OnUnitWrapCheckChanged((wrap as Wrap<Unit>)!));
+            UnitWrapCheckedCommand = new RelayCommand(wrap => OnMultipleSelectionChanged((wrap as Wrap<Unit>)!, SelectedUnits));
+            StaffWrapCheckedCommand = new RelayCommand(wrap => OnMultipleSelectionChanged((wrap as Wrap<Staff>)!, SelectedPersonnel));
             RegisterCommand = new RelayCommand(async _ => await RegisterAsync(), _ => !string.IsNullOrWhiteSpace(Name));
         }
 
@@ -192,6 +194,14 @@ namespace ILS_WPF.ViewModels
                 .OrderByDescending(u=>u.IsChecked).ToArray();
 
             OnPropertyChanged(nameof(HasUnits));
+        }
+
+        async Task LoadPersonnel()
+        {
+            using var context = await _dbFactory.CreateDbContextAsync();
+            Personnel = await context.Personnel
+                .Where(p => p.UnitId == null && p.Rank <= UnitRankMatcher.CommanderRanks[SelectedUnitType].Last())
+                .Select(p=>new Wrap<Staff>(p)).ToArrayAsync();
         }
         
         bool IsUnitRelationMatches(Unit unit)
@@ -231,12 +241,12 @@ namespace ILS_WPF.ViewModels
             } 
         }
 
-        void OnUnitWrapCheckChanged(Wrap<Unit> wrap)
+        void OnMultipleSelectionChanged<T>(Wrap<T> wrap, List<T> collection) where T : class, IDbEntry
         {
             if (wrap.IsChecked)
-                SelectedUnits.Add(wrap.Value);
+                collection.Add(wrap.Value);
             else
-                SelectedUnits.RemoveAll(u => u.Id == wrap.Value.Id);
+                collection.RemoveAll(u => u.Id == wrap.Value.Id);
             _ = LoadUnits();
         }
     }

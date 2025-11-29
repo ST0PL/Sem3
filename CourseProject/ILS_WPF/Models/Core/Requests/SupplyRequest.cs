@@ -1,6 +1,8 @@
-﻿namespace ILS_WPF.Models.Core.Requests
+﻿using ILS_WPF.Models.Database;
+
+namespace ILS_WPF.Models.Core.Requests
 {
-    public class SupplyRequest
+    public class SupplyRequest : IDbEntry
     {
         public int Id { get; set; }
         public int RequestUnitId { get; set; }

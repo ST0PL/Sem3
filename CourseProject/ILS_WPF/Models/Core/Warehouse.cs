@@ -1,10 +1,11 @@
 ﻿using ILS_WPF.Models.Core.Enums;
 using ILS_WPF.Models.Core.Equipments;
 using ILS_WPF.Models.Core.Resources;
+using ILS_WPF.Models.Database;
 
 namespace ILS_WPF.Models.Core
 {
-    public class Warehouse
+    public class Warehouse : IDbEntry
     {
         public int Id { get; set; }
         public WarehouseType Type { get; set; }

@@ -1,9 +1,10 @@
 ﻿using ILS_WPF.Models.Core.Enums;
 using ILS_WPF.Models.Core.Requests;
+using ILS_WPF.Models.Database;
 
 namespace ILS_WPF.Models.Core
 {
-    public class Unit
+    public class Unit : IDbEntry
     {
         public int Id { get; set; }
         public string? Name { get; set; }
