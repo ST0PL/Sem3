@@ -1,0 +1,46 @@
+#pragma once
+#include <memory>
+#include <vector>
+#include <string>
+#include <iostream>
+#include <map>
+#include "Enums.hpp"
+
+class SupplyRequestDetail {
+
+public:
+    SupplyRequestDetail(const SupplyRequestDetail&);
+    SupplyRequestDetail(int, MaterialType, float);
+    SupplyRequestDetail& WithCaliber(Caliber);
+    SupplyRequestDetail& WithFuelType(FuelType);
+    SupplyRequestDetail& WithVehicleType(VehicleType);
+    int GetId() const;
+    MaterialType GetSupplyType() const;
+    Caliber GetCaliber() const;
+    VehicleType GetVehicleType() const;
+    FuelType GetFuelType() const;
+    float GetCount() const;
+    void SetCount(float);
+    std::string ToString() const;
+
+    SupplyRequestDetail& operator +=(float);
+    SupplyRequestDetail& operator -=(float);
+    friend std::ostream& operator << (std::ostream&, const SupplyRequestDetail& detail);
+    
+
+    static std::string MaterialTypeToString(MaterialType);
+    static std::string CaliberToString(Caliber);
+    static std::string FuelTypeToString(FuelType);
+    static std::string VehicleTypeToString(VehicleType);
+private:
+    int m_id;
+    MaterialType m_materialType;
+    Caliber m_caliber;
+    VehicleType m_vehicleType;
+    FuelType m_fuelType;
+    float m_count;
+    static const std::map<MaterialType, std::string> m_materialTypes;
+    static const std::map<Caliber, std::string> m_calibers;
+    static const std::map<FuelType, std::string> m_fuelTypes;
+    static const std::map<VehicleType, std::string> m_vehicleTypes;
+};
