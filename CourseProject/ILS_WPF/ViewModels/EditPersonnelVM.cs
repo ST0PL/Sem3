@@ -4,6 +4,7 @@ using ILS_WPF.Models.Database;
 using ILS_WPF.MVMM;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace ILS_WPF.ViewModels
@@ -97,7 +98,7 @@ namespace ILS_WPF.ViewModels
             _soldier.FullName = FullName;
             _soldier.Rank = CurrentRank;
             _soldier.Speciality = CurrentSpeciality;
-            _soldier.Unit = SelectedUnit;
+            _soldier.UnitId = SelectedUnit?.Id;
             await context.SaveChangesAsync();
             _dataRefreshCommand.Execute(null);
             _windowService.OpenMessageWindow("Изменение данных", "Данные о военнослужащем были успешно изменены.");
