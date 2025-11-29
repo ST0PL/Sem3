@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 
 namespace ILS_WPF.ViewModels
 {
@@ -10,7 +9,7 @@ namespace ILS_WPF.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public T Value { get; set; }
+        public T Value { get; }
         public bool IsChecked { get => _isChecked; set { _isChecked = value; OnPropertyChanged(); } }
 
         public Wrap(T value)

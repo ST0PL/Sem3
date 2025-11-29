@@ -10,7 +10,7 @@ namespace ILS_WPF.ViewModels
 {
     class WindowService : IWindowService
     {
-        public IServiceProvider _serviceProvider;
+        private IServiceProvider _serviceProvider;
 
         public WindowService(IServiceProvider serviceProvider)
             => _serviceProvider = serviceProvider;
