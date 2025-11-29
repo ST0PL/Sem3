@@ -66,6 +66,11 @@ namespace ILS_WPF.ViewModels
 
         async Task LoadUnits()
         {
+            Units = [];
+
+            if (CurrentRank > UnitRankMatcher.MaxBattalionRank)
+                return;
+
             using var context = await _dbFactory.CreateDbContextAsync();
             Units = await context.Units
                 .Include(u => u.Commander)
