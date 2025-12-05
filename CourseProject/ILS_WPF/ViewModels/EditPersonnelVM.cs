@@ -82,17 +82,18 @@ namespace ILS_WPF.ViewModels
         {
             Units = [];
 
-            if (CurrentRank > UnitRankMatcher.MaxBattalionRank)
-                return;
+            if (CurrentRank <= UnitRankMatcher.MaxBattalionRank)
+            {
+                using var context = await _dbFactory.CreateDbContextAsync();
+                Units = await context.Units
+                    .Include(u => u.Commander)
+                    .Where(u => u.Type == UnitType.Battalion && (string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%")))
+                    .Select(u => new Wrap<Unit>(u))
+                    .ToArrayAsync();
+                foreach (var w in Units)
+                    w.IsChecked = w.Value.Id == SelectedUnit?.Id;
+            }
 
-            using var context = await _dbFactory.CreateDbContextAsync();
-            Units = await context.Units
-                .Include(u => u.Commander)
-                .Where(u => u.Type == UnitType.Battalion && (string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%")))
-                .Select(u => new Wrap<Unit>(u))
-                .ToArrayAsync();
-            foreach (var w in Units)
-                w.IsChecked = w.Value.Id == SelectedUnit?.Id;
             OnPropertyChanged(nameof(HasItems));
         }
 
@@ -100,10 +101,16 @@ namespace ILS_WPF.ViewModels
         {
             using var context = await _dbFactory.CreateDbContextAsync();
             context.Attach(_soldier);
+
+            if ((SelectedUnit?.Id != _soldier.Unit?.Id))
+                // При смене подразделения открепляем солдата от управляемых им подразделений
+                await context.Units.Where(u => u.CommanderId == _soldier.Id).ForEachAsync(u => u.CommanderId = null);
+
             _soldier.FullName = FullName;
             _soldier.Rank = CurrentRank;
             _soldier.Speciality = CurrentSpeciality;
             _soldier.UnitId = SelectedUnit?.Id;
+
             await context.SaveChangesAsync();
             _dataRefreshCommand.Execute(null);
             _windowService.OpenMessageWindow("Изменение данных", "Данные о военнослужащем были успешно изменены.");

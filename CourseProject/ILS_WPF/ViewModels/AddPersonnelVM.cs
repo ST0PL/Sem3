@@ -68,19 +68,20 @@ namespace ILS_WPF.ViewModels
         {
             Units = [];
 
-            if (CurrentRank > UnitRankMatcher.MaxBattalionRank)
-                return;
-
-            using var context = await _dbFactory.CreateDbContextAsync();
-            Units = await context.Units
-                .Include(u => u.Commander)
-                .Where(u => u.Type == UnitType.Battalion && (string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%")))
-                .Select(u => new Wrap<Unit>(u))
-                .ToArrayAsync();
-            foreach (var w in Units)
-                w.IsChecked = w.Value.Id == SelectedUnit?.Id;
+            if (CurrentRank <= UnitRankMatcher.MaxBattalionRank)
+            {
+                using var context = await _dbFactory.CreateDbContextAsync();
+                Units = await context.Units
+                    .Include(u => u.Commander)
+                    .Where(u => u.Type == UnitType.Battalion && (string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%")))
+                    .Select(u => new Wrap<Unit>(u))
+                    .ToArrayAsync();
+                foreach (var w in Units)
+                    w.IsChecked = w.Value.Id == SelectedUnit?.Id;
+            }
             OnPropertyChanged(nameof(HasItems));
         }
+
         async Task RegisterAsync()
         {
             using var context = await _dbFactory.CreateDbContextAsync();

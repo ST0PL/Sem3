@@ -5,7 +5,7 @@ namespace ILS_WPF
     static class UnitRankMatcher
     {
         public const Rank MaxBattalionRank = Rank.LieutenantColonel;
-        public static Dictionary<UnitType, Rank[]> CommanderRanks = new Dictionary<UnitType, Rank[]>
+        private static Dictionary<UnitType, Rank[]> CommanderRanks = new Dictionary<UnitType, Rank[]>
         {
             { UnitType.Battalion, [Rank.Major, Rank.LieutenantColonel]},
             { UnitType.Regiment, [Rank.LieutenantColonel, Rank.Colonel] },
@@ -13,5 +13,11 @@ namespace ILS_WPF
             { UnitType.Division, [Rank.MajorGeneral, Rank.LieutenantGeneral] },
             { UnitType.Army, [Rank.LieutenantGeneral, Rank.ArmyGeneral] }
         };
+
+        public static bool IsMatches(UnitType unitType, Rank rank)
+        {
+            var maxMinRanks = CommanderRanks[unitType];
+            return rank >= maxMinRanks[0] && rank <= maxMinRanks[1];
+        }
     }
 }

@@ -100,11 +100,23 @@
                                            Foreground="#66FFFFFF"
                                            FontSize="13"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"
+                                        Visibility="{Binding Commander, Converter={StaticResource emptyVisibilityConverter}}">
                                 <TextBlock Text="Коммандир: "
                                            Foreground="#66FFFFFF"
                                            FontSize="13"/>
                                 <TextBlock Text="{Binding Commander.FullName}"
+                                           TextWrapping="Wrap"
+                                           MaxWidth="220"
+                                           Foreground="#66FFFFFF"
+                                           FontSize="13"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        Visibility="{Binding AssignedWarehouse, Converter={StaticResource emptyVisibilityConverter}}">
+                                <TextBlock Text="Склад: "
+                                           Foreground="#66FFFFFF"
+                                           FontSize="13"/>
+                                <TextBlock Text="{Binding AssignedWarehouse.Name}"
                                            TextWrapping="Wrap"
                                            MaxWidth="220"
                                            Foreground="#66FFFFFF"

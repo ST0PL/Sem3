@@ -71,6 +71,7 @@ namespace ILS_WPF.ViewModels
                ActualUnits =
                     (await context.Units
                     .Include(u => u.Commander)
+                    .Include(u => u.AssignedWarehouse)
                     .Where(u => string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%") || (u.CommanderId != null && EF.Functions.Like(u.Commander.FullName, $"%{Query}%")))
                     .ToArrayAsync())
                     .Where(u =>
