@@ -13,7 +13,6 @@ namespace ILS_WPF.ViewModels
 {
     public class StatVM : BaseVM
     {
-        private IViewModelUpdaterService _viewModeUpdaterService;
         private IDbContextFactory<ILSContext> _dbFactory;
 
         private int _totalPersonnel;
@@ -34,7 +33,6 @@ namespace ILS_WPF.ViewModels
 
         public StatVM(IViewModelUpdaterService viewUpdaterService, IDbContextFactory<ILSContext> dbFactory)
         {
-            _viewModeUpdaterService = viewUpdaterService;
             _dbFactory = dbFactory;
             RefreshCommand = new RelayCommand(async _=> await LoadData());
             viewUpdaterService.SetUpdateCommand<StatVM>(RefreshCommand);

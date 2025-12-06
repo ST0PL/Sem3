@@ -2,7 +2,6 @@
 using ILS_WPF.Models.Core.Enums;
 using ILS_WPF.Models.Database;
 using ILS_WPF.MVMM;
-using ILS_WPF.Services;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -12,7 +11,6 @@ namespace ILS_WPF.ViewModels
 {
     public class StructuresVM : BaseVM
     {
-        private IViewModelUpdaterService _viewModelUpdaterService;
         private IUserService _userService;
         private IDbContextFactory<ILSContext> _dbFactory;
         private string _query;

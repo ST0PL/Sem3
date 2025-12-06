@@ -10,7 +10,6 @@ namespace ILS_WPF.ViewModels
 {
     public class PersonnelVM : BaseVM
     {
-        private IViewModelUpdaterService _viewModelUpdaterService;
         private IUserService _userService;
         private IDbContextFactory<ILSContext> _dbFactory;
         private string _query;
@@ -60,7 +59,6 @@ namespace ILS_WPF.ViewModels
 
         public PersonnelVM(IViewModelUpdaterService viewUpdaterService, IUserService userService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
-            _viewModelUpdaterService = viewUpdaterService;
             _userService = userService;
             _dbFactory = dbFactory;
             Ranks = [.. Enum.GetValues<Rank>().Order()];
