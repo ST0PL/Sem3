@@ -61,8 +61,8 @@ namespace ILS_WPF.ViewModels
             _windowService = windowService;
             Ranks = Enum.GetValues<Rank>().SkipLast(1).Order().ToArray();
             Specialities = Enum.GetValues<Speciality>().SkipLast(1).Order().ToArray();
-            CurrentRank = Ranks[0];
-            CurrentSpeciality = Specialities[0];
+            _currentRank = _soldier.Rank;
+            CurrentSpeciality = _soldier.Speciality;
             WrapCheckedCommand = new RelayCommand(wrap => OnWrapCheckChanged((wrap as Wrap<Unit>)!));
             SaveCommand = new RelayCommand(async _=> await SaveAsync(), _=>!string.IsNullOrWhiteSpace(FullName));
             RemoveCommand = new RelayCommand(async _ => await RemoveAsync());
