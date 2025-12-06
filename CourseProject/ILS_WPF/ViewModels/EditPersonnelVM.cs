@@ -4,17 +4,16 @@ using ILS_WPF.Models.Database;
 using ILS_WPF.MVMM;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace ILS_WPF.ViewModels
 {
     public class EditPersonnelVM : BaseVM
     {
+        private IViewModelUpdaterService _viewModelUpdaterService;
         private Staff _soldier;
         private IDbContextFactory<ILSContext> _dbFactory;
         private IWindowService _windowService;
-        private ICommand _dataRefreshCommand;
         private string _fullName;
         private Rank _currentRank;
         private string _query;
@@ -54,12 +53,12 @@ namespace ILS_WPF.ViewModels
         public ICommand SaveCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
 
-        public EditPersonnelVM(Staff soldier, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
+        public EditPersonnelVM(Staff soldier, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
         {
             _soldier = soldier;
+            _viewModelUpdaterService = viewUpdaterService;
             _dbFactory = dbFactory;
             _windowService = windowService;
-            _dataRefreshCommand = dataRefreshCommand;
             Ranks = Enum.GetValues<Rank>().SkipLast(1).Order().ToArray();
             Specialities = Enum.GetValues<Speciality>().SkipLast(1).Order().ToArray();
             CurrentRank = Ranks[0];
@@ -112,7 +111,8 @@ namespace ILS_WPF.ViewModels
             _soldier.UnitId = SelectedUnit?.Id;
 
             await context.SaveChangesAsync();
-            _dataRefreshCommand.Execute(null);
+            _viewModelUpdaterService.Update<PersonnelVM>();
+            _viewModelUpdaterService.Update<StructuresVM>();
             _windowService.OpenMessageWindow("Изменение данных", "Данные о военнослужащем были успешно изменены.");
         }
         async Task RemoveAsync()
@@ -122,7 +122,9 @@ namespace ILS_WPF.ViewModels
             context.Users.RemoveRange(profiles);
             context.Personnel.Remove(_soldier);
             await context.SaveChangesAsync();
-            _dataRefreshCommand.Execute(null);
+            _viewModelUpdaterService.Update<PersonnelVM>();
+            _viewModelUpdaterService.Update<StructuresVM>();
+            _viewModelUpdaterService.Update<StatVM>();
             _windowService.OpenMessageWindow("Удаление данных", "Данные о военнослужащем были успешно удалены.");
         }
 

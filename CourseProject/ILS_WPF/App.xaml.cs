@@ -25,6 +25,7 @@ namespace ILS_WPF
                     s.AddTransient<IAccountService, AccountService>();
                     s.AddSingleton<IUserService, UserService>();
                     s.AddSingleton<IWindowService, WindowService>();
+                    s.AddSingleton<IViewModelUpdaterService, ViewModelUpdaterService>();
                     s.AddTransient<LoginVM>();
                     s.AddTransient<LoginWindow>();
                     s.AddTransient<MainVM>();

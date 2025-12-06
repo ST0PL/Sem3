@@ -10,9 +10,9 @@ namespace ILS_WPF.ViewModels
 {
     public class AddUnitVM : BaseVM
     {
+        private IViewModelUpdaterService _viewModelUpdaterService;
         private IDbContextFactory<ILSContext> _dbFactory;
         private IWindowService _windowService;
-        private ICommand _dataRefreshCommand;
         private WarehouseType _selectedWarehouseType;
         private RelationType _selectedUnitRelationType;
         private RelationType _selectedStaffRelationType;
@@ -92,8 +92,7 @@ namespace ILS_WPF.ViewModels
             set
             {
                 _selectedUnitType = value;
-                SelectedUnits = [];
-                SelectedPersonnel = [];
+                SelectedCommander = null;
                 _ = LoadUnits();
                 _ = LoadPersonnel();
                 _ = LoadCommanders();
@@ -158,21 +157,21 @@ namespace ILS_WPF.ViewModels
         public ICommand StaffWrapCheckedCommand { get; set; }
         public ICommand RegisterCommand { get; set; }
 
-        public AddUnitVM(IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
+        public AddUnitVM(IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
         {
+            _viewModelUpdaterService = viewUpdaterService;
             _dbFactory = dbFactory;
             _windowService = windowService;
-            _dataRefreshCommand = dataRefreshCommand;
             WarehouseTypes = Enum.GetValues<WarehouseType>().Order().ToArray();
             RelationTypes = Enum.GetValues<RelationType>().Order().ToArray();
             Specialities = Enum.GetValues<Speciality>().Order().ToArray();
             UnitTypes = Enum.GetValues<UnitType>().Order().Skip(1).ToArray();
-            SelectedWarehouseType = WarehouseTypes[0];
-            SelectedUnitRelationType = RelationTypes[0];
-            SelectedStaffRelationType = RelationTypes[0];
-            SelectedSoldierSpeciality = Specialities[0];
-            SelectedCommanderSpeciality = Specialities[0];
-            SelectedUnitType = UnitTypes[0];
+            _selectedWarehouseType = WarehouseTypes[0];
+            _selectedUnitRelationType = RelationTypes[0];
+            _selectedStaffRelationType = RelationTypes[0];
+            _selectedSoldierSpeciality = Specialities[0];
+            _selectedCommanderSpeciality = Specialities[0];
+            _selectedUnitType = UnitTypes[0];
             InitCommands();
             _ = LoadData();
         }
@@ -213,13 +212,15 @@ namespace ILS_WPF.ViewModels
                 Where(
                 w =>
                 (SelectedWarehouseType == WarehouseType.AnyType || w.Type == SelectedWarehouseType) &&
-                (string.IsNullOrWhiteSpace(WarehouseQuery) || EF.Functions.Like(w.Name, $"%{WarehouseQuery}%")))
+                (string.IsNullOrWhiteSpace(WarehouseQuery) || EF.Functions.Like(w.Name, $"%{WarehouseQuery}%")) &&
+                !context.Units.Any(u => u.AssignedWarehouseId == w.Id))
                 .Select(w=>new Wrap<Warehouse>(w) { IsChecked = (SelectedWarehouse != null && SelectedWarehouse.Id == w.Id) }).ToArrayAsync();
             OnPropertyChanged(nameof(HasWarehouses));
         }
 
         async Task LoadUnits()
         {
+            Units = [];
             using var context = await _dbFactory.CreateDbContextAsync();
 
             Units = (await context.Units
@@ -255,7 +256,7 @@ namespace ILS_WPF.ViewModels
                         IsRelationMatches(p, SelectedStaffRelationType, SelectedPersonnel) &&
                         !context.Units.Any(u=>u.CommanderId == p.Id))
                     .Select(p => new Wrap<Staff>(p) { IsChecked = SelectedPersonnel.Any(selected => selected.Id == p.Id) })
-                    .OrderBy(w=>w.IsChecked)
+                    .OrderByDescending(w=>w.IsChecked)
                     .ToArray();
             }
             OnPropertyChanged(nameof(HasPersonnel));
@@ -263,6 +264,7 @@ namespace ILS_WPF.ViewModels
 
         async Task LoadCommanders()
         {
+            Commanders = [];
             using var context = await _dbFactory.CreateDbContextAsync();
             Commanders = (await context.Personnel
                 .Where(c =>
@@ -272,7 +274,7 @@ namespace ILS_WPF.ViewModels
                 .ToArrayAsync())
                 .Where(c => UnitRankMatcher.IsMatches(SelectedUnitType, c.Rank) && !SelectedPersonnel.Any(p => p.Id == c.Id))
                 .Select(c =>new Wrap<Staff>(c) { IsChecked = SelectedCommander != null && SelectedCommander.Id == c.Id })
-                .OrderBy(w=>w.IsChecked)
+                .OrderByDescending(w=>w.IsChecked)
                 .ToArray();
 
             OnPropertyChanged(nameof(HasCommanders));
@@ -282,7 +284,7 @@ namespace ILS_WPF.ViewModels
         {
             using var context = await _dbFactory.CreateDbContextAsync();
 
-            foreach (var p in Personnel)
+            foreach (var p in SelectedPersonnel)
                 context.Attach(p);
             foreach (var c in SelectedUnits)
                 context.Attach(c);
@@ -290,13 +292,15 @@ namespace ILS_WPF.ViewModels
             await context.Units.AddAsync(new Unit()
             {
                 Name = Name,
+                Type = SelectedUnitType,
                 CommanderId = SelectedCommander?.Id,
                 AssignedWarehouseId = SelectedWarehouse?.Id,
                 Personnel = SelectedPersonnel,
                 Children = SelectedUnits
             });
+
             await context.SaveChangesAsync();
-            _dataRefreshCommand.Execute(null);
+            _viewModelUpdaterService.Update<StructuresVM>();
             _windowService.OpenMessageWindow("Регистрация данных", "Данные о подразделении были успешно зарегистрированы.");
         }
 
@@ -341,7 +345,7 @@ namespace ILS_WPF.ViewModels
             if (wrap.IsChecked)
                 collection.Add(wrap.Value);
             else
-                collection.RemoveAll(u => u.Id == wrap.Value.Id);
+                collection.RemoveAll(i => i.Id == wrap.Value.Id);
             action?.Invoke();
         }
     }

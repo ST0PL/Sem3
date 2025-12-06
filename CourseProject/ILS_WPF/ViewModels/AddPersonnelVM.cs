@@ -10,9 +10,9 @@ namespace ILS_WPF.ViewModels
 {
     public class AddPersonnelVM : BaseVM
     {
+        private IViewModelUpdaterService _viewModelUpdaterService;
         private IDbContextFactory<ILSContext> _dbFactory;
         private IWindowService _windowService;
-        private ICommand _dataRefreshCommand;
         private string _fullName;
         private Rank _currentRank;
         private string _query;
@@ -51,11 +51,11 @@ namespace ILS_WPF.ViewModels
         public ICommand RegisterCommand { get; set; }
         public ICommand WrapCheckedCommand { get; set; }
 
-        public AddPersonnelVM(IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
+        public AddPersonnelVM(IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
         {
+            _viewModelUpdaterService = viewUpdaterService;
             _dbFactory = dbFactory;
             _windowService = windowService;
-            _dataRefreshCommand = dataRefreshCommand;
             Ranks = Enum.GetValues<Rank>().SkipLast(1).Order().ToArray();
             Specialities = Enum.GetValues<Speciality>().SkipLast(1).Order().ToArray();
             CurrentRank = Ranks[0];
@@ -87,7 +87,9 @@ namespace ILS_WPF.ViewModels
             using var context = await _dbFactory.CreateDbContextAsync();
             await context.Personnel.AddAsync(new Staff(FullName, CurrentRank, CurrentSpeciality, SelectedUnit?.Id));
             await context.SaveChangesAsync();
-            _dataRefreshCommand.Execute(null);
+            _viewModelUpdaterService.Update<PersonnelVM>();
+            _viewModelUpdaterService.Update<StructuresVM>();
+            _viewModelUpdaterService.Update<StatVM>();
             _windowService.OpenMessageWindow("Регистрация данных", "Данные о военнослужащем были успешно зарегистрированы.");
         }
         void OnWrapCheckChanged(Wrap<Unit> wrap)

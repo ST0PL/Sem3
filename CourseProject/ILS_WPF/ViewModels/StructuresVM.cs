@@ -2,6 +2,7 @@
 using ILS_WPF.Models.Core.Enums;
 using ILS_WPF.Models.Database;
 using ILS_WPF.MVMM;
+using ILS_WPF.Services;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -11,6 +12,7 @@ namespace ILS_WPF.ViewModels
 {
     public class StructuresVM : BaseVM
     {
+        private IViewModelUpdaterService _viewModelUpdaterService;
         private IUserService _userService;
         private IDbContextFactory<ILSContext> _dbFactory;
         private string _query;
@@ -47,13 +49,14 @@ namespace ILS_WPF.ViewModels
         public ICommand OpenRegisterWindowCommand { get; set; }
         public ICommand OpenEditWindowCommand { get; set; }
 
-        public StructuresVM(IUserService userService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
+        public StructuresVM(IViewModelUpdaterService viewUpdaterService, IUserService userService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
             _userService = userService;
             _dbFactory = dbFactory;
             Types = [.. Enum.GetValues<UnitType>().Order()];
             CurrentType = Types[0];
             RefreshCommand = new RelayCommand(async _ => await LoadData());
+            viewUpdaterService.SetUpdateCommand<StructuresVM>(RefreshCommand);
             OpenRegisterWindowCommand = new RelayCommand(_=>windowService.OpenUnitRegisterWindow(RefreshCommand));
             OpenEditWindowCommand = new RelayCommand(arg => windowService.OpenUnitEditWindow((arg as Unit)!, RefreshCommand));
             _  = LoadData();
@@ -72,6 +75,8 @@ namespace ILS_WPF.ViewModels
                     (await context.Units
                     .Include(u => u.Commander)
                     .Include(u => u.AssignedWarehouse)
+                    .Include(u=>u.Personnel)
+                    .Include(u=>u.Children)
                     .Where(u => string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%") || (u.CommanderId != null && EF.Functions.Like(u.Commander.FullName, $"%{Query}%")))
                     .ToArrayAsync())
                     .Where(u =>

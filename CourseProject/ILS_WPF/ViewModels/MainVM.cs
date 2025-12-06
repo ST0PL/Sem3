@@ -25,6 +25,7 @@ namespace ILS_WPF.ViewModels
         public ICommand LogoutCommand { get; set; }
 
         public MainVM(
+            IViewModelUpdaterService viewUpdaterService,
             IWindowService windowService,
             IUserService userService,
             IAccountService accountService,
@@ -34,11 +35,11 @@ namespace ILS_WPF.ViewModels
             _views =
                 [
                     userService?.GetUser()?.Role < Role.Administator ?
-                        new MainViewCommander() : new MainView(new StatVM(dbFactory)),
+                        new MainViewCommander() : new MainView(new StatVM(viewUpdaterService,dbFactory)),
                     null,
                     null,
-                    new StructuresView(new StructuresVM(userService, windowService, dbFactory)),
-                    new PersonnelView(new PersonnelVM(userService, windowService, dbFactory))
+                    new StructuresView(new StructuresVM(viewUpdaterService, userService, windowService, dbFactory)),
+                    new PersonnelView(new PersonnelVM(viewUpdaterService,userService, windowService, dbFactory))
                 ];
             _currentView = _views[0];
             SetViewCommand = new RelayCommand(arg =>

@@ -10,121 +10,387 @@ namespace ILS_WPF.ViewModels
 {
     public class EditUnitVM : BaseVM
     {
-        private Staff _soldier;
+        private IViewModelUpdaterService _viewModelUpdaterService;
+        private Unit _unit;
         private IDbContextFactory<ILSContext> _dbFactory;
         private IWindowService _windowService;
-        private ICommand _dataRefreshCommand;
-        private string _fullName;
-        private Rank _currentRank;
-        private string _query;
+        private WarehouseType _selectedWarehouseType;
+        private RelationType _selectedUnitRelationType;
+        private RelationType _selectedStaffRelationType;
+        private Speciality _selectedCommanderSpeciality;
+        private Speciality _selectedSoldierSpeciality;
+        private UnitType _selectedUnitType;
+        private string? _name;
+        private string _unitQuery;
+        private string _warehouseQuery;
+        private string _staffQuery;
+        private string _commanderQuery;
+        private Wrap<Warehouse>[] _warehouses;
         private Wrap<Unit>[] _units;
+        private Wrap<Staff>[] _commanders;
+        private Wrap<Staff>[] _personnel;
+        private List<Staff> _unselectedPersonnel = [];
+        private List<Unit> _unselectedUnits = [];
 
-        public string FullName { get => _fullName; set { _fullName = value; OnPropertyChanged(); } }
+        public string? Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
-        public Rank CurrentRank
-        {
-            get => _currentRank;
-            set
-            {
-                _currentRank = value;
-                SelectedUnit = null;
-                _ = LoadUnits();
-            }
-        }
-        public Speciality CurrentSpeciality { get; set; }
-
-        public string Query
-        {
-            get => _query;
-            set
-            {
-                _query = value;
-                _ = LoadUnits();
-            }
-        }
-        public Wrap<Unit>[] Units { get => _units; set { _units = value; OnPropertyChanged(); } }
-        public bool HasItems => Units?.Length > 0;
-        public Unit? SelectedUnit { get; set; }
-
-        public Rank[] Ranks { get; set; }
+        public WarehouseType[] WarehouseTypes { get; set; }
+        public RelationType[] RelationTypes { get; set; }
         public Speciality[] Specialities { get; set; }
-        
-        public ICommand WrapCheckedCommand { get; set; }
-        public ICommand SaveCommand { get; set; }
-        public ICommand RemoveCommand { get; set; }
+        public UnitType[] UnitTypes { get; set; }
 
-        public EditUnitVM(Staff soldier, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
+        public WarehouseType SelectedWarehouseType
         {
-            _soldier = soldier;
+            get => _selectedWarehouseType;
+            set
+            {
+                _selectedWarehouseType = value;
+                _ = LoadWarehouses();
+            }
+        }
+
+        public RelationType SelectedUnitRelationType
+        {
+            get => _selectedUnitRelationType;
+            set
+            {
+                _selectedUnitRelationType = value;
+                _ = LoadUnits();
+            }
+        }
+
+        public RelationType SelectedStaffRelationType
+        {
+            get => _selectedStaffRelationType;
+            set
+            {
+                _selectedStaffRelationType = value;
+                _ = LoadPersonnel();
+            }
+        }
+
+        public Speciality SelectedCommanderSpeciality
+        {
+            get => _selectedCommanderSpeciality;
+            set
+            {
+                _selectedCommanderSpeciality = value;
+                _ = LoadCommanders();
+            }
+        }
+
+        public Speciality SelectedSoldierSpeciality
+        {
+            get => _selectedSoldierSpeciality;
+            set
+            {
+                _selectedSoldierSpeciality = value;
+                _ = LoadPersonnel();
+            }
+        }
+
+        public UnitType SelectedUnitType
+        {
+            get => _selectedUnitType;
+            set
+            {
+                _selectedUnitType = value;
+                SelectedCommander = null;
+                _ = LoadUnits();
+                _ = LoadPersonnel();
+                _ = LoadCommanders();
+            }
+        }
+
+        public string UnitQuery
+        {
+            get => _unitQuery;
+            set
+            {
+                _unitQuery = value;
+                _ = LoadUnits();
+            }
+        }
+        public string WarehouseQuery
+        {
+            get => _warehouseQuery;
+            set
+            {
+                _warehouseQuery = value;
+                _ = LoadWarehouses();
+            }
+        }
+        public string StaffQuery
+        {
+            get => _staffQuery;
+            set
+            {
+                _staffQuery = value;
+                _ = LoadPersonnel();
+            }
+        }
+        public string CommanderQuery
+        {
+            get => _commanderQuery;
+            set
+            {
+                _commanderQuery = value;
+                _ = LoadCommanders();
+            }
+        }
+
+        public Wrap<Warehouse>[] Warehouses { get => _warehouses; set { _warehouses = value; OnPropertyChanged(); } }
+        public Wrap<Unit>[] Units { get => _units; set { _units = value; OnPropertyChanged(); } }
+        public Wrap<Staff>[] Commanders { get => _commanders; set { _commanders = value; OnPropertyChanged(); } }
+        public Wrap<Staff>[] Personnel { get => _personnel; set { _personnel = value; OnPropertyChanged(); } }
+
+        public Warehouse? SelectedWarehouse { get; set; }
+        public List<Unit> SelectedUnits { get; set; } = new();
+        public Staff? SelectedCommander { get; set; }
+        public List<Staff> SelectedPersonnel { get; set; } = new();
+
+        public bool HasWarehouses => Warehouses?.Length > 0;
+        public bool HasUnits => Units?.Length > 0;
+        public bool HasCommanders => Commanders?.Length > 0;
+        public bool HasPersonnel => Personnel?.Length > 0;
+
+        public ICommand WarehouseWrapCheckedCommand { get; set; }
+        public ICommand UnitWrapCheckedCommand { get; set; }
+        public ICommand CommanderWrapCheckedCommand { get; set; }
+        public ICommand StaffWrapCheckedCommand { get; set; }
+        public ICommand RemoveCommand { get; set; }
+        public ICommand RegisterCommand { get; set; }
+
+        public EditUnitVM(Unit unit, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
+        {
+            _unit = unit;
+            _viewModelUpdaterService = viewUpdaterService;
             _dbFactory = dbFactory;
             _windowService = windowService;
-            _dataRefreshCommand = dataRefreshCommand;
-            Ranks = Enum.GetValues<Rank>().SkipLast(1).Order().ToArray();
-            Specialities = Enum.GetValues<Speciality>().SkipLast(1).Order().ToArray();
-            CurrentRank = Ranks[0];
-            CurrentSpeciality = Specialities[0];
-            WrapCheckedCommand = new RelayCommand(wrap => OnWrapCheckChanged((wrap as Wrap<Unit>)!));
-            SaveCommand = new RelayCommand(async _=> await SaveAsync(), _=>!string.IsNullOrWhiteSpace(FullName));
-            RemoveCommand = new RelayCommand(async _ => await RemoveAsync());
-            InitFormProperties();
+            WarehouseTypes = Enum.GetValues<WarehouseType>().Order().ToArray();
+            RelationTypes = Enum.GetValues<RelationType>().Order().ToArray();
+            Specialities = Enum.GetValues<Speciality>().Order().ToArray();
+            UnitTypes = Enum.GetValues<UnitType>().Order().Skip(1).ToArray();
+            _selectedWarehouseType = WarehouseTypes[0];
+            _selectedUnitRelationType = RelationTypes[0];
+            _selectedStaffRelationType = RelationTypes[0];
+            _selectedSoldierSpeciality = Specialities[0];
+            _selectedCommanderSpeciality = Specialities[0];
+            _selectedUnitType = UnitTypes[0];
+            InitCommands();
+            InitFormFields();
+            _ = LoadData();
         }
 
-        void InitFormProperties()
+
+        void InitFormFields()
         {
-            FullName = _soldier.FullName!;
-            CurrentRank = _soldier.Rank;
-            CurrentSpeciality = _soldier.Speciality;
-            SelectedUnit = _soldier.Unit;
+            Name = _unit.Name;
+            SelectedUnitType = _unit.Type;
+            SelectedWarehouse = _unit.AssignedWarehouse;
+            SelectedUnits = _unit.Children;
+            SelectedCommander = _unit.Commander;
+            SelectedPersonnel = _unit.Personnel;
+        }
+
+        void InitCommands()
+        {
+            WarehouseWrapCheckedCommand = new RelayCommand(wrap => OnSingleSelectionChanged((wrap as Wrap<Warehouse>)!, Warehouses, w => SelectedWarehouse = w));
+            UnitWrapCheckedCommand = new RelayCommand(wrap => OnMultipleSelectionChanged((wrap as Wrap<Unit>)!, SelectedUnits, () => _ = LoadUnits(), _unselectedUnits));
+            CommanderWrapCheckedCommand =
+                new RelayCommand(wrap => OnSingleSelectionChanged((wrap as Wrap<Staff>)!, Commanders,
+                cmd =>
+                {
+                    SelectedCommander = cmd;
+                    _ = LoadCommanders();
+                    _ = LoadPersonnel();
+
+                }));
+            StaffWrapCheckedCommand = new RelayCommand(wrap => OnMultipleSelectionChanged((wrap as Wrap<Staff>)!, SelectedPersonnel, () =>
+            {
+                _ = LoadPersonnel();
+                _ = LoadCommanders();
+            }, _unselectedPersonnel));
+            RegisterCommand = new RelayCommand(async _ => await SaveAsync(), _ => !string.IsNullOrWhiteSpace(Name));
+            RemoveCommand = new RelayCommand(async _=> await RemoveAsync());
+        }
+
+        async Task LoadData()
+        {
+            await LoadWarehouses();
+            await LoadUnits();
+            await LoadCommanders();
+            await LoadPersonnel();
+        }
+
+        async Task LoadWarehouses()
+        {
+            using var context = await _dbFactory.CreateDbContextAsync();
+            Warehouses = await context.Warehouses.
+                Where(
+                w =>
+                (SelectedWarehouseType == WarehouseType.AnyType || w.Type == SelectedWarehouseType) &&
+                (string.IsNullOrWhiteSpace(WarehouseQuery) || EF.Functions.Like(w.Name, $"%{WarehouseQuery}%")) &&
+                (w.Id == _unit.AssignedWarehouseId || !context.Units.Any(u=>u.AssignedWarehouseId == w.Id)))
+                .Select(w=>new Wrap<Warehouse>(w) { IsChecked = (SelectedWarehouse != null && SelectedWarehouse.Id == w.Id) })
+                .OrderByDescending(w=>w.IsChecked)
+                .ToArrayAsync();
+            OnPropertyChanged(nameof(HasWarehouses));
         }
 
         async Task LoadUnits()
         {
+            Units = [];
             using var context = await _dbFactory.CreateDbContextAsync();
-            Units = await context.Units
+
+            Units = (await context.Units
                 .Include(u => u.Commander)
-                .Where(u => u.Type == UnitType.Battalion && (string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%")))
-                .Select(u => new Wrap<Unit>(u))
-                .ToArrayAsync();
-            foreach (var w in Units)
-                w.IsChecked = w.Value.Id == SelectedUnit?.Id;
-            OnPropertyChanged(nameof(HasItems));
+                .Where(u => (u.Type == (SelectedUnitType - 1)) &&
+                    (string.IsNullOrWhiteSpace(UnitQuery) || EF.Functions.Like(u.Name, $"%{UnitQuery}%") || (u.Commander != null && EF.Functions.Like(u.Commander.FullName, $"%{UnitQuery}%"))) &&
+                    (u.ParentId == _unit.Id || u.ParentId == null))
+                .ToArrayAsync())
+                .Where(u => IsRelationMatches(u, SelectedUnitRelationType, SelectedUnits))
+                .Select(u => new Wrap<Unit>(u) { IsChecked = SelectedUnits.Any(selected=>selected.Id == u.Id) })
+                .OrderByDescending(u=>u.IsChecked).ToArray();
+
+            OnPropertyChanged(nameof(HasUnits));
+        }
+
+        async Task LoadPersonnel()
+        {
+            Personnel = [];
+
+            if (SelectedUnitType == UnitType.Battalion)
+            {
+                using var context = await _dbFactory.CreateDbContextAsync();
+                Personnel = (await context.Personnel
+                    .Include(p => p.Unit)
+                    .Where(p =>
+                        (p.UnitId == _unit.Id || p.UnitId == null) &&
+                        (SelectedCommander == null || p.Id != SelectedCommander.Id) &&
+                        p.Rank <= UnitRankMatcher.MaxBattalionRank &&
+                        (SelectedSoldierSpeciality == Speciality.AnySpeciality || p.Speciality == SelectedSoldierSpeciality) &&
+                        (string.IsNullOrWhiteSpace(StaffQuery) || EF.Functions.Like(p.FullName, $"%{StaffQuery}%")))
+                    .ToArrayAsync())
+                    .Where(p =>
+                        IsRelationMatches(p, SelectedStaffRelationType, SelectedPersonnel) &&
+                        !context.Units.Any(u=>u.CommanderId == p.Id))
+                    .Select(p => new Wrap<Staff>(p) { IsChecked = SelectedPersonnel.Any(selected => selected.Id == p.Id) })
+                    .OrderByDescending(w=>w.IsChecked)
+                    .ToArray();
+            }
+            OnPropertyChanged(nameof(HasPersonnel));
+        }
+
+        async Task LoadCommanders()
+        {
+            Commanders = [];
+            using var context = await _dbFactory.CreateDbContextAsync();
+            Commanders = (await context.Personnel
+                .Where(c =>
+                    (SelectedCommanderSpeciality == Speciality.AnySpeciality || c.Speciality == SelectedCommanderSpeciality) &&
+                    (string.IsNullOrWhiteSpace(CommanderQuery) || EF.Functions.Like(c.FullName, $"%{CommanderQuery}%")) &&
+                    !context.Units.Any(u=>u.Id != _unit.Id && u.CommanderId == c.Id) && c.UnitId == null)
+                .ToArrayAsync())
+                .Where(c => UnitRankMatcher.IsMatches(SelectedUnitType, c.Rank) && !SelectedPersonnel.Any(p => p.Id == c.Id))
+                .Select(c =>new Wrap<Staff>(c) { IsChecked = SelectedCommander != null && SelectedCommander.Id == c.Id })
+                .OrderByDescending(w=>w.IsChecked)
+                .ToArray();
+
+            OnPropertyChanged(nameof(HasCommanders));
         }
 
         async Task SaveAsync()
         {
             using var context = await _dbFactory.CreateDbContextAsync();
-            context.Attach(_soldier);
-            _soldier.FullName = FullName;
-            _soldier.Rank = CurrentRank;
-            _soldier.Speciality = CurrentSpeciality;
-            _soldier.Unit = SelectedUnit;
+
+            // Обработка внешний ключей
+            SelectedPersonnel.ForEach(p => { context.Attach(p); p.UnitId = _unit.Id; });
+            SelectedUnits.ForEach(u => { context.Attach(u); u.ParentId = _unit.Id; });
+            _unselectedUnits.ForEach(u => { context.Attach(u); u.ParentId = null; });
+            _unselectedPersonnel.ForEach(p => { context.Attach(p); p.UnitId = null; });
+
+            // Если произошла хотя-бы одна итерация с context.attach, то _unit уже отслеживается
+
+            bool unitAlreadyAttached =
+                SelectedPersonnel.Count > 0 ||
+                SelectedUnits.Count > 0     ||
+                _unselectedUnits.Count > 0  ||
+                _unselectedPersonnel.Count > 0;
+
+            _unit.Name = Name;
+            _unit.Type = SelectedUnitType;
+            _unit.CommanderId = SelectedCommander?.Id;
+            _unit.AssignedWarehouseId = SelectedWarehouse?.Id;
+
+            if (!unitAlreadyAttached)
+                context.Update(_unit);
+
             await context.SaveChangesAsync();
-            _dataRefreshCommand.Execute(null);
-            _windowService.OpenMessageWindow("Изменение данных", "Данные о военнослужащем были успешно изменены.");
+            _viewModelUpdaterService.Update<StructuresVM>();
+            _viewModelUpdaterService.Update<PersonnelVM>();
+            _windowService.OpenMessageWindow("Изменение данных", "Данные о подразделении были успешно изменены.");
         }
         async Task RemoveAsync()
         {
             using var context = await _dbFactory.CreateDbContextAsync();
-            var profiles = context.Users.Where(u => u.StaffId == _soldier.Id);
-            context.Users.RemoveRange(profiles);
-            context.Personnel.Remove(_soldier);
+            context.Attach(_unit);
+            context.Remove(_unit);
             await context.SaveChangesAsync();
-            _dataRefreshCommand.Execute(null);
-            _windowService.OpenMessageWindow("Удаление данных", "Данные о военнослужащем были успешно удалены.");
+            _viewModelUpdaterService.Update<StructuresVM>();
+            _viewModelUpdaterService.Update<PersonnelVM>();
+            _windowService.OpenMessageWindow("Удаление данных", "Данные о подразделении были успешно удалены.");
         }
 
-        void OnWrapCheckChanged(Wrap<Unit> wrap)
+        void OnSingleSelectionChanged<T>(
+            Wrap<T>? wrap,
+            IEnumerable<Wrap<T>> collection,
+            Action<T?> updatePropertyAction) where T : class?
         {
-            SelectedUnit = wrap.IsChecked ? wrap.Value : null;
+            if(wrap == null)
+            {
+                updatePropertyAction(null);
+                return;
+            }
             if (wrap.IsChecked)
             {
-                foreach (var w in Units)
+                foreach (var w in collection)
                 {
                     if (w != wrap)
                         w.IsChecked = false;
                 }
             }
+            updatePropertyAction(wrap.IsChecked ? wrap.Value : null);
+        }
 
+        bool IsRelationMatches<T>(T item, RelationType relationType, IEnumerable<T> collection) where T : IDbEntry
+        {
+            if (relationType == RelationType.AnyType)
+                return true;
+
+            bool isAttached = collection.Any(i => i.Id == item.Id);
+
+            return relationType switch
+            {
+                RelationType.Attached => isAttached,
+                RelationType.NotAttached => !isAttached,
+                _ => false
+            };
+        }
+
+        void OnMultipleSelectionChanged<T>(Wrap<T> wrap, List<T> collection, Action action, List<T> unselectedCollection) where T : class, IDbEntry
+        {
+            if (wrap.IsChecked)
+            {
+                collection.Add(wrap.Value);
+                unselectedCollection.RemoveAll(i => i.Id == wrap.Value.Id);
+            }
+            else
+            {
+                collection.RemoveAll(i => i.Id == wrap.Value.Id);
+                unselectedCollection.Add(wrap.Value);
+            }
+            action?.Invoke();
         }
     }
 }
