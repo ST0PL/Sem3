@@ -75,7 +75,7 @@
                                  Command="{Binding RemoveCommand}"
                                  Click="CloseButton_Click"/>
                     <clib:Button Style="{StaticResource DarkGreenButtonStyle}"
-                                 Content="Зарегистрировать"
+                                 Content="Сохранить"
                                  Padding="20,10,20,10"
                                  Command="{Binding SaveCommand}"
                                  Click="CloseButton_Click"/>
