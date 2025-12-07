@@ -38,7 +38,7 @@
                     <RowDefinition/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Регистрация данных подразделения"
+                <TextBlock Text="Изменение данных подразделения"
                            Margin="30,25,0,0"
                            Foreground="#00D492"
                            FontWeight="SemiBold"
@@ -266,7 +266,8 @@
                                                                        Foreground="#73FFFFFF"
                                                                        FontSize="12"/>
                                                         </StackPanel>
-                                                        <StackPanel Orientation="Horizontal">
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    Visibility="{Binding Value.Commander, Converter={StaticResource emptyVisibilityConverter}}">
                                                             <TextBlock Text="Коммандир: "
                                                                        Foreground="#73FFFFFF"
                                                                        FontSize="12"/>

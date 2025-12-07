@@ -266,7 +266,8 @@
                                                                        Foreground="#73FFFFFF"
                                                                        FontSize="12"/>
                                                         </StackPanel>
-                                                        <StackPanel Orientation="Horizontal">
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    Visibility="{Binding Value.Commander, Converter={StaticResource emptyVisibilityConverter}}">
                                                             <TextBlock Text="Коммандир: "
                                                                        Foreground="#73FFFFFF"
                                                                        FontSize="12"/>
