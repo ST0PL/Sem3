@@ -1,0 +1,120 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib">
+    <DataTemplate x:Key="AmmunitionTemplate">
+        <clib:Button Background="#101828"
+                     BorderBrush="#333E50"
+                     HoverBackgroundColor="#0d1422"
+                     CornerRadius="20"
+                     Width="350"
+                     Cursor="Hand"
+                     HorizontalContentAlignment="Left"
+                     Margin="25,20,25,0"
+                     Height="105"
+                     Command="{Binding DataContext.OpenEditEntryWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                     CommandParameter="{Binding}">
+            <StackPanel Margin="10">
+                <TextBlock Text="{Binding Name}"
+                           Foreground="#00D492"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           TextTrimming="CharacterEllipsis"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Тип: "
+                               FontSize="13"
+                               Foreground="#66FFFFFF"/>
+                    <TextBlock Text="{Binding Type, Converter={StaticResource enumConverter}}"
+                               Foreground="#66FFFFFF"
+                               FontSize="13"/>
+                </StackPanel>
+            </StackPanel>
+        </clib:Button>
+    </DataTemplate>
+    <DataTemplate x:Key="FuelTemplate">
+        <clib:Button Background="#101828"
+                     BorderBrush="#333E50"
+                     HoverBackgroundColor="#0d1422"
+                     CornerRadius="20"
+                     Width="350"
+                     Cursor="Hand"
+                     HorizontalContentAlignment="Left"
+                     Margin="25,20,25,0"
+                     Height="105"
+                     Command="{Binding DataContext.OpenEditEntryWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                     CommandParameter="{Binding}">
+            <StackPanel Margin="10">
+                <TextBlock Text="{Binding Name}"
+                           Foreground="#00D492"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           TextTrimming="CharacterEllipsis"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Тип: "
+                               FontSize="13"
+                               Foreground="#66FFFFFF"/>
+                    <TextBlock Text="{Binding Type, Converter={StaticResource enumConverter}}"
+                               Foreground="#66FFFFFF"
+                               FontSize="13"/>
+                </StackPanel>
+            </StackPanel>
+        </clib:Button>
+    </DataTemplate>
+    <DataTemplate x:Key="VehicleTemplate">
+        <clib:Button Background="#101828"
+                     BorderBrush="#333E50"
+                     HoverBackgroundColor="#0d1422"
+                     CornerRadius="20"
+                     Width="350"
+                     Cursor="Hand"
+                     HorizontalContentAlignment="Left"
+                     Margin="25,20,25,0"
+                     Height="105"
+                     Command="{Binding DataContext.OpenEditEntryWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                     CommandParameter="{Binding}">
+            <StackPanel Margin="10">
+                <TextBlock Text="{Binding Name}"
+                           Foreground="#00D492"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           TextTrimming="CharacterEllipsis"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Тип: "
+                               FontSize="13"
+                               Foreground="#66FFFFFF"/>
+                    <TextBlock Text="{Binding Type, Converter={StaticResource enumConverter}}"
+                               Foreground="#66FFFFFF"
+                               FontSize="13"/>
+                </StackPanel>
+            </StackPanel>
+        </clib:Button>        
+    </DataTemplate>
+    <DataTemplate x:Key="WeaponTemplate">
+        <clib:Button Background="#101828"
+                     BorderBrush="#333E50"
+                     HoverBackgroundColor="#0d1422"
+                     CornerRadius="20"
+                     Width="350"
+                     Cursor="Hand"
+                     HorizontalContentAlignment="Left"
+                     Margin="25,20,25,0"
+                     Height="105"
+                     Command="{Binding DataContext.OpenEditEntryWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                     CommandParameter="{Binding}">
+            <StackPanel Margin="10">
+                <TextBlock Text="{Binding Name}"
+                           Foreground="#00D492"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           TextTrimming="CharacterEllipsis"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Тип: "
+                               FontSize="13"
+                               Foreground="#66FFFFFF"/>
+                    <TextBlock Text="{Binding Type, Converter={StaticResource enumConverter}}"
+                               Foreground="#66FFFFFF"
+                               FontSize="13"/>
+                </StackPanel>
+            </StackPanel>
+        </clib:Button>
+    </DataTemplate>
+</ResourceDictionary>

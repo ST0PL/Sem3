@@ -157,7 +157,7 @@ namespace ILS_WPF.ViewModels
         public ICommand StaffWrapCheckedCommand { get; set; }
         public ICommand RegisterCommand { get; set; }
 
-        public AddUnitVM(IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
+        public AddUnitVM(IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
             _viewModelUpdaterService = viewUpdaterService;
             _dbFactory = dbFactory;

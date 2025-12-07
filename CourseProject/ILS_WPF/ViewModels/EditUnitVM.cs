@@ -161,7 +161,7 @@ namespace ILS_WPF.ViewModels
         public ICommand RemoveCommand { get; set; }
         public ICommand RegisterCommand { get; set; }
 
-        public EditUnitVM(Unit unit, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
+        public EditUnitVM(Unit unit, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
             _unit = unit;
             _viewModelUpdaterService = viewUpdaterService;
@@ -185,8 +185,8 @@ namespace ILS_WPF.ViewModels
 
         void InitFormFields()
         {
-            Name = _unit.Name;
-            SelectedUnitType = _unit.Type;
+            _name = _unit.Name;
+            _selectedUnitType = _unit.Type;
             SelectedWarehouse = _unit.AssignedWarehouse;
             SelectedUnits = _unit.Children;
             SelectedCommander = _unit.Commander;
@@ -334,7 +334,6 @@ namespace ILS_WPF.ViewModels
         async Task RemoveAsync()
         {
             using var context = await _dbFactory.CreateDbContextAsync();
-            context.Attach(_unit);
             context.Remove(_unit);
             await context.SaveChangesAsync();
             _viewModelUpdaterService.Update<StructuresVM>();

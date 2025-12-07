@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="ILS_WPF.Views.Structures.StructuresView"
+﻿<UserControl x:Class="ILS_WPF.Views.Warehouses.WarehouseListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ILS_WPF.Views.Structures"
+             xmlns:local="clr-namespace:ILS_WPF.Views.Warehouses"
              xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
              xmlns:prop="clr-namespace:ControlsLib.AttachedProperties;assembly=ControlsLib"
              mc:Ignorable="d" 
@@ -19,7 +19,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Подразделения"
+            <TextBlock Text="Склады"
                        FontSize="30"
                        FontWeight="SemiBold"
                        Foreground="#00D492"/>
@@ -37,14 +37,14 @@
                     Orientation="Horizontal">
             <clib:TextBox Style="{StaticResource TextBoxStyle}"
                           Margin="0,20,0,0"
-                          Width="705"
-                          Placeholder="Поиск по названию подразделения или ФИО коммандира"
+                          Width="685"
+                          Placeholder="Поиск по названию склада"
                           Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"/>
             <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
-                           SelectedValue="{Binding CurrentType}"
+                           SelectedValue="{Binding SelectedWarehouseType}"
                            Margin="10,0,0,0"
                            Width="175"
-                           ItemsSource="{Binding Types}">
+                           ItemsSource="{Binding WarehouseTypes}">
                 <clib:ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
@@ -54,9 +54,9 @@
                 </clib:ComboBox.ItemTemplate>
             </clib:ComboBox>
             <clib:Button Style="{StaticResource DarkGreenButtonStyle}"
-                         Content="Сформировать"
+                         Content="Зарегистрировать"
                          Grid.Column="1"
-                         Margin="20,0,0,0"
+                         Margin="15,0,0,0"
                          CornerRadius="20"
                          Padding="15"   
                          VerticalAlignment="Bottom"
@@ -66,7 +66,7 @@
         <clib:ListView Style="{StaticResource ListViewStyle}"
                        Grid.Row="2"
                        Margin="100,10,10,10"
-                       ItemsSource="{Binding ActualUnits}">
+                       ItemsSource="{Binding Warehouses}">
             <clib:ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal"
@@ -84,7 +84,7 @@
                                  HorizontalContentAlignment="Left"
                                  Margin="25,20,25,0"
                                  Height="105"
-                                 Command="{Binding DataContext.OpenEditWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                 Command="{Binding DataContext.NavigateToWarehouseViewCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                  CommandParameter="{Binding}">
                         <StackPanel Margin="10">
                             <TextBlock Text="{Binding Name}"
@@ -94,31 +94,9 @@
                                        TextTrimming="CharacterEllipsis"/>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Тип: "
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
+                                           FontSize="13"
+                                           Foreground="#66FFFFFF"/>
                                 <TextBlock Text="{Binding Type, Converter={StaticResource enumConverter}}"
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal"
-                                        Visibility="{Binding Commander, Converter={StaticResource emptyVisibilityConverter}}">
-                                <TextBlock Text="Коммандир: "
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                                <TextBlock Text="{Binding Commander.FullName}"
-                                           TextWrapping="Wrap"
-                                           MaxWidth="220"
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal"
-                                        Visibility="{Binding AssignedWarehouse, Converter={StaticResource emptyVisibilityConverter}}">
-                                <TextBlock Text="Склад: "
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                                <TextBlock Text="{Binding AssignedWarehouse.Name}"
-                                           TextWrapping="Wrap"
-                                           MaxWidth="220"
                                            Foreground="#66FFFFFF"
                                            FontSize="13"/>
                             </StackPanel>

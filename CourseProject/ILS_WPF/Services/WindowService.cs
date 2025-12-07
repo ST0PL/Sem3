@@ -16,44 +16,69 @@ namespace ILS_WPF.Services
         public WindowService(IServiceProvider serviceProvider)
             => _serviceProvider = serviceProvider;
 
-        public void OpenLoginWindow()
+
+        private void OpenServiceWindow<T>() where T : Window
         {
-            Application.Current.MainWindow = _serviceProvider.GetService<LoginWindow>();
+            Application.Current.MainWindow = _serviceProvider.GetService<T>();
             Application.Current.MainWindow?.Show();
         }
+
+        public void OpenLoginWindow()
+            => OpenServiceWindow<LoginWindow>();
 
         public void OpenMainWindow()
-        {
-            Application.Current.MainWindow = _serviceProvider.GetService<MainWindow>();
-            Application.Current.MainWindow?.Show();
-        }
+            => OpenServiceWindow<MainWindow>();
+
         public void CloseApplicationWindow()
             => Application.Current.MainWindow?.Close();
-
-        public void OpenPersonnelRegisterWindow(ICommand dataRefreshCommand)
+            
+        public void OpenPersonnelRegisterWindow()
             => new Views.Personnel.AddWindow(new AddPersonnelVM(
                 _serviceProvider.GetService<IViewModelUpdaterService>(),
                 this,
-                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!, dataRefreshCommand)).ShowDialog();
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
-        public void OpenPersonnelEditWindow(Staff soldier, ICommand dataRefreshCommand)
+        public void OpenPersonnelEditWindow(Staff soldier)
             => new Views.Personnel.EditWindow(new EditPersonnelVM(soldier, _serviceProvider.GetService<IViewModelUpdaterService>(),
                 this,
-                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!, dataRefreshCommand)).ShowDialog();
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
         public void OpenMessageWindow(string title, string text)
             => new MessageWindow(title, text).Show();
 
-        public void OpenUnitRegisterWindow(ICommand dataRefreshCommand)
+        public void OpenUnitRegisterWindow()
             => new Views.Structures.AddWindow(new AddUnitVM(
                 _serviceProvider.GetService<IViewModelUpdaterService>(),
                 this,
-                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!, dataRefreshCommand)).ShowDialog();
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
-        public void OpenUnitEditWindow(Unit unit, ICommand dataRefreshCommand)
+        public void OpenUnitEditWindow(Unit unit)
             => new Views.Structures.EditWindow(new EditUnitVM(unit,
                 _serviceProvider.GetService<IViewModelUpdaterService>(),
                 this,
-                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!, dataRefreshCommand)).ShowDialog();
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
+
+        public void OpenWarehouseRegisterWindow()
+            => new Views.Warehouses.AddWindow(new AddWarehouseVM(
+                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
+
+        public void OpenWarehouseEditWindow(int warehouseId, ICommand navigateBackCommand)
+            => new Views.Warehouses.EditWindow(new EditWarehouseVM(warehouseId,
+                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!,
+                navigateBackCommand)).ShowDialog();
+
+        public void OpenWarehouseEntryRegisterWindow()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OpenWarehouseEntryEditWindow(object entry)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

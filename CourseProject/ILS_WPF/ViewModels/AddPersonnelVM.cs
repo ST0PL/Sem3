@@ -51,7 +51,7 @@ namespace ILS_WPF.ViewModels
         public ICommand RegisterCommand { get; set; }
         public ICommand WrapCheckedCommand { get; set; }
 
-        public AddPersonnelVM(IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
+        public AddPersonnelVM(IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
             _viewModelUpdaterService = viewUpdaterService;
             _dbFactory = dbFactory;

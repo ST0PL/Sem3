@@ -13,13 +13,12 @@ namespace ILS_WPF.Models.Core
         public virtual List<Resource> Resources { get; set; } = [];
         public virtual List<Equipment> Equipments { get; set; } = [];
 
-        public Warehouse(int id, string name, WarehouseType type)
+        public Warehouse(string name, WarehouseType type)
         {
-            Id = id;
             Name = name;
             Type = type;
         }
 
-        protected Warehouse() { } // Для EF
+        public Warehouse() { }
     }
 }

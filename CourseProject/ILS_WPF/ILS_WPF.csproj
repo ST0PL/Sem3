@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Tasks\" />
-    <Folder Include="Views\Warehouses\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +38,12 @@
     <Resource Include="Resources\Fonts\Inter-Regular.otf" />
     <Resource Include="Resources\Fonts\Inter-SemiBold.otf" />
     <Resource Include="Resources\Icons\ils.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Warehouses\EditWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

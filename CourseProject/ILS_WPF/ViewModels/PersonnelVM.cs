@@ -67,8 +67,8 @@ namespace ILS_WPF.ViewModels
             CurrentSpeciality = Specialities[0];
             RefreshCommand = new RelayCommand(async _ => await LoadData());
             viewUpdaterService.SetUpdateCommand<PersonnelVM>(RefreshCommand);
-            OpenRegisterWindowCommand = new RelayCommand(_=>windowService.OpenPersonnelRegisterWindow(RefreshCommand));
-            OpenEditWindowCommand = new RelayCommand(arg => windowService.OpenPersonnelEditWindow((arg as Staff)!, RefreshCommand));
+            OpenRegisterWindowCommand = new RelayCommand(_=>windowService.OpenPersonnelRegisterWindow());
+            OpenEditWindowCommand = new RelayCommand(arg => windowService.OpenPersonnelEditWindow((arg as Staff)!));
             _  = LoadData();
         }
 

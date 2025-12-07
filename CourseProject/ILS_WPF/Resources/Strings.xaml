@@ -50,5 +50,14 @@
     <sys:String x:Key="Attached">Прикрепленные</sys:String>
     <sys:String x:Key="NotAttached">Неприкрепленные</sys:String>
 
+    <sys:String x:Key="Vehicle">Транспорт</sys:String>
+    <sys:String x:Key="Fuel">Топливо</sys:String>
+    <sys:String x:Key="Ammunition">Боеприпасы</sys:String>
+    <sys:String x:Key="Weapon">Вооружение</sys:String>
+
+    <sys:String x:Key="Item">шт.</sys:String>
+    <sys:String x:Key="Kilogramm">кг.</sys:String>
+    <sys:String x:Key="Liter">л.</sys:String>
+
 
 </ResourceDictionary>

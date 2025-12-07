@@ -53,7 +53,7 @@ namespace ILS_WPF.ViewModels
         public ICommand SaveCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
 
-        public EditPersonnelVM(Staff soldier, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, ICommand dataRefreshCommand)
+        public EditPersonnelVM(Staff soldier, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
             _soldier = soldier;
             _viewModelUpdaterService = viewUpdaterService;

@@ -55,8 +55,8 @@ namespace ILS_WPF.ViewModels
             CurrentType = Types[0];
             RefreshCommand = new RelayCommand(async _ => await LoadData());
             viewUpdaterService.SetUpdateCommand<StructuresVM>(RefreshCommand);
-            OpenRegisterWindowCommand = new RelayCommand(_=>windowService.OpenUnitRegisterWindow(RefreshCommand));
-            OpenEditWindowCommand = new RelayCommand(arg => windowService.OpenUnitEditWindow((arg as Unit)!, RefreshCommand));
+            OpenRegisterWindowCommand = new RelayCommand(_=>windowService.OpenUnitRegisterWindow());
+            OpenEditWindowCommand = new RelayCommand(arg => windowService.OpenUnitEditWindow((arg as Unit)!));
             _  = LoadData();
         }
 

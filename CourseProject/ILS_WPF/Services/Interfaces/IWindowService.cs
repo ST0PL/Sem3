@@ -8,10 +8,14 @@ namespace ILS_WPF.Services.Interfaces
         void OpenMainWindow();
         void CloseApplicationWindow();
         void OpenLoginWindow();
-        void OpenPersonnelRegisterWindow(ICommand dataRefreshCommand);
-        void OpenPersonnelEditWindow(Staff soldier, ICommand dataRefreshCommand);
-        void OpenUnitRegisterWindow(ICommand dataRefreshCommand);
-        void OpenUnitEditWindow(Unit unit, ICommand dataRefreshCommand);
+        void OpenPersonnelRegisterWindow();
+        void OpenPersonnelEditWindow(Staff soldier);
+        void OpenUnitRegisterWindow();
+        void OpenUnitEditWindow(Unit unit);
+        void OpenWarehouseRegisterWindow();
+        void OpenWarehouseEditWindow(int warehouseId, ICommand navigateBackCommand);
+        void OpenWarehouseEntryRegisterWindow();
+        void OpenWarehouseEntryEditWindow(object entry);
         void OpenMessageWindow(string title, string text);
     }
 }
