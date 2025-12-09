@@ -1,4 +1,5 @@
-﻿using ILS_WPF.Models.Core.Enums;
+﻿using ILS_WPF.Models.Core;
+using ILS_WPF.Models.Core.Enums;
 using ILS_WPF.Models.Core.Equipments;
 using ILS_WPF.Models.Core.Resources;
 using ILS_WPF.Models.Database;
@@ -77,9 +78,9 @@ namespace ILS_WPF.ViewModels
             MaterialTypes = [.. Enum.GetValues<MaterialType>().Order()];
             _selectedMaterialType = MaterialTypes[0];
             RefreshCommand = new RelayCommand(async _ => await LoadData()); //
-            OpenRegisterWindowCommand = new RelayCommand(_ => windowService.OpenWarehouseEntryRegisterWindow());
+            OpenRegisterWindowCommand = new RelayCommand(_ => windowService.OpenWarehouseEntryRegisterWindow(warehouseId));
             OpenEditWindowCommand = new RelayCommand(warehouse => windowService.OpenWarehouseEditWindow(_warehouseId, navigateBackCommand));
-            OpenEditEntryWindowCommand = new RelayCommand(entry => windowService.OpenWarehouseEntryEditWindow(_warehouseId));
+            OpenEditEntryWindowCommand = new RelayCommand(entry => windowService.OpenWarehouseEntryEditWindow((entry as IMaterial)!, _warehouseId));
             NavigateBackCommand = navigateBackCommand;
             viewUpdaterService.SetUpdateCommand<CurrentWarehouseVM>(RefreshCommand);
             _ = LoadData();
@@ -102,7 +103,7 @@ namespace ILS_WPF.ViewModels
 
             Name = warehouse.Name;
             Items = [.. warehouse.Resources.Where(IsResourceMatches), .. warehouse.Equipments.Where(IsEquipmentMatches)];
-            OnPropertyChanged(nameof(Items));
+            OnPropertyChanged(nameof(HasItems));
         }
 
         bool IsResourceMatches(Resource resource)
@@ -110,16 +111,14 @@ namespace ILS_WPF.ViewModels
             if (SelectedMaterialType != MaterialType.AnyType && resource.MaterialType != SelectedMaterialType)
                 return false;
 
-            if (string.IsNullOrWhiteSpace(Query))
+            if (string.IsNullOrWhiteSpace(Query) || (resource.Name?.Contains(Query, StringComparison.OrdinalIgnoreCase) ?? false))
                 return true;
 
             return resource switch
             {
                 Ammunition ammunition => IsLocaleContainsText(ammunition.Caliber.ToString(), Query),
-
-                Fuel fuel => IsLocaleContainsText(fuel.ToString(), Query),
-
-                _ => resource.Name?.Contains(Query, StringComparison.OrdinalIgnoreCase) ?? false
+                Fuel fuel => IsLocaleContainsText(fuel.Type.ToString(), Query),
+                _ => false
             };
         }
 
@@ -128,17 +127,15 @@ namespace ILS_WPF.ViewModels
             if (SelectedMaterialType != MaterialType.AnyType && equipment.MaterialType != SelectedMaterialType)
                 return false;
 
-            if (string.IsNullOrWhiteSpace(Query))
+            if (string.IsNullOrWhiteSpace(Query) || (equipment.Name?.Contains(Query, StringComparison.OrdinalIgnoreCase) ?? false))
                 return true;
 
             return equipment switch
             {
                 Vehicle vehicle => IsLocaleContainsText(vehicle.FuelType.ToString(), Query) ||
                                    IsLocaleContainsText(vehicle.Type.ToString(), Query),
-
                 Weapon weapon => IsLocaleContainsText(weapon.Caliber.ToString(), Query),
-
-                _ => equipment.Name?.Contains(Query, StringComparison.OrdinalIgnoreCase) ?? false
+                _=> false
             };
         }
 

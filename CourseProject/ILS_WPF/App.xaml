@@ -7,6 +7,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Converters.xaml"/>
+                <ResourceDictionary Source="/Resources/Templates/WarehouseEntryTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/Icons/XamlIcons.xaml"/>
                 <ResourceDictionary Source="/ControlsLib;component/Styles/Generic.xaml"/>
                 <ResourceDictionary Source="/Resources/Styles/Colors.xaml"/>
@@ -19,10 +21,6 @@
                 <ResourceDictionary Source="/Resources/Templates/WarehouseEntryTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="Inter">/ILS_WPF;component/Fonts/#Inter</FontFamily>
-            <conv:EnumLocaleConverter x:Key="enumConverter"/>
-            <conv:FullNameAbbreviationConverter x:Key="abbreviationConverter"/>
-            <cconv:NullOrEmptyVisibilityConverter x:Key="emptyVisibilityConverter"/>
-            <local:WarehouseEntryTemplateSelector x:Key="warehouseEntryTemplateSelector"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

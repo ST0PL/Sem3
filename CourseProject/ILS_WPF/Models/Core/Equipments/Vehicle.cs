@@ -10,9 +10,8 @@ namespace ILS_WPF.Models.Core.Equipments
 
         protected Vehicle() { }
 
-        public Vehicle(int id, string name, VehicleType type, FuelType fuelType, int count)
+        public Vehicle(string name, VehicleType type, FuelType fuelType, int count)
         {
-            Id = id;
             Name = name;
             MaterialType = MaterialType.Vehicle;
             Type = type;

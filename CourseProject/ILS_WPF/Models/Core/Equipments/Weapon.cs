@@ -9,9 +9,8 @@ namespace ILS_WPF.Models.Core.Equipments
 
         public Weapon() { } // Конструктор для EF
 
-        public Weapon(int id, string name, Caliber caliber, int count)
+        public Weapon(string name, Caliber caliber, int count)
         {
-            Id = id;
             Name = name;
             MaterialType = MaterialType.Weapon;
             Caliber = caliber;

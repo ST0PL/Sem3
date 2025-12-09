@@ -59,5 +59,14 @@
     <sys:String x:Key="Kilogramm">кг.</sys:String>
     <sys:String x:Key="Liter">л.</sys:String>
 
+    <sys:String x:Key="e545mm">5.45 мм</sys:String>
+    <sys:String x:Key="e122mm">122 мм</sys:String>
 
+    <sys:String x:Key="Tank">Танк</sys:String>
+    <sys:String x:Key="ArmoredVehicle">БМП</sys:String>
+    <sys:String x:Key="Motorbike">Мотоцикл</sys:String>
+    <sys:String x:Key="SelfPropelledLauncher">СПУ</sys:String>
+
+    <sys:String x:Key="Gasoline">Бензин</sys:String>
+    <sys:String x:Key="Diesel">Дизель</sys:String>
 </ResourceDictionary>

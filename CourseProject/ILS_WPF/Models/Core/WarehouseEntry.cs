@@ -4,7 +4,7 @@ using ILS_WPF.Models.Database;
 
 namespace ILS_WPF.Models.Core
 {
-    public abstract class WarehouseEntry<T> : IDbEntry
+    public abstract class WarehouseEntry<T> : IDbEntry, IMaterial
     {
         public int Id { get; set; }
         public string? Name { get; set; }

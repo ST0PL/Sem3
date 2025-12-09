@@ -14,8 +14,8 @@ namespace ILS_WPF.Services.Interfaces
         void OpenUnitEditWindow(Unit unit);
         void OpenWarehouseRegisterWindow();
         void OpenWarehouseEditWindow(int warehouseId, ICommand navigateBackCommand);
-        void OpenWarehouseEntryRegisterWindow();
-        void OpenWarehouseEntryEditWindow(object entry);
+        void OpenWarehouseEntryRegisterWindow(int warehouseId);
+        void OpenWarehouseEntryEditWindow(IMaterial entry, int warehouseId);
         void OpenMessageWindow(string title, string text);
     }
 }

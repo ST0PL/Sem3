@@ -26,5 +26,10 @@
         <Setter Property="prop:ScrollViewerHelper.ScrollBarThumbCornerRadius" Value="4"/>
         <Setter Property="prop:ScrollViewerHelper.ScrollBarWidth" Value="7"/>
         <Setter Property="prop:ScrollViewerHelper.ScrollBarThumbWidth" Value="7"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.5"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

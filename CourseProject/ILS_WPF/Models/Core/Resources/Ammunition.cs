@@ -9,9 +9,8 @@ namespace ILS_WPF.Models.Core.Resources
 
         protected Ammunition() { }
 
-        public Ammunition(int id, string name, Caliber caliber, int quantity)
+        public Ammunition(string name, Caliber caliber, int quantity)
         {
-            Id = id;
             Name = name;
             MaterialType = MaterialType.Ammunition;
             Caliber = caliber;

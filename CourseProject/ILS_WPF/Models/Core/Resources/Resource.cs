@@ -1,5 +1,4 @@
 ﻿using ILS_WPF.Models.Core.Enums;
-using ILS_WPF.Models.Core.Requests;
 
 namespace ILS_WPF.Models.Core.Resources
 {

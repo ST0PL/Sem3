@@ -71,14 +71,20 @@ namespace ILS_WPF.Services
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!,
                 navigateBackCommand)).ShowDialog();
 
-        public void OpenWarehouseEntryRegisterWindow()
-        {
-            throw new NotImplementedException();
-        }
+        public void OpenWarehouseEntryRegisterWindow(int warehouseId)
+            => new Views.Warehouses.AddEntriesWindow(new AddWarehouseEntriesVM(
+                warehouseId,
+                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
-        public void OpenWarehouseEntryEditWindow(object entry)
-        {
-            throw new NotImplementedException();
-        }
+        public void OpenWarehouseEntryEditWindow(IMaterial entry, int warehouseId)
+            => new Views.Warehouses.EditEntryWindow(new EditWarehouseEntryVM(
+                entry,
+                warehouseId,
+                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
+
     }
 }

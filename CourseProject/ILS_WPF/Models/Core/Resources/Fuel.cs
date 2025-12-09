@@ -9,9 +9,8 @@ namespace ILS_WPF.Models.Core.Resources
 
         protected Fuel() { }
 
-        public Fuel(int id, string name, FuelType type, float quantity)
+        public Fuel(string name, FuelType type, float quantity)
         {
-            Id = id;
             Name = name;
             MaterialType = MaterialType.Fuel;
             Type = type;
