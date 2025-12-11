@@ -100,6 +100,7 @@ namespace ILS_WPF.ViewModels
                 _selectedCommander = null;
                 _selectedUnits = [];
                 _selectedPersonnel = [];
+                _unit.ParentId = null;
                 _ = LoadUnits();
                 _ = LoadPersonnel();
                 _ = LoadCommanders();
@@ -305,6 +306,7 @@ namespace ILS_WPF.ViewModels
 
             var unitToUpdate = new Unit
             {
+                ParentId = _unit.ParentId,
                 Id = _unit.Id,
                 Name = Name,
                 Type = SelectedUnitType,

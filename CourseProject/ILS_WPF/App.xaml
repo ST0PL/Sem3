@@ -18,7 +18,6 @@
                 <ResourceDictionary Source="/Resources/Styles/ListViews.xaml"/>
                 <ResourceDictionary Source="/Resources/Strings.xaml"/>
                 <ResourceDictionary Source="/Resources/Styles/TextBoxes.xaml"/>
-                <ResourceDictionary Source="/Resources/Templates/WarehouseEntryTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="Inter">/ILS_WPF;component/Fonts/#Inter</FontFamily>
         </ResourceDictionary>

@@ -65,7 +65,7 @@
                                    Foreground="White"
                                    Opacity="0.5"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding TotalPersonnel}"
+                            <TextBlock Text="{Binding TotalPersonnel, Converter={StaticResource numberShortenerConverter}}"
                                        Foreground="White"
                                        FontWeight="SemiBold"
                                        FontSize="18"/>
@@ -110,7 +110,7 @@
                                    Foreground="White"
                                    Opacity="0.5"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding UnresolvedRequests}"
+                            <TextBlock Text="{Binding UnresolvedRequests, Converter={StaticResource numberShortenerConverter}}"
                                        Foreground="#FF3D3D"
                                        FontWeight="SemiBold"
                                        FontSize="18"/>

@@ -4,5 +4,6 @@
                     xmlns:conv="clr-namespace:ILS_WPF.Converters">
     <conv:EnumLocaleConverter x:Key="enumConverter"/>
     <conv:FullNameAbbreviationConverter x:Key="abbreviationConverter"/>
+    <conv:NumberShortenerConverter x:Key="numberShortenerConverter"/>
     <cconv:NullOrEmptyVisibilityConverter x:Key="emptyVisibilityConverter"/>
 </ResourceDictionary>

@@ -33,7 +33,7 @@
 
     <sys:String x:Key="AnySpeciality">Все специальности</sys:String>
     <sys:String x:Key="None">Без специальности</sys:String>
-    <sys:String x:Key="Infantry">Пехота</sys:String>
+    <sys:String x:Key="Infantry">Стрелок</sys:String>
     <sys:String x:Key="MachineGunner">Пулемётчик</sys:String>
     <sys:String x:Key="GrenadeLauncher">Гранатомётчик</sys:String>
     <sys:String x:Key="Reconnaissance">Разведчик</sys:String>
@@ -69,4 +69,9 @@
 
     <sys:String x:Key="Gasoline">Бензин</sys:String>
     <sys:String x:Key="Diesel">Дизель</sys:String>
+
+    <sys:String x:Key="Success">Успешно</sys:String>
+    <sys:String x:Key="Partial">Удовлетворено частично</sys:String>
+    <sys:String x:Key="Denied">Отклонено</sys:String>
+
 </ResourceDictionary>

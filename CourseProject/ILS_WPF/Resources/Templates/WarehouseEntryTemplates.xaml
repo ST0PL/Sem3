@@ -174,5 +174,57 @@
             </StackPanel>
         </clib:Button>
     </DataTemplate>
-    <local:WarehouseEntryTemplateSelector x:Key="warehouseEntryTemplateSelector"/>
+    <DataTemplate x:Key="SimpleAmmunitionTemplate">
+        <TextBlock FontSize="17"
+                   Foreground="White"
+                   Opacity="0.4">
+            <Run Text="•"/>
+            <Run Text="{Binding Caliber, Converter={StaticResource enumConverter}}"/>
+            <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="-"/>
+            <Run Text="{Binding Quantity}"/>
+            <Run Text="{Binding MeasureUnit, Converter={StaticResource enumConverter}}"/>
+        </TextBlock>
+    </DataTemplate>
+    <DataTemplate x:Key="SimpleFuelTemplate">
+        <TextBlock FontSize="17"
+                   Foreground="White"
+                   Opacity="0.4">
+            <Run Text="•"/>
+            <Run Text="{Binding Type, Converter={StaticResource enumConverter}}"/>
+            <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="-"/>
+            <Run Text="{Binding Quantity}"/>
+            <Run Text="{Binding MeasureUnit, Converter={StaticResource enumConverter}}"/>
+        </TextBlock>
+    </DataTemplate>
+    <DataTemplate x:Key="SimpleVehicleTemplate">
+        <TextBlock FontSize="17"
+                   Foreground="White"
+                   Opacity="0.4">
+            <Run Text="•"/>
+            <Run Text="{Binding Type, Converter={StaticResource enumConverter}}"/>
+            <Run Text="{Binding FuelType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="-"/>
+            <Run Text="{Binding Count}"/>
+            <Run Text="шт."/>
+        </TextBlock>
+    </DataTemplate>
+    <DataTemplate x:Key="SimpleWeaponTemplate">
+        <TextBlock FontSize="17"
+                   Foreground="White"
+                   Opacity="0.4">
+            <Run Text="•"/>
+            <Run Text="{Binding Caliber, Converter={StaticResource enumConverter}}"/>
+            <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="-"/>
+            <Run Text="{Binding Count}"/>
+            <Run Text="шт."/>
+        </TextBlock>
+    </DataTemplate>
+    <local:WarehouseEntryTemplateSelector x:Key="warehouseEntryTemplateSelector"
+                                          Pattern="{}{0}Template"/>
+    <local:WarehouseEntryTemplateSelector x:Key="simpleWarehouseEntryTemplateSelector"
+                                          Pattern="Simple{0}Template"/>
 </ResourceDictionary>

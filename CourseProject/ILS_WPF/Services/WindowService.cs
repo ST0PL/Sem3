@@ -86,5 +86,9 @@ namespace ILS_WPF.Services
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
+        public void OpenSupplyRequestWindow()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

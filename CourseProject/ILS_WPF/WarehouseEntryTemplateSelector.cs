@@ -8,6 +8,7 @@ namespace ILS_WPF
 {
     internal class WarehouseEntryTemplateSelector : DataTemplateSelector
     {
+        public string Pattern { get; set; } = "";
         public override DataTemplate? SelectTemplate(object item, DependencyObject container)
         {
             MaterialType? type =
@@ -16,7 +17,7 @@ namespace ILS_WPF
             if (type is null || type == MaterialType.AnyType)
                 return null;
 
-            return (Application.Current.Resources[$"{type.ToString()}Template"] as DataTemplate);
+            return (Application.Current.Resources[string.Format(Pattern, type.ToString())] as DataTemplate);
         }
     }
 }
