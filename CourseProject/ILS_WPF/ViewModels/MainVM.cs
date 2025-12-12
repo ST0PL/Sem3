@@ -36,7 +36,7 @@ namespace ILS_WPF.ViewModels
             _views =
                 [
                     userService?.GetUser()?.Role < Role.Administator ?
-                        new MainViewCommander(new MainCommanderVM(userService, windowService, dbFactory)) : new MainView(new StatVM(viewUpdaterService,dbFactory)),
+                        new MainViewCommander(new MainCommanderVM(viewUpdaterService, userService, windowService, dbFactory)) : new MainView(new StatVM(viewUpdaterService,dbFactory)),
                     null,
                     new WarehousesView(new WarehousesVM(viewUpdaterService, windowService, dbFactory)),
                     new StructuresView(new StructuresVM(viewUpdaterService, userService, windowService, dbFactory)),

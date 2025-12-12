@@ -1,4 +1,5 @@
 ﻿using ILS_WPF.Models.Core.Enums;
+using ILS_WPF.Models.Core.Requests;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -119,5 +120,6 @@ namespace ILS_WPF.ViewModels
 
         void OnPropertiesChanged(params List<string> propertyNames)
             => propertyNames.ForEach(OnPropertyChanged);
+
     }
 }

@@ -29,13 +29,13 @@ namespace ILS_WPF.Models.Database
         {
             modelBuilder.Entity<Resource>()
                  .ToTable("Resources")
-                 .HasDiscriminator<MaterialType>("ResourceType")
+                 .HasDiscriminator(r=>r.MaterialType)
                  .HasValue<Ammunition>(MaterialType.Ammunition)
                  .HasValue<Fuel>(MaterialType.Fuel);
 
             modelBuilder.Entity<Equipment>()
                 .ToTable("Equipment")
-                .HasDiscriminator<MaterialType>("EquipmentType")
+                .HasDiscriminator(e=>e.MaterialType)
                 .HasValue<Weapon>(MaterialType.Weapon)
                 .HasValue<Vehicle>(MaterialType.Vehicle);
 
@@ -44,63 +44,70 @@ namespace ILS_WPF.Models.Database
                 .HasOne(s => s.Unit)
                 .WithMany(u => u.Personnel)
                 .HasForeignKey(s => s.UnitId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             // Unit => Commander (командир подразделения)
             modelBuilder.Entity<Unit>()
                 .HasOne(u => u.Commander)
                 .WithMany()
                 .HasForeignKey(u => u.CommanderId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             // Unit иерархия (родитель-потомки)
             modelBuilder.Entity<Unit>()
                 .HasMany(u => u.Children)
                 .WithOne(u => u.Parent)
                 .HasForeignKey(u => u.ParentId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             // Unit => AssignedWarehouse (прикрепленный склад)
             modelBuilder.Entity<Unit>()
                 .HasOne(u => u.AssignedWarehouse)
                 .WithMany()
                 .HasForeignKey(u => u.AssignedWarehouseId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             // Unit => SupplyRequests (заявки подразделения)
             modelBuilder.Entity<Unit>()
                 .HasMany(u => u.SupplyRequests)
                 .WithOne(sr => sr.RequestUnit)
                 .HasForeignKey(sr => sr.RequestUnitId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             // SupplyRequest => Details (детали заявки)
             modelBuilder.Entity<SupplyRequest>()
                 .HasMany(sr => sr.Details)
                 .WithOne(d => d.SupplyRequest)
                 .HasForeignKey(d => d.SupplyRequestId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            // SupplyRespone => Details (неудовлетворенные детали заявки)
+            modelBuilder.Entity<SupplyResponse>()
+                .HasMany(sr => sr.UnprocessedDetails)
+                .WithOne(d => d.SupplyResponse)
+                .HasForeignKey(d => d.SupplyResponseId)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             // SupplyResponse => SupplyRequest (ответ на заявку)
             modelBuilder.Entity<SupplyResponse>()
                 .HasOne(sr => sr.Request)
                 .WithMany()
                 .HasForeignKey(sr => sr.RequestId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             // Warehouse => Resources (ресурсы на складе)
             modelBuilder.Entity<Resource>()
                 .HasOne(r => r.Warehouse)
                 .WithMany(w => w.Resources)
                 .HasForeignKey(r => r.WarehouseId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             // Warehouse => Equipment (оборудование на складе)
             modelBuilder.Entity<Equipment>()
                 .HasOne(e => e.Warehouse)
                 .WithMany(w => w.Equipments)
                 .HasForeignKey(e => e.WarehouseId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

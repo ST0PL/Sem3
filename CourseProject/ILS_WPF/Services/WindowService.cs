@@ -34,12 +34,12 @@ namespace ILS_WPF.Services
             
         public void OpenPersonnelRegisterWindow()
             => new Views.Personnel.AddWindow(new AddPersonnelVM(
-                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
         public void OpenPersonnelEditWindow(Staff soldier)
-            => new Views.Personnel.EditWindow(new EditPersonnelVM(soldier, _serviceProvider.GetService<IViewModelUpdaterService>(),
+            => new Views.Personnel.EditWindow(new EditPersonnelVM(soldier, _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
@@ -48,25 +48,25 @@ namespace ILS_WPF.Services
 
         public void OpenUnitRegisterWindow()
             => new Views.Structures.AddWindow(new AddUnitVM(
-                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
         public void OpenUnitEditWindow(Unit unit)
             => new Views.Structures.EditWindow(new EditUnitVM(unit,
-                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
         public void OpenWarehouseRegisterWindow()
             => new Views.Warehouses.AddWindow(new AddWarehouseVM(
-                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
         public void OpenWarehouseEditWindow(int warehouseId, ICommand navigateBackCommand)
             => new Views.Warehouses.EditWindow(new EditWarehouseVM(warehouseId,
-                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!,
                 navigateBackCommand)).ShowDialog();
@@ -74,7 +74,7 @@ namespace ILS_WPF.Services
         public void OpenWarehouseEntryRegisterWindow(int warehouseId)
             => new Views.Warehouses.AddEntriesWindow(new AddWarehouseEntriesVM(
                 warehouseId,
-                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
@@ -82,13 +82,16 @@ namespace ILS_WPF.Services
             => new Views.Warehouses.EditEntryWindow(new EditWarehouseEntryVM(
                 entry,
                 warehouseId,
-                _serviceProvider.GetService<IViewModelUpdaterService>(),
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
-        public void OpenSupplyRequestWindow()
-        {
-            throw new NotImplementedException();
-        }
+        public void OpenSupplyRequestWindow(int unitId)
+            => new Views.Main.SupplyRequestWindow(new SupplyRequestVM(
+                unitId,
+                _serviceProvider.GetService<ISupplyService>()!,
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
+                this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
     }
 }

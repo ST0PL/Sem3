@@ -32,7 +32,7 @@
                          Command="{Binding RefreshCommand}"/>
         </Grid>
         <Grid Grid.Row="1"
-              Margin="20,30,0,0">
+              Margin="20,25,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -66,6 +66,7 @@
             </StackPanel>
             <clib:Button Grid.Column="1"
                          Style="{StaticResource DarkGreenButtonStyle}"
+                         Command="{Binding OpenSupplyRequestWindowCommand}"
                          Content="Открыть заявку на снабжение"
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
@@ -89,7 +90,7 @@
                                    ItemsSource="{Binding SupplyResponses}"
                                    Margin="0,5,0,0"
                                    VirtualizingPanel.ScrollUnit="Pixel"
-                                   Height="187">
+                                   Height="189">
                         <clib:ListView.ItemTemplate>
                             <DataTemplate>
                                 <Border Background="#172131"

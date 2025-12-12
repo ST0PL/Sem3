@@ -74,9 +74,9 @@ namespace ILS_WPF.ViewModels
 
             var totalResponses = await context.SupplyResponses.CountAsync();
 
-            ResolvedPercent = totalResponses == 0 ? 0 :
+            ResolvedPercent = (int)(totalResponses == 0 ? 0 :
                 (await context.SupplyResponses.Where(r => r.Status == SupplyResponseStatus.Success).CountAsync())
-                / totalResponses * 100;
+                / (float)totalResponses * 100);
 
 
             var autoResolvedCount = new int[DateTime.Now.Hour+1];

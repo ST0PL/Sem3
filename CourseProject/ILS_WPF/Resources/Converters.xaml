@@ -5,5 +5,6 @@
     <conv:EnumLocaleConverter x:Key="enumConverter"/>
     <conv:FullNameAbbreviationConverter x:Key="abbreviationConverter"/>
     <conv:NumberShortenerConverter x:Key="numberShortenerConverter"/>
+    <conv:CounterColorConverter x:Key="counterColorConverter"/>
     <cconv:NullOrEmptyVisibilityConverter x:Key="emptyVisibilityConverter"/>
 </ResourceDictionary>

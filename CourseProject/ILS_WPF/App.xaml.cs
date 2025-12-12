@@ -20,12 +20,13 @@ namespace ILS_WPF
             _host = Host.CreateDefaultBuilder()
                 .ConfigureServices(s =>
                 {
-                    s.AddSingleton<IConfigurationService<Configuration?>, ConfigurationService>(_=>new ConfigurationService("config.json"));
                     s.AddDbContextFactory<ILSContext>();
-                    s.AddTransient<IAccountService, AccountService>();
+                    s.AddSingleton<IConfigurationService<Configuration?>, ConfigurationService>(_=>new ConfigurationService("config.json"));
                     s.AddSingleton<IUserService, UserService>();
                     s.AddSingleton<IWindowService, WindowService>();
                     s.AddSingleton<IViewModelUpdaterService, ViewModelUpdaterService>();
+                    s.AddTransient<ISupplyService, SupplyService>();
+                    s.AddTransient<IAccountService, AccountService>();
                     s.AddTransient<LoginVM>();
                     s.AddTransient<LoginWindow>();
                     s.AddTransient<MainVM>();

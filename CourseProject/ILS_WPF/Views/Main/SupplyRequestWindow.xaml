@@ -1,0 +1,204 @@
+﻿<Window x:Class="ILS_WPF.Views.Main.SupplyRequestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
+        xmlns:local="clr-namespace:ILS_WPF.Views.Main"
+        mc:Ignorable="d"
+        Title="WarehouseEntriesAddWindow" Height="540" Width="1160"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Border CornerRadius="20"
+            BorderThickness="1"
+            BorderBrush="#333e50"
+            Background="#101828">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Background="#80141d2b"
+                    BorderThickness="0,0,0,1"
+                    CornerRadius="20,20,0,0"
+                    BorderBrush="#806b6b6b"
+                    Padding="10"
+                    MouseDown="Border_MouseDown">
+                <clib:Button Style="{StaticResource CloseButtonStyle}"
+                             Click="CloseButton_Click"
+                             Opacity="0.8"
+                             HorizontalAlignment="Right"/>
+            </Border>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Заявка на снабжение"
+                           Foreground="#00D492"
+                           Margin="30,15,0,0"
+                           FontWeight="SemiBold"
+                           FontSize="20"/>
+                <Border Grid.Row="1"
+                        Margin="30,20,30,10"
+                        Background="#050A16"
+                        CornerRadius="20"
+                        Padding="20,10,20,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <clib:Button Style="{StaticResource DarkGreenButtonStyle}"
+                                     Command="{Binding AddDetailCommand}"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Top"
+                                     HorizontalContentAlignment="Center"
+                                     Content="+"
+                                     Padding="0,0,0,5"
+                                     Width="30"
+                                     Height="30"
+                                     CornerRadius="5"
+                                     FontWeight="Bold"
+                                     FontSize="20"
+                                     Margin="10"/>
+                        <TextBlock Grid.Row="1"
+                                   Text="Начните добавлять данные"
+                                   Foreground="#66FFFFFF"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasItems}" Value="True">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <clib:ListView Grid.Row="1"
+                                       Style="{StaticResource ListViewStyle}"
+                                       ItemsSource="{Binding SupplyRequestDetails}"
+                                       Margin="5">
+                            <clib:ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#333E50"
+                                            BorderThickness="1"
+                                            Background="#101828"
+                                            Padding="10"
+                                            CornerRadius="15"
+                                            Width="1010">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                                                   CornerRadius="10"
+                                                                   Width="175"
+                                                                   Margin="10,0,0,0"
+                                                                   ItemsSource="{Binding Types}"
+                                                                   SelectedItem="{Binding SelectedType}">
+                                                        <clib:ComboBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                                           Margin="5"
+                                                                           Foreground="White"/>
+                                                            </DataTemplate>
+                                                        </clib:ComboBox.ItemTemplate>
+                                                    </clib:ComboBox>
+                                                    <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                                                   CornerRadius="10"
+                                                                   Width="175"
+                                                                   Margin="10,0,0,0"
+                                                                   ItemsSource="{Binding Calibers}"
+                                                                   SelectedItem="{Binding SelectedCaliber}"
+                                                                   IsEnabled="{Binding IsCaliberTypeEnabled}">
+                                                        <clib:ComboBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                                           Margin="5"
+                                                                           Foreground="White"/>
+                                                            </DataTemplate>
+                                                        </clib:ComboBox.ItemTemplate>
+                                                    </clib:ComboBox>
+                                                    <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                                                   CornerRadius="10"
+                                                                   Width="175"
+                                                                   Margin="10,0,0,0"
+                                                                   ItemsSource="{Binding VehicleTypes}"
+                                                                   SelectedItem="{Binding SelectedVehicleType}"
+                                                                   IsEnabled="{Binding IsVehicleTypeEnabled}">
+                                                        <clib:ComboBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                                           Margin="5"
+                                                                           Foreground="White"/>
+                                                            </DataTemplate>
+                                                        </clib:ComboBox.ItemTemplate>
+                                                    </clib:ComboBox>
+                                                    <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                                                   CornerRadius="10"
+                                                                   Width="175"
+                                                                   Margin="10,0,0,0"
+                                                                   ItemsSource="{Binding FuelTypes}"
+                                                                   SelectedItem="{Binding SelectedFuelType}"
+                                                                   IsEnabled="{Binding IsFuelTypeEnabled}">
+                                                        <clib:ComboBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                                           Margin="5"
+                                                                           Foreground="White"/>
+                                                            </DataTemplate>
+                                                        </clib:ComboBox.ItemTemplate>
+                                                    </clib:ComboBox>
+                                                    <clib:TextBox Style="{StaticResource TextBoxStyle}"
+                                                                  Text="{Binding Count, UpdateSourceTrigger=PropertyChanged}"
+                                                                  CornerRadius="10"
+                                                                  Placeholder="Количество"
+                                                                  Width="180"
+                                                                  Margin="10,0,0,0"/>
+                                                </StackPanel>
+                                            </Grid>
+                                            <clib:Button Grid.Column="1"
+                                                         Style="{StaticResource DarkRedButtonStyle}"
+                                                         HorizontalAlignment="Right"
+                                                         Content="-"
+                                                         Width="35"
+                                                         Height="35"
+                                                         FontWeight="SemiBold"
+                                                         FontSize="25"
+                                                         Padding="0"
+                                                         Margin="0,0,5,0"
+                                                         Command="{Binding RemoveCommand}"
+                                                         CommandParameter="{Binding}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </clib:ListView.ItemTemplate>
+                        </clib:ListView>
+                    </Grid>
+                </Border>
+                <clib:Button Grid.Row="2" 
+                             Style="{StaticResource DarkGreenButtonStyle}"
+                             Content="Отправить"
+                             HorizontalAlignment="Right"
+                             Margin="10,0,30,10"
+                             Padding="20,10,20,10"
+                             Command="{Binding MakeRequestCommand}"
+                             Click="CloseButton_Click"/>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

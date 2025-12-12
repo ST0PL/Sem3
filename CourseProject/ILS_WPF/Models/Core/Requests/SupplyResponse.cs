@@ -8,6 +8,7 @@ namespace ILS_WPF.Models.Core.Requests
         public int Id { get; set; }
         public int RequestId { get; set; }
         public virtual SupplyRequest? Request { get; set; }
+        public virtual List<SupplyRequestDetail> UnprocessedDetails { get; set; } = [];
         public SupplyResponseStatus Status { get; set; }
         public string? Comment { get; set; }
     }

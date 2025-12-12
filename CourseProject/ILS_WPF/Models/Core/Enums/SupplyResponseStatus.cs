@@ -5,6 +5,7 @@
         AnyStatus = -1,
         Success = 0,
         Partial = 1,
-        Denied = 2
+        Denied = 2,
+        Pending = 3
     }
 }

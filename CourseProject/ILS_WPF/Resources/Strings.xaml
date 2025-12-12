@@ -73,5 +73,6 @@
     <sys:String x:Key="Success">Успешно</sys:String>
     <sys:String x:Key="Partial">Удовлетворено частично</sys:String>
     <sys:String x:Key="Denied">Отклонено</sys:String>
+    <sys:String x:Key="Pending">В обработке</sys:String>
 
 </ResourceDictionary>
