@@ -6,7 +6,7 @@
         xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
         xmlns:local="clr-namespace:ILS_WPF.Views.Personnel"
         mc:Ignorable="d"
-        Title="PersonnelEditWindow" Height="500" Width="855"
+        Title="Изменение данных военнослужащего" Height="500" Width="855"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"

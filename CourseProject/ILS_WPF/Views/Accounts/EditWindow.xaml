@@ -6,7 +6,7 @@
         xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
         xmlns:local="clr-namespace:ILS_WPF.Views.Accounts"
         mc:Ignorable="d"
-        Title="AccountEditWindow" Height="570" Width="855"
+        Title="Изменение аккаунта" Height="570" Width="855"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"

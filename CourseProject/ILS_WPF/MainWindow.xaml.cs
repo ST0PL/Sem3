@@ -1,8 +1,4 @@
-﻿using ILS_WPF.Models;
-using ILS_WPF.Models.Database;
-using ILS_WPF.Services.Interfaces;
-using ILS_WPF.ViewModels;
-using Microsoft.EntityFrameworkCore;
+﻿using ILS_WPF.ViewModels;
 using System.Windows;
 using System.Windows.Input;
 

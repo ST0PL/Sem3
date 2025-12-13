@@ -7,12 +7,18 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
         <Platforms>AnyCPU;x64</Platforms>
+        <ApplicationIcon>Resources\Icons\AppIcon.ico</ApplicationIcon>
       </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Fonts\Inter-Regular.otf" />
     <None Remove="Resources\Fonts\Inter-SemiBold.otf" />
+    <None Remove="Resources\Icons\AppIcon.ico" />
     <None Remove="Resources\Icons\ils.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Icons\AppIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +39,7 @@
   <ItemGroup>
     <Resource Include="Resources\Fonts\Inter-Regular.otf" />
     <Resource Include="Resources\Fonts\Inter-SemiBold.otf" />
+    <Resource Include="Resources\Icons\AppIcon.ico" />
     <Resource Include="Resources\Icons\ils.png" />
   </ItemGroup>
 

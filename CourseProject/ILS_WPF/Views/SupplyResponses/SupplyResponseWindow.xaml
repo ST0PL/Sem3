@@ -6,7 +6,7 @@
         xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
         xmlns:local="clr-namespace:ILS_WPF.Views.Warehouses"
         mc:Ignorable="d"
-        Title="WarehouseAddWindow" Height="600" Width="1200"
+        Title="Ответ на заявку" Height="600" Width="1200"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"

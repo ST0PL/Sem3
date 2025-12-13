@@ -6,7 +6,7 @@
         xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
         xmlns:local="clr-namespace:ILS_WPF.Views.Structures"
         mc:Ignorable="d"
-        Title="StructuresAddWindow" Height="800" Width="1500"
+        Title="Регистрация подразделения" Height="800" Width="1500"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"

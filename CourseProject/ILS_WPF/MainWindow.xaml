@@ -7,7 +7,7 @@
         xmlns:prop="clr-namespace:ControlsLib.AttachedProperties;assembly=ControlsLib"
         xmlns:local="clr-namespace:ILS_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1366"
+        Title="Главное окно" Height="768" Width="1366"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"

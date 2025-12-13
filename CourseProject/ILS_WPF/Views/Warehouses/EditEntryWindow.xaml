@@ -6,7 +6,7 @@
         xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
         xmlns:local="clr-namespace:ILS_WPF.Views.Warehouses"
         mc:Ignorable="d"
-        Title="WarehouseEditEntryWindow" Height="300" Width="800"
+        Title="Изменение данных МТО" Height="300" Width="800"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
