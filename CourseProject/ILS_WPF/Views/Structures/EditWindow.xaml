@@ -61,6 +61,7 @@
                                           Placeholder="Название подразделения"
                                           MaxLength="50"
                                           Width="400"
+                                          IsEnabled="{Binding IsAdmin}"
                                           Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
                             <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
                                            Width="175"
@@ -68,7 +69,8 @@
                                            ItemsSource="{Binding UnitTypes}"
                                            SelectedItem="{Binding SelectedUnitType}"
                                            HorizontalAlignment="Left"
-                                           CornerRadius="20">
+                                           CornerRadius="20"
+                                           IsEnabled="{Binding IsAdmin}">
                                 <clib:ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
@@ -555,7 +557,7 @@
                                  Content="Сохранить"
                                  Padding="20,10,20,10"
                                  Margin="30,0,0,0"
-                                 Command="{Binding RegisterCommand}"
+                                 Command="{Binding SaveCommand}"
                                  Click="CloseButton_Click"/>
                 </StackPanel>
             </Grid>

@@ -12,7 +12,7 @@ namespace ILS_WPF.Services.Interfaces
         void OpenPersonnelRegisterWindow();
         void OpenPersonnelEditWindow(Staff soldier);
         void OpenUnitRegisterWindow();
-        void OpenUnitEditWindow(Unit unit);
+        void OpenUnitEditWindow(Unit unit, bool IsAdmin);
         void OpenWarehouseRegisterWindow();
         void OpenWarehouseEditWindow(int warehouseId, ICommand navigateBackCommand);
         void OpenWarehouseEntryRegisterWindow(int warehouseId);

@@ -52,15 +52,17 @@ namespace ILS_WPF.Services
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 
-        public void OpenUnitEditWindow(Unit unit)
+        public void OpenUnitEditWindow(Unit unit, bool IsAdmin)
             => new Views.Structures.EditWindow(new EditUnitVM(unit,
                 _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
-                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!,
+                IsAdmin)).ShowDialog();
 
         public void OpenWarehouseRegisterWindow()
             => new Views.Warehouses.AddWindow(new AddWarehouseVM(
                 _serviceProvider.GetService<IViewModelUpdaterService>()!,
+                _serviceProvider.GetService<IUserService>()!,
                 this,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
 

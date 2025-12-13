@@ -71,16 +71,21 @@ namespace ILS_WPF.ViewModels
             IViewModelUpdaterService viewUpdaterService,
             IWindowService windowService,
             IDbContextFactory<ILSContext> dbFactory,
-            ICommand navigateBackCommand)
+            ICommand navigateBackCommand,
+            bool isAdmin)
         {
             _warehouseId = warehouseId;
             _dbFactory = dbFactory;
             MaterialTypes = [.. Enum.GetValues<MaterialType>().Order()];
             _selectedMaterialType = MaterialTypes[0];
             RefreshCommand = new RelayCommand(async _ => await LoadData()); //
-            OpenRegisterWindowCommand = new RelayCommand(_ => windowService.OpenWarehouseEntryRegisterWindow(warehouseId));
-            OpenEditWindowCommand = new RelayCommand(warehouse => windowService.OpenWarehouseEditWindow(_warehouseId, navigateBackCommand));
-            OpenEditEntryWindowCommand = new RelayCommand(entry => windowService.OpenWarehouseEntryEditWindow((entry as IMaterial)!, _warehouseId));
+            OpenRegisterWindowCommand = new RelayCommand(_ => windowService.OpenWarehouseEntryRegisterWindow(warehouseId), _ => isAdmin);
+            OpenEditWindowCommand = new RelayCommand(warehouse => windowService.OpenWarehouseEditWindow(_warehouseId, navigateBackCommand), _=> isAdmin);
+            OpenEditEntryWindowCommand = new RelayCommand(entry =>
+            {
+                if (isAdmin)
+                    windowService.OpenWarehouseEntryEditWindow((entry as IMaterial)!, _warehouseId);
+            });
             NavigateBackCommand = navigateBackCommand;
             viewUpdaterService.SetUpdateCommand<CurrentWarehouseVM>(RefreshCommand);
             _ = LoadData();

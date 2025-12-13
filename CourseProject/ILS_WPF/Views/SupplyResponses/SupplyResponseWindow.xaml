@@ -142,7 +142,6 @@
                             Orientation="Horizontal"
                             HorizontalAlignment="Right">
                     <clib:Button Style="{StaticResource DarkRedButtonStyle}"
-                                 IsEnabled="{Binding IsAdmin}"
                                  Content="Удалить"
                                  Padding="20,10,20,10"
                                  Margin="0,0,15,0"

@@ -10,6 +10,7 @@ namespace ILS_WPF.ViewModels
 {
     public class AddWarehouseVM : BaseVM
     {
+        private IUserService _userService;
         private IViewModelUpdaterService _viewModelUpdaterService;
         private IDbContextFactory<ILSContext> _dbFactory;
         private IWindowService _windowService;
@@ -27,14 +28,17 @@ namespace ILS_WPF.ViewModels
         public WarehouseType[] WarehouseTypes { get; set; }
         public WarehouseType CurrentType { get; set; }
 
+        public bool IsAdmin { get; set; }
 
         public ICommand RegisterCommand { get; set; }
 
-        public AddWarehouseVM(IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
+        public AddWarehouseVM(IViewModelUpdaterService viewUpdaterService, IUserService userService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
             _viewModelUpdaterService = viewUpdaterService;
+            _userService = userService;
             _dbFactory = dbFactory;
             _windowService = windowService;
+            IsAdmin = userService.GetUser()!.Role == Role.Administator;
             WarehouseTypes = Enum.GetValues<WarehouseType>().SkipLast(1).Order().ToArray();
             CurrentType = WarehouseTypes[0];
             RegisterCommand = new RelayCommand(async _=> await RegisterAsync(), _=>!string.IsNullOrWhiteSpace(Name));

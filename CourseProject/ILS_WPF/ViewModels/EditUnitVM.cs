@@ -154,14 +154,16 @@ namespace ILS_WPF.ViewModels
         public bool HasCommanders => Commanders?.Length > 0;
         public bool HasPersonnel => Personnel?.Length > 0;
 
+        public bool IsAdmin { get; set; }
+
         public ICommand WarehouseWrapCheckedCommand { get; set; }
         public ICommand UnitWrapCheckedCommand { get; set; }
         public ICommand CommanderWrapCheckedCommand { get; set; }
         public ICommand StaffWrapCheckedCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
-        public ICommand RegisterCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
 
-        public EditUnitVM(Unit unit, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
+        public EditUnitVM(Unit unit, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory, bool isAdmin)
         {
             _unit = unit;
             _viewModelUpdaterService = viewUpdaterService;
@@ -177,6 +179,7 @@ namespace ILS_WPF.ViewModels
             _selectedSoldierSpeciality = Specialities[0];
             _selectedCommanderSpeciality = Specialities[0];
             _selectedUnitType = UnitTypes[0];
+            IsAdmin = isAdmin;
             InitCommands();
             InitFormFields();
             _ = LoadData();
@@ -195,8 +198,8 @@ namespace ILS_WPF.ViewModels
 
         void InitCommands()
         {
-            WarehouseWrapCheckedCommand = new RelayCommand(wrap => OnSingleSelectionChanged((wrap as Wrap<Warehouse>)!, Warehouses, w => _selectedWarehouse = w));
-            UnitWrapCheckedCommand = new RelayCommand(wrap => OnMultipleSelectionChanged((wrap as Wrap<Unit>)!, _selectedUnits, () => _ = LoadUnits()));
+            WarehouseWrapCheckedCommand = new RelayCommand(wrap => OnSingleSelectionChanged((wrap as Wrap<Warehouse>)!, Warehouses, w => _selectedWarehouse = w), _=> IsAdmin);
+            UnitWrapCheckedCommand = new RelayCommand(wrap => OnMultipleSelectionChanged((wrap as Wrap<Unit>)!, _selectedUnits, () => _ = LoadUnits()), _ => IsAdmin);
             CommanderWrapCheckedCommand =
                 new RelayCommand(wrap => OnSingleSelectionChanged((wrap as Wrap<Staff>)!, Commanders,
                 cmd =>
@@ -205,14 +208,14 @@ namespace ILS_WPF.ViewModels
                     _ = LoadCommanders();
                     _ = LoadPersonnel();
 
-                }));
+                }), _ => IsAdmin);
             StaffWrapCheckedCommand = new RelayCommand(wrap => OnMultipleSelectionChanged((wrap as Wrap<Staff>)!, _selectedPersonnel, () =>
             {
                 _ = LoadPersonnel();
                 _ = LoadCommanders();
-            }));
-            RegisterCommand = new RelayCommand(async _ => await SaveAsync(), _ => !string.IsNullOrWhiteSpace(Name));
-            RemoveCommand = new RelayCommand(async _=> await RemoveAsync());
+            }), _ => IsAdmin);
+            SaveCommand = new RelayCommand(async _ => await SaveAsync(), _ => IsAdmin &&!string.IsNullOrWhiteSpace(Name));
+            RemoveCommand = new RelayCommand(async _=> await RemoveAsync(), _ => IsAdmin);
         }
 
         async Task LoadData()

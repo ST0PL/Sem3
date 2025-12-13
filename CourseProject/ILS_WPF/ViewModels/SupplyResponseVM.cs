@@ -92,6 +92,7 @@ namespace ILS_WPF.ViewModels
             _windowService.OpenMessageWindow("Заявки", "Повторная заявка успешно зарегистрирована.");
             _updaterService.Update<SupplyResponsesVM>();
             _updaterService.Update<MainCommanderVM>();
+            _updaterService.Update<MainVM>();
         }
 
         async Task RemoveAsync()

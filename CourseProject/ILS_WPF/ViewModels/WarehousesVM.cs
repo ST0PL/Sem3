@@ -22,18 +22,21 @@ namespace ILS_WPF.ViewModels
             }
         }
 
-        public WarehousesVM(IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
+        public bool IsAdmin { get; set; }
+
+        public WarehousesVM(IViewModelUpdaterService viewUpdaterService, IUserService userService,IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
+            IsAdmin = userService.GetUser()!.Role == Role.Administator;
             RelayCommand navigateBackCommand = null!;
             RelayCommand navigateToWarehouseViewCommand = null!;
             
             navigateBackCommand = new RelayCommand(_ =>
-                CurrentView = new WarehouseListView(new WarehouseListVM(viewUpdaterService, windowService, dbFactory, navigateToWarehouseViewCommand, navigateBackCommand)));
+                CurrentView = new WarehouseListView(new WarehouseListVM(viewUpdaterService, userService, windowService, dbFactory, navigateToWarehouseViewCommand, navigateBackCommand, IsAdmin)));
 
             navigateToWarehouseViewCommand = new RelayCommand(w =>
-                CurrentView = new CurrentWarehouseView(new CurrentWarehouseVM((w as Warehouse)!.Id, viewUpdaterService, windowService, dbFactory, navigateBackCommand)));
+                CurrentView = new CurrentWarehouseView(new CurrentWarehouseVM((w as Warehouse)!.Id, viewUpdaterService, windowService, dbFactory, navigateBackCommand, IsAdmin)));
 
-            CurrentView = new WarehouseListView(new WarehouseListVM(viewUpdaterService, windowService, dbFactory, navigateToWarehouseViewCommand, navigateBackCommand));
+            CurrentView = new WarehouseListView(new WarehouseListVM(viewUpdaterService, userService, windowService, dbFactory, navigateToWarehouseViewCommand, navigateBackCommand, IsAdmin));
         }
     }
 }

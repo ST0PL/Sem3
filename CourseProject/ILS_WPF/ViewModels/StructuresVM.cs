@@ -41,7 +41,10 @@ namespace ILS_WPF.ViewModels
             }
         }
 
+        public bool IsAdmin { get; set; }
+
         public UnitType[] Types { get; set; }
+
 
         public ICommand RefreshCommand { get; set; }
         public ICommand OpenRegisterWindowCommand { get; set; }
@@ -55,36 +58,41 @@ namespace ILS_WPF.ViewModels
             CurrentType = Types[0];
             RefreshCommand = new RelayCommand(async _ => await LoadData());
             viewUpdaterService.SetUpdateCommand<StructuresVM>(RefreshCommand);
-            OpenRegisterWindowCommand = new RelayCommand(_=>windowService.OpenUnitRegisterWindow());
-            OpenEditWindowCommand = new RelayCommand(arg => windowService.OpenUnitEditWindow((arg as Unit)!));
+            IsAdmin = _userService.GetUser()!.Role == Role.Administator;
+            OpenRegisterWindowCommand = new RelayCommand(_=>windowService.OpenUnitRegisterWindow(), _=> IsAdmin);
+            OpenEditWindowCommand = new RelayCommand(arg => windowService.OpenUnitEditWindow((arg as Unit)!, IsAdmin));
             _  = LoadData();
         }
 
-        async Task LoadData()
-        {
-            using var context = await _dbFactory.CreateDbContextAsync();
-            var currentUser = _userService.GetUser();
-            var isAdmin = currentUser?.Role == Role.Administator;
-            var commanderId = currentUser?.Staff?.Id;
-
-            try
+            async Task LoadData()
             {
-               ActualUnits =
-                    (await context.Units
-                    .Include(u => u.Commander)
-                    .Include(u => u.AssignedWarehouse)
-                    .Include(u=>u.Personnel)
-                    .Include(u=>u.Children)
-                    .Where(u => string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%") || (u.CommanderId != null && EF.Functions.Like(u.Commander.FullName, $"%{Query}%")))
-                    .ToArrayAsync())
+                using var context = await _dbFactory.CreateDbContextAsync();
+                var currentUser = _userService.GetUser();
+                var commanderId = currentUser?.Staff?.Id;
+
+                var filteredUnits = await context.Units
+                         .Include(u => u.Commander)
+                         .Include(u => u.AssignedWarehouse)
+                         .Include(u => u.Personnel)
+                         .Include(u => u.Children)
+                         .Where(u => string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%") || (u.CommanderId != null && EF.Functions.Like(u.Commander.FullName, $"%{Query}%")))
+                         .ToArrayAsync();
+
+                await LoadAllParents(context.Units, filteredUnits);
+
+                ActualUnits = filteredUnits
                     .Where(u =>
-                        (isAdmin || (commanderId != null && HasCommanderInTree(u, commanderId.Value))) &&
+                        (IsAdmin || (commanderId != null && HasCommanderInTree(u, commanderId.Value))) &&
                         (CurrentType == UnitType.AnyType || u.Type == CurrentType))
                     .ToList();
+                OnPropertyChanged(nameof(HasItems));
             }
-            catch(Exception ex) { Debug.WriteLine(ex); }
-            OnPropertyChanged(nameof(HasItems));
-        }
+
+            async Task LoadAllParents(DbSet<Unit> dbSet, IEnumerable<Unit> units)
+            {
+                foreach(var unit in units)
+                    unit.Parent = await dbSet.Where(u => u.Id == unit.ParentId).FirstOrDefaultAsync();
+            }
 
         bool HasCommanderInTree(Unit unit, int commanderId)
         {
@@ -93,7 +101,7 @@ namespace ILS_WPF.ViewModels
             {
                 if (currentUnit.CommanderId == commanderId)
                     return true;
-                currentUnit = currentUnit.Parent;
+                currentUnit = currentUnit.Parent!;
             }
             return false;
         }
