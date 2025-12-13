@@ -81,7 +81,6 @@
         <Setter Property="ImageHeight" Value="12"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="13"/>
-        <Setter Property="FontFamily" Value="{StaticResource Inter}"/>
         <Setter Property="CheckedForegroundColor" Value="#34D399"/>
         <Setter Property="CheckedBackgroundColor" Value="#09262A"/>
         <Setter Property="HoverBackgroundColor" Value="#0a2b30"/>

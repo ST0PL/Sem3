@@ -1,5 +1,4 @@
-﻿using ILS_WPF.Models.Core;
-using ILS_WPF.Models.Database;
+﻿using ILS_WPF.Models.Database;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;

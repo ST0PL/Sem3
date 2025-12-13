@@ -1,5 +1,4 @@
-﻿using ILS_WPF.Models.Core;
-using ILS_WPF.Models.Database;
+﻿using ILS_WPF.Models.Database;
 
 namespace ILS_WPF.Services.Interfaces
 {

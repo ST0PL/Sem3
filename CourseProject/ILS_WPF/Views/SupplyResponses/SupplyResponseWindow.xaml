@@ -118,17 +118,8 @@
                             <TextBlock Text="Комментарий"
                                        FontWeight="SemiBold"
                                        FontSize="16"
-                                       Foreground="White">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsEnabled" Value="False">
-                                                <Setter Property="Opacity" Value="0.2"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
+                                       Opacity="0.6"
+                                       Foreground="White"/>
                             <clib:TextBox Style="{StaticResource ReadonlyTextBoxStyle}"
                                           Grid.Row="1"
                                           Text="{Binding SupplyResponseWrap.SupplyResponse.Comment}"

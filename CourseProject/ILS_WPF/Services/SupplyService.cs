@@ -4,7 +4,6 @@ using ILS_WPF.Models.Core.Requests;
 using ILS_WPF.Models.Database;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace ILS_WPF.Services
 {
@@ -70,14 +69,12 @@ namespace ILS_WPF.Services
             response.Status = responseStatus;
             response.UnprocessedDetails = unprocessedRequirements;
 
+            if (responseStatus == SupplyResponseStatus.Denied)
+                response.Comment = "Ни одно из вышестоящих подразделений не смогло удовлетворить запрос.";
 
             context.SupplyResponses.Update(response);
-            try
-            {
 
-                await context.SaveChangesAsync();
-            }
-            catch(Exception ex) { Debug.WriteLine(ex); }
+            await context.SaveChangesAsync();
         }
 
         async Task LoadUnitProperties(ILSContext context, Unit unit)
