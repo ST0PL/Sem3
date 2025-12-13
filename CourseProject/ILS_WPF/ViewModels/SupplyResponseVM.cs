@@ -53,7 +53,7 @@ namespace ILS_WPF.ViewModels
             _updaterService = updaterService;
             _windowService = windowService;
             _dbFactory = dbFactory;
-            IsAdmin = userService.GetUser()!.Role == Role.Administator;
+            IsAdmin = userService.GetUser()!.Role == Role.Administrator;
             RepeatRequestCommand = new RelayCommand(_ => RepeatRequest());
             RemoveCommand = new RelayCommand(async _ => await RemoveAsync());
             _ = LoadData(supplyResponseId);

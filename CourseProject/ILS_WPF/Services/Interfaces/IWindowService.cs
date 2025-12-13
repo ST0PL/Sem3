@@ -1,4 +1,5 @@
 ﻿using ILS_WPF.Models.Core;
+using ILS_WPF.Models.Database;
 using System.Windows.Input;
 
 namespace ILS_WPF.Services.Interfaces
@@ -19,5 +20,7 @@ namespace ILS_WPF.Services.Interfaces
         void OpenWarehouseEntryEditWindow(IMaterial entry, int warehouseId);
         void OpenSupplyRequestWindow(int unitId);
         void OpenSupplyResponseWindow(int supplyResponseId);
+        void OpenAccountRegisterWindow();
+        void OpenAccountEditWindow(User account);
     }
 }

@@ -2,7 +2,8 @@
 {
     public enum Role
     {
+        AnyRole = -1,
         Commander,
-        Administator
+        Administrator
     }
 }

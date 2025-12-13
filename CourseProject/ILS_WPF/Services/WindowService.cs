@@ -102,5 +102,19 @@ namespace ILS_WPF.Services
                 this,
                 _serviceProvider.GetService<IUserService>()!,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
+
+        public void OpenAccountRegisterWindow()
+            => new Views.Accounts.AddWindow(new AddAccountVM(
+                _serviceProvider.GetService<IAccountService>()!,
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
+                this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
+
+        public void OpenAccountEditWindow(User account)
+            => new Views.Accounts.EditWindow(new EditAccountVM(account,
+                _serviceProvider.GetService<IAccountService>()!,
+                _serviceProvider.GetService<IViewModelUpdaterService>()!,
+                this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
     }
 }

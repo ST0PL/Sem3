@@ -26,7 +26,7 @@ namespace ILS_WPF.ViewModels
 
         public WarehousesVM(IViewModelUpdaterService viewUpdaterService, IUserService userService,IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
-            IsAdmin = userService.GetUser()!.Role == Role.Administator;
+            IsAdmin = userService.GetUser()!.Role == Role.Administrator;
             RelayCommand navigateBackCommand = null!;
             RelayCommand navigateToWarehouseViewCommand = null!;
             

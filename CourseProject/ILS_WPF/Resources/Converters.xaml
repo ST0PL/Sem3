@@ -6,5 +6,7 @@
     <conv:FullNameAbbreviationConverter x:Key="abbreviationConverter"/>
     <conv:NumberShortenerConverter x:Key="numberShortenerConverter"/>
     <conv:CounterColorConverter x:Key="counterColorConverter"/>
+    <cconv:InverseBoolConverter x:Key="inverseBoolConverter"/>
+    <cconv:InverseNullOrEmptyVisibilityConverter x:Key="inverseEmptyVisibilityConverter"/>
     <cconv:NullOrEmptyVisibilityConverter x:Key="emptyVisibilityConverter"/>
 </ResourceDictionary>

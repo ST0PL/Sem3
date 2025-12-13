@@ -44,6 +44,10 @@
     <sys:String x:Key="Engineer">Инженер</sys:String>
     <sys:String x:Key="Medic">Медик</sys:String>
 
+    <sys:String x:Key="AnyRole">Любая роль</sys:String>
+    <sys:String x:Key="Commander">Командир</sys:String>
+    <sys:String x:Key="Administrator">Администратор</sys:String>
+
     <sys:String x:Key="Rear">Тыловой</sys:String>
     <sys:String x:Key="Field">Полевой</sys:String>
 

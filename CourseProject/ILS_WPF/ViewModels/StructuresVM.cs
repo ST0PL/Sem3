@@ -4,7 +4,6 @@ using ILS_WPF.Models.Database;
 using ILS_WPF.MVMM;
 using ILS_WPF.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace ILS_WPF.ViewModels
@@ -58,7 +57,7 @@ namespace ILS_WPF.ViewModels
             CurrentType = Types[0];
             RefreshCommand = new RelayCommand(async _ => await LoadData());
             viewUpdaterService.SetUpdateCommand<StructuresVM>(RefreshCommand);
-            IsAdmin = _userService.GetUser()!.Role == Role.Administator;
+            IsAdmin = _userService.GetUser()!.Role == Role.Administrator;
             OpenRegisterWindowCommand = new RelayCommand(_=>windowService.OpenUnitRegisterWindow(), _=> IsAdmin);
             OpenEditWindowCommand = new RelayCommand(arg => windowService.OpenUnitEditWindow((arg as Unit)!, IsAdmin));
             _  = LoadData();

@@ -20,12 +20,12 @@ namespace ILS_WPF.Services
             return user?.Hash == Convert.ToBase64String(hashed) ? user : null;
         }
 
-        public async Task<User> RegisterAsync(string username, string password, Role role, Staff? profile = null)
+        public async Task<User> RegisterAsync(string username, string password, Role role, int? profileId = null)
         {
             using var context = await _dbFactory.CreateDbContextAsync();
             if (await GetUserAsync(username) != null)
                 throw new InvalidOperationException("Пользователь с данным именем уже существует.");
-            var user = CreateUser(username, password, role, profile);
+            var user = CreateUser(username, password, role, profileId);
             await context.AddAsync(user);
             await context.SaveChangesAsync();
             return user;
@@ -41,12 +41,12 @@ namespace ILS_WPF.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task RemoveAsync(string username)
+        public async Task RemoveAsync(int accountId)
         {
             using var context = await _dbFactory.CreateDbContextAsync();
-            var user = await GetUserOrThrowAsync(username);
-            context.Users.Remove(user);
-            await context.SaveChangesAsync();
+            int removed = await context.Users.Where(u => u.Id == accountId).ExecuteDeleteAsync();
+            if(removed > 0)
+                await context.SaveChangesAsync();
         }
 
         private async Task<User?> GetUserAsync(string username)
@@ -61,10 +61,10 @@ namespace ILS_WPF.Services
         private async Task<User> GetUserOrThrowAsync(string username)
             => (await GetUserAsync(username)) ?? throw new InvalidOperationException($"Пользователь с именем \"{username}\" не найден.");
 
-        private static User CreateUser(string username, string password, Role role, Staff? profile = null)
+        private static User CreateUser(string username, string password, Role role, int? profileId = null)
         {
             var (Password, Salt) = ComputeCreds(password);
-            return new User(username, Password, Salt, role, profile);
+            return new User(username, Password, Salt, role, profileId);
         }
 
         private static (string, string) ComputeCreds(string password)

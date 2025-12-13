@@ -38,7 +38,7 @@ namespace ILS_WPF.ViewModels
             _userService = userService;
             _dbFactory = dbFactory;
             _windowService = windowService;
-            IsAdmin = userService.GetUser()!.Role == Role.Administator;
+            IsAdmin = userService.GetUser()!.Role == Role.Administrator;
             WarehouseTypes = Enum.GetValues<WarehouseType>().SkipLast(1).Order().ToArray();
             CurrentType = WarehouseTypes[0];
             RegisterCommand = new RelayCommand(async _=> await RegisterAsync(), _=>!string.IsNullOrWhiteSpace(Name));

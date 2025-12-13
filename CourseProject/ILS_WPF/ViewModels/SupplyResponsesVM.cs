@@ -68,7 +68,7 @@ namespace ILS_WPF.ViewModels
         {
             using var context = await _dbFactory.CreateDbContextAsync();
             var currentUser = _userService.GetUser();
-            var isAdmin = currentUser?.Role == Role.Administator;
+            var isAdmin = currentUser?.Role == Role.Administrator;
             var commanderId = currentUser?.Staff?.Id;
 
             SupplyResponses = [.. context.SupplyResponses

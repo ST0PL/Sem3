@@ -102,6 +102,13 @@
                                                    Content="Военнослужащие"
                                                    Command="{Binding SetViewCommand}"
                                                    CommandParameter="4"/>
+                            <clib:ImageRadioButton Style="{StaticResource NavButtonStyle}"
+                                                   ImageSource="{StaticResource AccountsIcon}"
+                                                   CheckedImageSource="{StaticResource AccountsIcon_Checked}"
+                                                   Content="Аккаунты"
+                                                   Command="{Binding SetViewCommand}"
+                                                   CommandParameter="5"
+                                                   IsEnabled="{Binding IsAdmin}"/>
                         </StackPanel>
                         <Border Grid.Row="2"
                                 VerticalAlignment="Bottom"

@@ -63,7 +63,7 @@ namespace ILS_WPF.ViewModels
         {
             _userService = userService;
             _dbFactory = dbFactory;
-            IsAdmin = userService.GetUser()!.Role == Role.Administator;
+            IsAdmin = userService.GetUser()!.Role == Role.Administrator;
             Ranks = [.. Enum.GetValues<Rank>().Order()];
             Specialities = [.. Enum.GetValues<Speciality>().Order()];
             _currentRank = Ranks[0];

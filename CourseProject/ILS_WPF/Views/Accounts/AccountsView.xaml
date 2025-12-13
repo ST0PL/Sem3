@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="ILS_WPF.Views.Accounts.AccountsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ILS_WPF.Views.Accounts"
+             xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
+             xmlns:prop="clr-namespace:ControlsLib.AttachedProperties;assembly=ControlsLib"
+             mc:Ignorable="d" 
+             d:DesignHeight="631" d:DesignWidth="1110">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Учетные записи"
+                       FontSize="30"
+                       FontWeight="SemiBold"
+                       Foreground="#00D492"/>
+            <clib:Button Style="{StaticResource DarkGreenButtonStyle}"
+                         Content="Обновить"
+                         Grid.Column="1"
+                         HorizontalAlignment="Right"
+                         Padding="10"
+                         FontSize="14"
+                         CornerRadius="15"
+                         Command="{Binding RefreshCommand}"
+                         Margin="0,0,15,0"/>
+        </Grid>
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <clib:TextBox Style="{StaticResource TextBoxStyle}"
+                          Margin="0,20,0,0"
+                          Width="680"
+                          Placeholder="Поиск по логину"
+                          Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"/>
+            <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                           SelectedValue="{Binding CurrentRole}"
+                           Margin="10,0,0,0"
+                           Width="175"
+                           ItemsSource="{Binding Roles}">
+                <clib:ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                   Margin="5"
+                                   Foreground="White"/>
+                    </DataTemplate>
+                </clib:ComboBox.ItemTemplate>
+            </clib:ComboBox>
+            <clib:Button Style="{StaticResource DarkGreenButtonStyle}"
+                         Content="Зарегистрировать"
+                         Grid.Column="1"
+                         Margin="20,0,0,0"
+                         CornerRadius="20"
+                         Padding="15"   
+                         VerticalAlignment="Bottom"
+                         FontSize="14"
+                         Command="{Binding OpenRegisterWindowCommand}"/>
+        </StackPanel>
+        <clib:ListView Style="{StaticResource ListViewStyle}"
+                       Grid.Row="2"
+                       Margin="80,10,10,10"
+                       ItemsSource="{Binding Accounts}">
+            <clib:ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"
+                               IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </clib:ListView.ItemsPanel>
+            <clib:ListView.ItemTemplate>
+                <DataTemplate>
+                    <clib:Button Background="#101828"
+                                 BorderBrush="#333E50"
+                                 HoverBackgroundColor="#0d1422"
+                                 CornerRadius="20"
+                                 Width="400"
+                                 Cursor="Hand"
+                                 HorizontalContentAlignment="Left"
+                                 Margin="25,20,25,0"
+                                 Height="100"
+                                 Command="{Binding DataContext.OpenEditWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                 CommandParameter="{Binding}">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="{Binding Username}"
+                                       Foreground="#00D492"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"
+                                       TextWrapping="Wrap"
+                                       TextTrimming="WordEllipsis"/>
+                            <TextBlock Text="{Binding Role, StringFormat='Роль: {0}', Converter={StaticResource enumConverter}}"
+                                       FontSize="13"
+                                       Foreground="#66FFFFFF"/>
+                        </StackPanel>
+                    </clib:Button>
+                </DataTemplate>
+            </clib:ListView.ItemTemplate>
+        </clib:ListView>
+        <TextBlock Grid.Row="2"
+                   Text="Данных нет"
+                   Foreground="#66FFFFFF"
+                   FontSize="40"
+                   FontWeight="Bold"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasItems}" Value="True">
+                            <DataTrigger.Setters>
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </Grid>
+</UserControl>
