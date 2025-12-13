@@ -52,7 +52,10 @@ namespace ILS_WPF.Services
         private async Task<User?> GetUserAsync(string username)
         {
             using var context = await _dbFactory.CreateDbContextAsync();
-            return await context.Users.Where(u => u.Username == username.ToLower()).FirstOrDefaultAsync();
+            return await context.Users
+                .Where(u => u.Username == username.ToLower())
+                .Include(u=>u.Staff)
+                .FirstOrDefaultAsync();
         }
         
         private async Task<User> GetUserOrThrowAsync(string username)

@@ -5,6 +5,7 @@ using ILS_WPF.Services.Interfaces;
 using ILS_WPF.Views.Main;
 using ILS_WPF.Views.Personnel;
 using ILS_WPF.Views.Structures;
+using ILS_WPF.Views.SupplyResponses;
 using ILS_WPF.Views.Warehouses;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Controls;
@@ -37,7 +38,7 @@ namespace ILS_WPF.ViewModels
                 [
                     userService?.GetUser()?.Role < Role.Administator ?
                         new MainViewCommander(new MainCommanderVM(viewUpdaterService, userService, windowService, dbFactory)) : new MainView(new StatVM(viewUpdaterService,dbFactory)),
-                    null,
+                    new SupplyResponsesView(new SupplyResponsesVM(viewUpdaterService, userService, windowService, dbFactory)),
                     new WarehousesView(new WarehousesVM(viewUpdaterService, windowService, dbFactory)),
                     new StructuresView(new StructuresVM(viewUpdaterService, userService, windowService, dbFactory)),
                     new PersonnelView(new PersonnelVM(viewUpdaterService,userService, windowService, dbFactory))

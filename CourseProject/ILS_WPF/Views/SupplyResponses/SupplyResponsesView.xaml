@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="ILS_WPF.Views.Personnel.PersonnelView"
+﻿<UserControl x:Class="ILS_WPF.Views.SupplyResponses.SupplyResponsesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ILS_WPF.Views.Personnel"
+             xmlns:local="clr-namespace:ILS_WPF.Views.SupplyResponses"
              xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
              xmlns:prop="clr-namespace:ControlsLib.AttachedProperties;assembly=ControlsLib"
              mc:Ignorable="d" 
@@ -19,7 +19,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Военнослужащие"
+            <TextBlock Text="Заявки"
                        FontSize="30"
                        FontWeight="SemiBold"
                        Foreground="#00D492"/>
@@ -37,14 +37,14 @@
                     Orientation="Horizontal">
             <clib:TextBox Style="{StaticResource TextBoxStyle}"
                           Margin="0,20,0,0"
-                          Width="500"
-                          Placeholder="Поиск по ФИО или подразделению"
+                          Width="850"
+                          Placeholder="Поиск по названию подразделения или дате"
                           Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"/>
             <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
-                           SelectedValue="{Binding CurrentRank}"
+                           SelectedValue="{Binding CurrentStatus}"
                            Margin="10,0,0,0"
                            Width="175"
-                           ItemsSource="{Binding Ranks}">
+                           ItemsSource="{Binding Statuses}">
                 <clib:ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
@@ -53,33 +53,11 @@
                     </DataTemplate>
                 </clib:ComboBox.ItemTemplate>
             </clib:ComboBox>
-            <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
-                           SelectedValue="{Binding CurrentSpeciality}"
-                           Margin="10,0,0,0"
-                           Width="175"
-                           ItemsSource="{Binding Specialities}">
-                <clib:ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
-                                   Margin="5"
-                                   Foreground="White"/>
-                    </DataTemplate>
-                </clib:ComboBox.ItemTemplate>
-            </clib:ComboBox>
-            <clib:Button Style="{StaticResource DarkGreenButtonStyle}"
-                         Content="Зарегистрировать"
-                         Grid.Column="1"
-                         Margin="20,0,0,0"
-                         CornerRadius="20"
-                         Padding="15"   
-                         VerticalAlignment="Bottom"
-                         FontSize="14"
-                         Command="{Binding OpenRegisterWindowCommand}"/>
         </StackPanel>
         <clib:ListView Style="{StaticResource ListViewStyle}"
                        Grid.Row="2"
-                       Margin="100,10,10,10"
-                       ItemsSource="{Binding ActualPersonnel}">
+                       Margin="80,10,10,10"
+                       ItemsSource="{Binding SupplyResponses}">
             <clib:ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal"
@@ -92,42 +70,25 @@
                                  BorderBrush="#333E50"
                                  HoverBackgroundColor="#0d1422"
                                  CornerRadius="20"
-                                 Width="350"
+                                 Width="400"
                                  Cursor="Hand"
                                  HorizontalContentAlignment="Left"
                                  Margin="25,20,25,0"
-                                 Height="130"
-                                 Command="{Binding DataContext.OpenEditWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                 Height="140"
+                                 Command="{Binding DataContext.OpenSupplyResponseWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                  CommandParameter="{Binding}">
                         <StackPanel Margin="10">
-                            <TextBlock Text="{Binding FullName}"
+                            <TextBlock Text="{Binding Title}"
                                        Foreground="#00D492"
                                        FontSize="20"
                                        FontWeight="SemiBold"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap"/>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Звание: "
+                                       TextWrapping="Wrap"
+                                       TextTrimming="WordEllipsis"/>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding SupplyResponse.Status, StringFormat='Статус: {0}', Converter={StaticResource enumConverter}}"
                                            FontSize="13"
                                            Foreground="#66FFFFFF"/>
-                                <TextBlock Text="{Binding Rank, Converter={StaticResource enumConverter}}"
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Военно-учетная специальность: "
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                                <TextBlock Text="{Binding Speciality, Converter={StaticResource enumConverter}}"
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal"
-                                        Visibility="{Binding Unit, Converter={StaticResource emptyVisibilityConverter}}">
-                                <TextBlock Text="Подразделение: "
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                                <TextBlock Text="{Binding Unit.Name}"
+                                <TextBlock Text="{Binding SupplyResponse.Request.CreationTime, StringFormat='Дата: {0:yyyy-MM-dd HH:mm}'}"
                                            Foreground="#66FFFFFF"
                                            FontSize="13"/>
                             </StackPanel>

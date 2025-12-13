@@ -12,7 +12,6 @@ namespace ILS_WPF.ViewModels
     {
         private int _unitId;
         private ISupplyService _supplyService;
-        private IViewModelUpdaterService _updaterService;
         private IWindowService _windowService;
         private IDbContextFactory<ILSContext> _dbFactory;
         private bool _canMakeSupplyRequest;
@@ -35,11 +34,10 @@ namespace ILS_WPF.ViewModels
         public ICommand AddDetailCommand { get; set; }
         public ICommand RemoveDetailCommand { get; set; }
 
-        public SupplyRequestVM(int unitId, ISupplyService supplyService, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
+        public SupplyRequestVM(int unitId, ISupplyService supplyService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
             _unitId = unitId;
             _supplyService = supplyService;
-            _updaterService = viewUpdaterService;
             _windowService = windowService;
             _dbFactory = dbFactory;
             var _notifyChangesCommand = new RelayCommand(_ => ChangeCanMakeRequest());
@@ -59,7 +57,6 @@ namespace ILS_WPF.ViewModels
                     Details = [.. SupplyRequestDetails.Select(d=>(SupplyRequestDetail)d)],
                     CreationTime = DateTime.Now
                 });
-            _updaterService.Update<MainCommanderVM>();
             _windowService.OpenMessageWindow("Заявки", "Заявка на снабжение была успешно отправлена.");
         }
 

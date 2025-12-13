@@ -90,8 +90,15 @@ namespace ILS_WPF.Services
             => new Views.Main.SupplyRequestWindow(new SupplyRequestVM(
                 unitId,
                 _serviceProvider.GetService<ISupplyService>()!,
+                this,
+                _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
+        public void OpenSupplyResponseWindow(int supplyResponseId)
+            => new Views.SupplyResponses.SupplyResponseWindow(new SupplyResponseVM(
+                supplyResponseId,
+                _serviceProvider.GetService<ISupplyService>()!,
                 _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,
+                _serviceProvider.GetService<IUserService>()!,
                 _serviceProvider.GetService<IDbContextFactory<ILSContext>>()!)).ShowDialog();
     }
 }

@@ -11,6 +11,9 @@ namespace ILS_WPF.Services
             => _updateComands[typeof(T)] = updateCommand;
 
         public void Update<T>()
-            => _updateComands[typeof(T)].Execute(null);
+        {
+            if (_updateComands.TryGetValue(typeof(T), out var command))
+                command.Execute(null);
+        }
     }
 }

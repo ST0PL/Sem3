@@ -71,18 +71,34 @@ namespace ILS_WPF.ViewModels
             await context.SaveChangesAsync();
             _viewModelUpdaterService.Update<WarehouseListVM>();
             _viewModelUpdaterService.Update<CurrentWarehouseVM>();
-            _viewModelUpdaterService.Update<PersonnelVM>();
+            _viewModelUpdaterService.Update<StructuresVM>();
             _windowService.OpenMessageWindow("Изменение данных", "Данные о складе были успешно изменены.");
         }
         async Task RemoveAsync()
         {
             using var context = await _dbFactory.CreateDbContextAsync();
-            await context.Warehouses.Where(w => w.Id == _warehouseId).ExecuteDeleteAsync();
-            _viewModelUpdaterService.Update<WarehouseListVM>();
-            _viewModelUpdaterService.Update<PersonnelVM>();
+
+            // Загрузка склада со связанными данными
+            var warehouse = await context.Warehouses
+                .Include(w => w.Resources)
+                .Include(w => w.Equipments)
+                .FirstOrDefaultAsync(w => w.Id == _warehouseId);
+
+            if (warehouse == null)
+                return;
+
+            // Обнуление AssignedWarehouseId у всех подразделений, которые ссылаются на этот склад
+            await context.Units
+                .Where(u => u.AssignedWarehouseId == _warehouseId)
+                .ExecuteUpdateAsync(setters =>
+                    setters.SetProperty(u => u.AssignedWarehouseId, (int?)null));
+;
+            context.Warehouses.Remove(warehouse);
             await context.SaveChangesAsync();
+            _viewModelUpdaterService.Update<WarehouseListVM>();
+            _viewModelUpdaterService.Update<StructuresVM>();
             _navigateBackCommand.Execute(null);
-            _windowService.OpenMessageWindow("Удаление данных", "Данные о складе были успешно изменены.");
+            _windowService.OpenMessageWindow("Удаление данных", "Данные о складе были успешно удалены.");
         }
     }
 }

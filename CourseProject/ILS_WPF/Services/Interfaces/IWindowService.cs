@@ -18,5 +18,6 @@ namespace ILS_WPF.Services.Interfaces
         void OpenWarehouseEntryRegisterWindow(int warehouseId);
         void OpenWarehouseEntryEditWindow(IMaterial entry, int warehouseId);
         void OpenSupplyRequestWindow(int unitId);
+        void OpenSupplyResponseWindow(int supplyResponseId);
     }
 }

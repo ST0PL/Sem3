@@ -59,6 +59,7 @@
                                     HorizontalAlignment="Left">
                             <clib:TextBox Style="{StaticResource TextBoxStyle}"
                                           Placeholder="Название подразделения"
+                                          MaxLength="50"
                                           Width="400"
                                           Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
                             <clib:ComboBox Style="{StaticResource ComboBoxStyle}"

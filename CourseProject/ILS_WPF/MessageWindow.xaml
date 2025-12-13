@@ -52,21 +52,8 @@
                         CornerRadius="15"
                         Visibility="{Binding MessageText, Converter={StaticResource emptyVisibilityConverter}}"
                         Padding="10,0,10,10">
-                    <clib:TextBox Text="{Binding MessageText}"
-                                  TextWrapping="Wrap"
-                                  Foreground="White"
-                                  IsReadOnly="True"
-                                  Background="Transparent"
-                                  FontSize="18"
-                                  BorderThickness="0"
-                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                  prop:ScrollViewerHelper.ScrollBarThumbWidth="7"
-                                  prop:ScrollViewerHelper.ScrollBarWidth="7"
-                                  prop:ScrollViewerHelper.ScrollBarThumbCornerRadius="4"
-                                  prop:ScrollViewerHelper.ScrollBarCornerRadius="4"
-                                  prop:ScrollViewerHelper.ClickScrollBarThumbBackground="#1c2b4a"
-                                  prop:ScrollViewerHelper.ScrollBarThumbBackground="#1c2b4a"
-                                  prop:ScrollViewerHelper.ScrollBarBackground="#0e1524"/>
+                    <clib:TextBox Style="{StaticResource ReadonlyTextBoxStyle}" 
+                                  Text="{Binding MessageText}"/>
                 </Border>
             </Grid>
         </Grid>

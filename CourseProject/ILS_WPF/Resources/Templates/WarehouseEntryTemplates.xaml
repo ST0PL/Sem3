@@ -20,26 +20,14 @@
                            FontSize="20"
                            FontWeight="SemiBold"
                            TextTrimming="CharacterEllipsis"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Калибр: "
-                               FontSize="13"
-                               Foreground="#66FFFFFF"/>
-                    <TextBlock Text="{Binding Caliber, Converter={StaticResource enumConverter}}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Количество: "
-                               FontSize="13"
-                               Foreground="#66FFFFFF"/>
-                    <TextBlock Text="{Binding Quantity}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"/>
-                    <TextBlock Text="{Binding MeasureUnit, Converter={StaticResource enumConverter}}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"
-                               Margin="3,0,0,0"/>
-                </StackPanel>
+                <TextBlock Text="{Binding Caliber, StringFormat='Калибр: {0}', Converter={StaticResource enumConverter}}"
+                           FontSize="13"
+                           Foreground="#66FFFFFF"/>
+                <TextBlock FontSize="13"
+                           Foreground="#66FFFFFF">
+                    <Run Text="{Binding Quantity, StringFormat='Количество: {0}', Converter={StaticResource numberShortenerConverter}}"/>
+                    <Run Text="{Binding MeasureUnit, Converter={StaticResource enumConverter}}"/>
+                </TextBlock>
             </StackPanel>
         </clib:Button>
     </DataTemplate>
@@ -61,26 +49,14 @@
                            FontSize="20"
                            FontWeight="SemiBold"
                            TextTrimming="CharacterEllipsis"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Вид топлива: "
-                               FontSize="13"
-                               Foreground="#66FFFFFF"/>
-                    <TextBlock Text="{Binding Type, Converter={StaticResource enumConverter}}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Количество: "
-                               FontSize="13"
-                               Foreground="#66FFFFFF"/>
-                    <TextBlock Text="{Binding Quantity}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"/>
-                    <TextBlock Text="{Binding MeasureUnit, Converter={StaticResource enumConverter}}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"
-                               Margin="3,0,0,0"/>
-                </StackPanel>
+                <TextBlock Text="{Binding Type, StringFormat='Вид топлива: {0}', Converter={StaticResource enumConverter}}"
+                           FontSize="13"
+                           Foreground="#66FFFFFF"/>
+                <TextBlock FontSize="13"
+                           Foreground="#66FFFFFF">
+                    <Run Text="{Binding Quantity, StringFormat='Количество: {0}', Converter={StaticResource numberShortenerConverter}}"/>
+                    <Run Text="{Binding MeasureUnit, Converter={StaticResource enumConverter}}"/>
+                </TextBlock>
             </StackPanel>
         </clib:Button>
     </DataTemplate>
@@ -102,34 +78,15 @@
                            FontSize="20"
                            FontWeight="SemiBold"
                            TextTrimming="CharacterEllipsis"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Вид транспорта: "
-                               FontSize="13"
-                               Foreground="#66FFFFFF"/>
-                    <TextBlock Text="{Binding Type, Converter={StaticResource enumConverter}}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Вид топлива: "
-                               FontSize="13"
-                               Foreground="#66FFFFFF"/>
-                    <TextBlock Text="{Binding FuelType, Converter={StaticResource enumConverter}}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Количество: "
-                               FontSize="13"
-                               Foreground="#66FFFFFF"/>
-                    <TextBlock Text="{Binding Count}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"/>
-                    <TextBlock Text="шт."
-                               Foreground="#66FFFFFF"
-                               FontSize="13"
-                               Margin="3,0,0,0"/>
-                </StackPanel>
+                <TextBlock Text="{Binding Type, StringFormat='Вид транспорта: {0}', Converter={StaticResource enumConverter}}"
+                           FontSize="13"
+                           Foreground="#66FFFFFF"/>
+                <TextBlock Text="{Binding FuelType, StringFormat='Тип топлива: {0}', Converter={StaticResource enumConverter}}"
+                           FontSize="13"
+                           Foreground="#66FFFFFF"/>
+                <TextBlock Text="{Binding Count, StringFormat='Количество: {0} шт.', Converter={StaticResource numberShortenerConverter}}"
+                           FontSize="13"
+                           Foreground="#66FFFFFF"/>
             </StackPanel>
         </clib:Button>        
     </DataTemplate>
@@ -151,26 +108,12 @@
                            FontSize="20"
                            FontWeight="SemiBold"
                            TextTrimming="CharacterEllipsis"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Калибр: "
-                               FontSize="13"
-                               Foreground="#66FFFFFF"/>
-                    <TextBlock Text="{Binding Caliber, Converter={StaticResource enumConverter}}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Количество: "
-                               FontSize="13"
-                               Foreground="#66FFFFFF"/>
-                    <TextBlock Text="{Binding Count}"
-                               Foreground="#66FFFFFF"
-                               FontSize="13"/>
-                    <TextBlock Text="шт."
-                               Foreground="#66FFFFFF"
-                               FontSize="13"
-                               Margin="3,0,0,0"/>
-                </StackPanel>
+                <TextBlock Text="{Binding Caliber, StringFormat='Калибр: {0}', Converter={StaticResource enumConverter}}"
+                           FontSize="13"
+                           Foreground="#66FFFFFF"/>
+                <TextBlock Text="{Binding Count, StringFormat='Количество: {0} шт.', Converter={StaticResource numberShortenerConverter}}"
+                           FontSize="13"
+                           Foreground="#66FFFFFF"/>
             </StackPanel>
         </clib:Button>
     </DataTemplate>
@@ -182,7 +125,7 @@
             <Run Text="{Binding Caliber, Converter={StaticResource enumConverter}}"/>
             <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
             <Run Text="-"/>
-            <Run Text="{Binding Quantity}"/>
+            <Run Text="{Binding Quantity, Converter={StaticResource numberShortenerConverter}}"/>
             <Run Text="{Binding MeasureUnit, Converter={StaticResource enumConverter}}"/>
         </TextBlock>
     </DataTemplate>
@@ -194,7 +137,7 @@
             <Run Text="{Binding Type, Converter={StaticResource enumConverter}}"/>
             <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
             <Run Text="-"/>
-            <Run Text="{Binding Quantity}"/>
+            <Run Text="{Binding Quantity, Converter={StaticResource numberShortenerConverter}}"/>
             <Run Text="{Binding MeasureUnit, Converter={StaticResource enumConverter}}"/>
         </TextBlock>
     </DataTemplate>
@@ -207,7 +150,7 @@
             <Run Text="{Binding FuelType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
             <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
             <Run Text="-"/>
-            <Run Text="{Binding Count}"/>
+            <Run Text="{Binding Count, Converter={StaticResource numberShortenerConverter}}"/>
             <Run Text="шт."/>
         </TextBlock>
     </DataTemplate>
@@ -219,7 +162,7 @@
             <Run Text="{Binding Caliber, Converter={StaticResource enumConverter}}"/>
             <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
             <Run Text="-"/>
-            <Run Text="{Binding Count}"/>
+            <Run Text="{Binding Count, Converter={StaticResource numberShortenerConverter}}"/>
             <Run Text="шт."/>
         </TextBlock>
     </DataTemplate>

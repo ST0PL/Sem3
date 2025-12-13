@@ -345,10 +345,44 @@ namespace ILS_WPF.ViewModels
         async Task RemoveAsync()
         {
             using var context = await _dbFactory.CreateDbContextAsync();
-            context.Remove(_unit);
+
+            // Загрузка подразделения
+            var unit = await context.Units
+                .Include(u => u.Personnel)
+                .Include(u => u.Children)
+                .Include(u => u.SupplyRequests)
+                .FirstOrDefaultAsync(u => u.Id == _unit.Id);
+
+            if (unit == null)
+                return;
+
+            // Поиск всех заявок этого подразделения
+            var requests = await context.SupplyRequests
+                .Include(r => r.Details)
+                .Where(r => r.RequestUnitId == _unit.Id)
+                .ToListAsync();
+
+            // Поиск всех ответов на эти заявки
+            var requestIds = requests.Select(r => r.Id).ToList();
+            var responses = await context.SupplyResponses
+                .Include(r => r.UnprocessedDetails)
+                .Where(r => requestIds.Contains(r.RequestId))
+                .ToListAsync();
+
+            // Удаление
+
+            foreach (var response in responses)
+                context.SupplyResponses.Remove(response);
+
+            foreach (var request in requests)
+                context.SupplyRequests.Remove(request);
+
+            context.Units.Remove(unit);
+
             await context.SaveChangesAsync();
             _viewModelUpdaterService.Update<StructuresVM>();
             _viewModelUpdaterService.Update<PersonnelVM>();
+            _viewModelUpdaterService.Update<SupplyResponsesVM>();
             _windowService.OpenMessageWindow("Удаление данных", "Данные о подразделении были успешно удалены.");
         }
 

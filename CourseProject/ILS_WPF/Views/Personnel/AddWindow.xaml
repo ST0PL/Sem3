@@ -53,6 +53,7 @@
                         <clib:TextBox Style="{StaticResource TextBoxStyle}"
                                       Placeholder="ФИО"
                                       Width="400"
+                                      MaxLength="50"
                                       Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"/>
                         <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
                                        Width="175"

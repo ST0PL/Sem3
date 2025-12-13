@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Converters.xaml"/>
+                <ResourceDictionary Source="/Resources/Templates/SupplyRequestDetailTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/Templates/WarehouseEntryTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/Icons/XamlIcons.xaml"/>
                 <ResourceDictionary Source="/ControlsLib;component/Styles/Generic.xaml"/>

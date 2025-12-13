@@ -7,16 +7,13 @@ namespace ILS_WPF.Converters
     {
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int num)
+            float num = System.Convert.ToSingle(value);
+            return num switch
             {
-                return num switch
-                {
-                    >= 1000000 => (((float)num) / 1000000).ToString() + " млн.",
-                    >= 1000 => (((float)num) / 1000).ToString() + " тыс.",
-                    _ => num
-                };
-            }
-            return null;
+                >= 1000000 => (num / 1000000).ToString() + " млн.",
+                >= 1000 => (num / 1000).ToString() + " тыс.",
+                _ => num
+            };
         }
 
         public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
