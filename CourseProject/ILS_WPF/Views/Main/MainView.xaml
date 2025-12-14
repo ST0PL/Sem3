@@ -155,7 +155,7 @@
                                    Foreground="White"
                                    Opacity="0.5"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding ResolvedPercent}"
+                            <TextBlock Text="{Binding TodayResolvedPercent}"
                                        Foreground="#00D492"
                                        FontWeight="SemiBold"
                                        FontSize="18"/>

@@ -16,6 +16,7 @@ namespace ILS_WPF.ViewModels
         private IDbContextFactory<ILSContext> _dbFactory;
         private IWindowService _windowService;
         private string _username;
+        private string _password;
         private Role _currentRole;
         private Rank _currentRank;
         private Speciality _currentSpeciality;
@@ -31,7 +32,15 @@ namespace ILS_WPF.ViewModels
                 OnPropertyChanged();
             }
         }
-        public string Password { get; set; }
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Role CurrentRole
         {
@@ -95,7 +104,7 @@ namespace ILS_WPF.ViewModels
         public ICommand RemoveCommand { get; set; }
         public ICommand WrapCheckedCommand { get; set; }
 
-        public EditAccountVM(User account, IAccountService accountService, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
+        public EditAccountVM(User account, IUserService userService, IAccountService accountService, IViewModelUpdaterService viewUpdaterService, IWindowService windowService, IDbContextFactory<ILSContext> dbFactory)
         {
             _account = account;
             _accountService = accountService;
@@ -105,13 +114,13 @@ namespace ILS_WPF.ViewModels
             Roles = Enum.GetValues<Role>().SkipLast(1).Order().ToArray();
             Ranks = Enum.GetValues<Rank>().Order().ToArray();
             Specialities = Enum.GetValues<Speciality>().Order().ToArray();
-            CurrentSpeciality = Specialities[0];
+            _currentSpeciality = Specialities[0];
             _currentRank = Ranks[0];
             IsRoot = account.Username == "admin";
             SaveCommand = new RelayCommand(async _ => await SaveAsync(),
                 _ => !string.IsNullOrWhiteSpace(Username) &&
                      (CurrentRole == Role.Administrator || (CurrentRole == Role.Commander && SelectedSoldier != null)));
-            RemoveCommand = new RelayCommand(async _ => await RemoveAsync(), _ => !IsRoot);
+            RemoveCommand = new RelayCommand(async _ => await RemoveAsync(), _ => !IsRoot && userService.GetUser()!.Id != account.Id);
             WrapCheckedCommand = new RelayCommand(wrap => OnWrapCheckChanged((wrap as Wrap<Staff>)!));
             InitFormFields();
             _ = LoadPersonnel();
@@ -131,8 +140,11 @@ namespace ILS_WPF.ViewModels
             using var context = await _dbFactory.CreateDbContextAsync();
             Personnel = await context.Personnel
                 .Where(p =>
-                    CurrentRole != Role.Administrator &&
-                    (CurrentRank == Rank.AnyRank || p.Rank == CurrentRank) && (CurrentSpeciality == Speciality.AnySpeciality || p.Speciality == CurrentSpeciality) &&
+                    CurrentRole != Role.Administrator && // администратор не может быть прикреплен к записи военнослужащего
+                    context.Units.Any(u=>u.CommanderId == p.Id) && // командир должен управлять подразделением
+                    (_account.StaffId == p.Id || !context.Users.Any(u => u.StaffId == p.Id)) && // командир или прикреплен к редактируемому аккаунту или не прикреплен вовсе
+                    (CurrentRank == Rank.AnyRank || p.Rank == CurrentRank) &&
+                    (CurrentSpeciality == Speciality.AnySpeciality || p.Speciality == CurrentSpeciality) &&
                     (string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(p.FullName, $"%{Query}%")))
                     .Select(p => new Wrap<Staff>(p) { IsChecked = SelectedSoldier != null && SelectedSoldier.Id == p.Id })
                     .ToArrayAsync();

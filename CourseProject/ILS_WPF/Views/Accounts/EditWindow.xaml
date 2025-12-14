@@ -164,7 +164,7 @@
                                                     <TextBlock Text="{Binding Value.Rank,StringFormat='Звание: {0}', Converter={StaticResource enumConverter}}"
                                                                Foreground="#73FFFFFF"
                                                                FontSize="12"/>
-                                                    <TextBlock Text="{Binding Value.Speciality,StringFormat='Специальность: {0}', Converter={StaticResource enumConverter}}"
+                                                    <TextBlock Text="{Binding Value.Speciality,StringFormat='Военно-учетная специальность: {0}', Converter={StaticResource enumConverter}}"
                                                                Foreground="#73FFFFFF"
                                                                FontSize="12"/>
                                                 </StackPanel>

@@ -112,6 +112,7 @@ namespace ILS_WPF.Services
 
         public void OpenAccountEditWindow(User account)
             => new Views.Accounts.EditWindow(new EditAccountVM(account,
+                _serviceProvider.GetService<IUserService>()!,
                 _serviceProvider.GetService<IAccountService>()!,
                 _serviceProvider.GetService<IViewModelUpdaterService>()!,
                 this,

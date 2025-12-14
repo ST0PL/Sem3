@@ -37,6 +37,7 @@ namespace ILS_WPF.Services
             var (Password, Salt) = ComputeCreds(newPassword);
             user.Hash = Password;
             user.Salt = Salt;
+            context.Update(user);
             await context.SaveChangesAsync();
         }
 

@@ -26,7 +26,7 @@ namespace ILS_WPF.Views.Accounts
             => Close();
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-            => ((AddAccountVM)DataContext).Password = ((PasswordBox)sender).Password;
+            => ((EditAccountVM)DataContext).Password = ((PasswordBox)sender).Password;
 
     }
 }

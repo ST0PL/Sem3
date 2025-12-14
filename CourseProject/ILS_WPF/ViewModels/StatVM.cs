@@ -22,7 +22,7 @@ namespace ILS_WPF.ViewModels
 
         public int TotalPersonnel { get => _totalPersonnel; set { _totalPersonnel = value; OnPropertyChanged(); } }
         public int UnresolvedRequests { get => _unresolvedRequests; set { _unresolvedRequests = value; OnPropertyChanged(); } }
-        public int ResolvedPercent { get => _resolvedPercent; set { _resolvedPercent = value; OnPropertyChanged(); } }
+        public int TodayResolvedPercent { get => _resolvedPercent; set { _resolvedPercent = value; OnPropertyChanged(); } }
 
         public ISeries[] Series { get => _series; set { _series = value; OnPropertyChanged(); } }
         public Axis[] XAxes { get; set; }
@@ -72,11 +72,16 @@ namespace ILS_WPF.ViewModels
                 .Where(r=>r.Status == SupplyResponseStatus.Denied)
                 .CountAsync();
 
-            var totalResponses = await context.SupplyResponses.CountAsync();
+            var totalTodayResponses = await context.SupplyResponses
+                .Include(r=>r.Request)
+                .Where(r=>r.Request.CreationTime == DateTime.Today)
+                .CountAsync();
 
-            ResolvedPercent = (int)(totalResponses == 0 ? 0 :
-                (await context.SupplyResponses.Where(r => r.Status == SupplyResponseStatus.Success).CountAsync())
-                / (float)totalResponses * 100);
+            TodayResolvedPercent = (int)(totalTodayResponses == 0 ? 0 :
+                (await context.SupplyResponses.Include(r=>r.Request)
+                .Where(r => r.Request.CreationTime == DateTime.Today && r.Status == SupplyResponseStatus.Success)
+                .CountAsync())
+                / (float)totalTodayResponses * 100);
 
 
             var autoResolvedCount = new int[DateTime.Now.Hour+1];

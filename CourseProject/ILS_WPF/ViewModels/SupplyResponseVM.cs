@@ -38,7 +38,6 @@ namespace ILS_WPF.ViewModels
             }
         }
 
-        public bool IsAdmin { get; set; }
         public bool HasDetails => SupplyResponseWrap.SupplyResponse?.Request?.Details?.Count > 0;
         public bool HasUnprocessedDetails => SupplyResponseWrap.SupplyResponse.UnprocessedDetails.Count > 0;
         public bool IsCommentEnabled => !string.IsNullOrWhiteSpace(SupplyResponseWrap?.SupplyResponse?.Comment ?? "");
@@ -53,7 +52,6 @@ namespace ILS_WPF.ViewModels
             _updaterService = updaterService;
             _windowService = windowService;
             _dbFactory = dbFactory;
-            IsAdmin = userService.GetUser()!.Role == Role.Administrator;
             RepeatRequestCommand = new RelayCommand(_ => RepeatRequest());
             RemoveCommand = new RelayCommand(async _ => await RemoveAsync());
             _ = LoadData(supplyResponseId);

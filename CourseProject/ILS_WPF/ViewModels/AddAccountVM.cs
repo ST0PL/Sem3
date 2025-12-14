@@ -110,7 +110,7 @@ namespace ILS_WPF.ViewModels
             Roles = Enum.GetValues<Role>().SkipLast(1).Order().ToArray();
             Ranks = Enum.GetValues<Rank>().Order().ToArray();
             Specialities = Enum.GetValues<Speciality>().Order().ToArray();
-            CurrentSpeciality = Specialities[0];
+            _currentSpeciality = Specialities[0];
             _currentRank = Ranks[0];
             RegisterCommand = new RelayCommand(async _ => await RegisterAsync(),
                 _ => !string.IsNullOrWhiteSpace(Username) &&
@@ -127,11 +127,13 @@ namespace ILS_WPF.ViewModels
             using var context = await _dbFactory.CreateDbContextAsync();
             Personnel = await context.Personnel
                 .Where(p =>
-                    CurrentRole  != Role.Administrator &&
-                    !context.Users.Any(u=>u.StaffId == p.Id) &&
-                    (CurrentRank == Rank.AnyRank || p.Rank == CurrentRank) && (CurrentSpeciality == Speciality.AnySpeciality || p.Speciality == CurrentSpeciality) &&
+                    CurrentRole != Role.Administrator && // администратор не может быть прикреплен к записи военнослужащего
+                    context.Units.Any(u => u.CommanderId == p.Id) && // командир должен управлять подразделением
+                    !context.Users.Any(u => u.StaffId == p.Id) && // командир не должен быть уже прикреплен к учетной записи
+                    (CurrentRank == Rank.AnyRank || p.Rank == CurrentRank) &&
+                    (CurrentSpeciality == Speciality.AnySpeciality || p.Speciality == CurrentSpeciality) &&
                     (string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(p.FullName, $"%{Query}%")))
-                    .Select(p => new Wrap<Staff>(p))
+                    .Select(p => new Wrap<Staff>(p) { IsChecked = SelectedSoldier != null && SelectedSoldier.Id == p.Id })
                     .ToArrayAsync();
 
             foreach (var w in Personnel)

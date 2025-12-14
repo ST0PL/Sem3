@@ -101,8 +101,8 @@ namespace ILS_WPF.ViewModels
             using var context = await _dbFactory.CreateDbContextAsync();
             context.Attach(_soldier);
 
-            if ((SelectedUnit?.Id != _soldier.Unit?.Id))
-                // При смене подразделения открепляем солдата от управляемых им подразделений
+            if ((SelectedUnit?.Id != _soldier.Unit?.Id) || CurrentRank != _soldier.Rank)
+                // При смене подразделения или звания открепляем солдата от управляемых им подразделений
                 await context.Units.Where(u => u.CommanderId == _soldier.Id).ForEachAsync(u => u.CommanderId = null);
 
             _soldier.FullName = FullName;

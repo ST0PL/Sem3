@@ -269,15 +269,15 @@ namespace ILS_WPF.ViewModels
                 Personnel = (await context.Personnel
                     .Include(p => p.Unit)
                     .Where(p =>
-                        (p.UnitId == _unit.Id || p.UnitId == null) &&
-                        (_selectedCommander == null || p.Id != _selectedCommander.Id) &&
+                        (p.UnitId == _unit.Id || p.UnitId == null) && // военнослужащий должен быть либо прикреплен к текущему подразделению или не прикреплен вовсе
+                        (_selectedCommander == null || p.Id != _selectedCommander.Id) && // если военнослужащий назначен командиром, он не может быть прикреплен к подразделению
                         p.Rank <= UnitRankMatcher.MaxBattalionRank &&
                         (SelectedSoldierSpeciality == Speciality.AnySpeciality || p.Speciality == SelectedSoldierSpeciality) &&
                         (string.IsNullOrWhiteSpace(StaffQuery) || EF.Functions.Like(p.FullName, $"%{StaffQuery}%")))
                     .ToArrayAsync())
                     .Where(p =>
                         IsRelationMatches(p, SelectedStaffRelationType, _selectedPersonnel) &&
-                        !context.Units.Any(u=>u.CommanderId == p.Id))
+                        !context.Units.Any(u => (u.CommanderId == p.Id))) // командиры этого или других подразделений не могут быть прикреплены к данному подразделению как рядовые
                     .Select(p => new Wrap<Staff>(p) { IsChecked = _selectedPersonnel.Any(selected => selected.Id == p.Id) })
                     .OrderByDescending(w=>w.IsChecked)
                     .ToArray();
@@ -329,13 +329,15 @@ namespace ILS_WPF.ViewModels
                 .ExecuteUpdateAsync(setters => setters.SetProperty(u => u.ParentId, (int?)null));
 
             // Прикрепление выбранных подразделений
+            var selectedUnitsIds = _selectedUnits.Select(selected => selected.Id);
             await context.Units
-                .Where(u => _selectedUnits.Select(selected => selected.Id).Contains(u.Id))
+                .Where(u => selectedUnitsIds.Contains(u.Id))
                 .ExecuteUpdateAsync(setters => setters.SetProperty(u => u.ParentId, _unit.Id));
 
             // Прикрепление выбранного персонала
+            var selectedPersonnelIds = _selectedPersonnel.Select(selected => selected.Id);
             await context.Personnel
-                .Where(p => _selectedPersonnel.Select(selected => selected.Id).Contains(p.Id))
+                .Where(p => selectedPersonnelIds.Contains(p.Id))
                 .ExecuteUpdateAsync(setters => setters.SetProperty(p => p.UnitId, _unit.Id));
 
             await context.SaveChangesAsync();
