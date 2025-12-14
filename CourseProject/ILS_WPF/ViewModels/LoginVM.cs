@@ -49,6 +49,7 @@ namespace ILS_WPF.ViewModels
                 async _ => await PerformLogin(),
                 _ => !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password));
             _ = CheckRememberMe();
+            _ = accountService.CreateDefaultUserIfNotExist();
         }
 
         private async Task CheckRememberMe()

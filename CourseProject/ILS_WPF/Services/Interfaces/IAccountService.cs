@@ -9,5 +9,6 @@ namespace ILS_WPF.Services.Interfaces
         Task<User> RegisterAsync(string username, string password, Role role, int? profileId = null);
         Task RemoveAsync(int accountId);
         Task ChangePasswordAsync(string username, string newPassword);
+        Task CreateDefaultUserIfNotExist();
     }
 }

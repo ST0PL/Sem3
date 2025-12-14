@@ -10,8 +10,8 @@ namespace ILS_WPF.Converters
             float num = System.Convert.ToSingle(value);
             return num switch
             {
-                >= 1000000 => (num / 1000000).ToString() + " млн.",
-                >= 1000 => (num / 1000).ToString() + " тыс.",
+                >= 1000000 => Math.Round(num / 1000000, 2).ToString() + " млн.",
+                >= 1000 => Math.Round(num / 1000,2).ToString() + " тыс.",
                 _ => num
             };
         }

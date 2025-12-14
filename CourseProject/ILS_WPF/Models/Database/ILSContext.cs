@@ -23,7 +23,7 @@ namespace ILS_WPF.Models.Database
             => Database.EnsureCreated();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("ILSConnectionString"));
+            => optionsBuilder.UseSqlite("Data Source=ILS.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

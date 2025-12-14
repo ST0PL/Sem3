@@ -80,5 +80,16 @@ namespace ILS_WPF.Services
             var user = await GetUserAsync(username);
             return user?.Hash == hash ? user : null;
         }
+
+        public async Task CreateDefaultUserIfNotExist()
+        {
+            using var context = await _dbFactory.CreateDbContextAsync();
+            
+            if (context.Users.Any(u => u.Username.ToLower() == "admin"))
+                return;
+
+            await context.AddAsync(CreateUser("admin", "11111111", Role.Administrator));
+            await context.SaveChangesAsync();
+        }
     }
 }
