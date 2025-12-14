@@ -67,12 +67,13 @@ namespace ILS_WPF.ViewModels
             SaveCommand = new RelayCommand(async _=> await SaveAsync(), _=>!string.IsNullOrWhiteSpace(FullName));
             RemoveCommand = new RelayCommand(async _ => await RemoveAsync());
             InitFormProperties();
+            _ = LoadUnits();
         }
 
         void InitFormProperties()
         {
-            FullName = _soldier.FullName!;
-            CurrentRank = _soldier.Rank;
+            _fullName = _soldier.FullName!;
+            _currentRank = _soldier.Rank;
             CurrentSpeciality = _soldier.Speciality;
             SelectedUnit = _soldier.Unit;
         }
@@ -83,7 +84,7 @@ namespace ILS_WPF.ViewModels
 
             if (CurrentRank <= UnitRankMatcher.MaxBattalionRank)
             {
-                using var context = await _dbFactory.CreateDbContextAsync();
+               using var context = await _dbFactory.CreateDbContextAsync();
                 Units = await context.Units
                     .Include(u => u.Commander)
                     .Where(u => u.Type == UnitType.Battalion && (string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(u.Name, $"%{Query}%")))

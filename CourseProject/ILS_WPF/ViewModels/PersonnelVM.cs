@@ -83,7 +83,7 @@ namespace ILS_WPF.ViewModels
         {
             using var context = await _dbFactory.CreateDbContextAsync();
             var currentUser = _userService.GetUser();
-            var commandedUnit = await context.Units.Where(u => u.CommanderId == currentUser.StaffId).FirstAsync();
+            var commandedUnit = await context.Units.Where(u => u.CommanderId == currentUser.StaffId).FirstOrDefaultAsync();
             var personnel = IsAdmin ? context.Personnel.Include(p => p.Unit).ToList() : await GetPersonnelFromTree(context, commandedUnit);
             ActualPersonnel = personnel.Where(
                     p =>
