@@ -69,7 +69,6 @@ namespace ILS_WPF.ViewModels
                 if (user != null)
                 {
                     _userService!.SetUser(user);
-                    _windowService.CloseApplicationWindow();
                     _windowService.OpenMainWindow();
 
                 }
@@ -91,7 +90,6 @@ namespace ILS_WPF.ViewModels
                 _configurationService.Configuration.RememberMe = RememberMe;
                 await _configurationService.SaveAsync();
                 _userService!.SetUser(user);
-                _windowService?.CloseApplicationWindow();
                 _windowService?.OpenMainWindow();
             }
         }

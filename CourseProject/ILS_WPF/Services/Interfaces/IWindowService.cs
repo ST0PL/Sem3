@@ -7,7 +7,6 @@ namespace ILS_WPF.Services.Interfaces
     public interface IWindowService
     {
         void OpenMainWindow();
-        void CloseApplicationWindow();
         void OpenLoginWindow();
         void OpenMessageWindow(string title, string text);
         void OpenPersonnelRegisterWindow();

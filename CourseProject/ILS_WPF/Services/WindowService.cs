@@ -19,8 +19,13 @@ namespace ILS_WPF.Services
 
         private void OpenServiceWindow<T>() where T : Window
         {
+            var previousWindow = Application.Current.MainWindow;
+
             Application.Current.MainWindow = _serviceProvider.GetService<T>();
             Application.Current.MainWindow?.Show();
+            
+            if(previousWindow?.IsLoaded ?? false)
+                previousWindow.Close();
         }
 
         public void OpenLoginWindow()
@@ -28,9 +33,6 @@ namespace ILS_WPF.Services
 
         public void OpenMainWindow()
             => OpenServiceWindow<MainWindow>();
-
-        public void CloseApplicationWindow()
-            => Application.Current.MainWindow?.Close();
             
         public void OpenPersonnelRegisterWindow()
             => new Views.Personnel.AddWindow(new AddPersonnelVM(

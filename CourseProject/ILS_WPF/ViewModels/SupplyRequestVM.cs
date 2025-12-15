@@ -44,7 +44,7 @@ namespace ILS_WPF.ViewModels
             MakeRequestCommand = new RelayCommand(_ => MakeSupplyRequest(), _ => CanMakeSupplyRequest);
             RemoveDetailCommand = new RelayCommand(entry => SupplyRequestDetails.Remove((WarehouseEntryVM)entry), _ => HasItems);
             AddDetailCommand = new RelayCommand(_ => SupplyRequestDetails.Add(new WarehouseEntryVM(_notifyChangesCommand, RemoveDetailCommand)));
-            SupplyRequestDetails.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasItems));
+            SupplyRequestDetails.CollectionChanged += (_, _) => { OnPropertyChanged(nameof(HasItems)); ChangeCanMakeRequest(); };
         }
 
         void MakeSupplyRequest()

@@ -74,12 +74,12 @@ namespace ILS_WPF.ViewModels
 
             var totalTodayResponses = await context.SupplyResponses
                 .Include(r=>r.Request)
-                .Where(r=>r.Request.CreationTime == DateTime.Today)
+                .Where(r=>r.Request.CreationTime.Date == DateTime.Today)
                 .CountAsync();
 
             TodayResolvedPercent = (int)(totalTodayResponses == 0 ? 0 :
                 (await context.SupplyResponses.Include(r=>r.Request)
-                .Where(r => r.Request.CreationTime == DateTime.Today && r.Status == SupplyResponseStatus.Success)
+                .Where(r => r.Request.CreationTime.Date == DateTime.Today && r.Status == SupplyResponseStatus.Success)
                 .CountAsync())
                 / (float)totalTodayResponses * 100);
 

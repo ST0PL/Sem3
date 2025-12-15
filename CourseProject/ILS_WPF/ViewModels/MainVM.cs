@@ -59,7 +59,6 @@ namespace ILS_WPF.ViewModels
             {
                 configurationService.Reset();
                 await configurationService.SaveAsync();
-                windowService.CloseApplicationWindow();
                 windowService.OpenLoginWindow();
             });
         }
