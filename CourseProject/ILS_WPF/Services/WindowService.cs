@@ -31,8 +31,12 @@ namespace ILS_WPF.Services
         public void OpenLoginWindow()
             => OpenServiceWindow<LoginWindow>();
 
-        public void OpenMainWindow()
-            => OpenServiceWindow<MainWindow>();
+        public async Task OpenMainWindow(bool waitPreviousWindow)
+        {
+            while (waitPreviousWindow && (Application.Current.MainWindow == null))
+                await Task.Delay(100);
+            OpenServiceWindow<MainWindow>();
+        }
             
         public void OpenPersonnelRegisterWindow()
             => new Views.Personnel.AddWindow(new AddPersonnelVM(
