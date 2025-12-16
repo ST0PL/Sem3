@@ -6,7 +6,7 @@ namespace ILS_WPF.Services.Interfaces
 {
     public interface IWindowService
     {
-        void OpenMainWindow();
+        Task OpenMainWindow(bool waitPreviousWindow);
         void OpenLoginWindow();
         void OpenMessageWindow(string title, string text);
         void OpenPersonnelRegisterWindow();
