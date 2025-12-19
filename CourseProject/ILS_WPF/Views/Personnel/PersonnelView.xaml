@@ -78,7 +78,7 @@
         </StackPanel>
         <clib:ListView Style="{StaticResource ListViewStyle}"
                        Grid.Row="2"
-                       Margin="100,10,10,10"
+                       Margin="80,10,10,10"
                        ItemsSource="{Binding ActualPersonnel}">
             <clib:ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -92,46 +92,40 @@
                                  BorderBrush="#333E50"
                                  HoverBackgroundColor="#0d1422"
                                  CornerRadius="20"
-                                 Width="350"
+                                 Width="400"
                                  Cursor="Hand"
                                  HorizontalContentAlignment="Left"
                                  Margin="25,20,25,0"
-                                 Height="130"
+                                 MaxHeight="160"
                                  Command="{Binding DataContext.OpenEditWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                  CommandParameter="{Binding}">
-                        <StackPanel Margin="10">
+                        <Grid Margin="15">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
                             <TextBlock Text="{Binding FullName}"
                                        Foreground="#00D492"
                                        FontSize="20"
                                        FontWeight="SemiBold"
                                        TextTrimming="CharacterEllipsis"
                                        TextWrapping="Wrap"/>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Звание: "
-                                           FontSize="13"
-                                           Foreground="#66FFFFFF"/>
-                                <TextBlock Text="{Binding Rank, Converter={StaticResource enumConverter}}"
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Военно-учетная специальность: "
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                                <TextBlock Text="{Binding Speciality, Converter={StaticResource enumConverter}}"
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal"
-                                        Visibility="{Binding Unit, Converter={StaticResource emptyVisibilityConverter}}">
-                                <TextBlock Text="Подразделение: "
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                                <TextBlock Text="{Binding Unit.Name}"
-                                           Foreground="#66FFFFFF"
-                                           FontSize="13"/>
-                            </StackPanel>
-                        </StackPanel>
+                            <TextBlock Grid.Row="1"
+                                       Text="{Binding Rank, Converter={StaticResource enumConverter},StringFormat='Звание: {0}'}"
+                                       Foreground="#66FFFFFF"
+                                       FontSize="13"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding Speciality, Converter={StaticResource enumConverter}, StringFormat='Военно-учетная специальность: {0}'}"
+                                       Foreground="#66FFFFFF"
+                                       FontSize="13"/>
+                            <TextBlock Grid.Row="3"
+                                       Text="{Binding Unit.Name, StringFormat='Подразделение: {0}'}"
+                                       TextWrapping="Wrap"
+                                       Foreground="#66FFFFFF"
+                                       FontSize="13"/>
+                        </Grid>
                     </clib:Button>
                 </DataTemplate>
             </clib:ListView.ItemTemplate>

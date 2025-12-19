@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace ILS_WPF.Converters
@@ -10,8 +9,12 @@ namespace ILS_WPF.Converters
         {
             if (value is null)
                 return value;
-            string[] fullNameParts = ((string)value).Split();
-            return $"{fullNameParts[0]} {fullNameParts[1][0]}.{fullNameParts[2][0]}.";
+            try
+            {
+                string[] fullNameParts = ((string)value).Split();
+                return $"{fullNameParts[0]} {fullNameParts[1][0]}.{fullNameParts[2][0]}.";
+            }
+            catch { return value; }
         }
 
         public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

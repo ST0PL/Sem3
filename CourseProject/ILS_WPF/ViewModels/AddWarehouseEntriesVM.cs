@@ -63,7 +63,7 @@ namespace ILS_WPF.ViewModels
         {
             using var context = await _dbFactory.CreateDbContextAsync();
             WarehouseName = (await context.Warehouses.Where(w => w.Id == _warehouseId).FirstAsync()).Name ?? "";
-            WarehouseEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasItems));
+            WarehouseEntries.CollectionChanged += (_, _) => { OnPropertyChanged(nameof(HasItems)); ChangeCanRegister(); };
         }
 
         async Task RegisterAsync()

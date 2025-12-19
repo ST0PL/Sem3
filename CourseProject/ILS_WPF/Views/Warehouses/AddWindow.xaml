@@ -48,6 +48,7 @@
                             Margin="0,20,0,0">
                     <clib:TextBox Style="{StaticResource TextBoxStyle}"
                                   Placeholder="Название склада"
+                                  MaxLength="50"
                                   Width="360"
                                   Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
                     <clib:ComboBox Style="{StaticResource ComboBoxStyle}"

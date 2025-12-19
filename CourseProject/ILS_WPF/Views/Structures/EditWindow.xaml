@@ -369,7 +369,7 @@
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition />
-                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
                                                     <StackPanel>
                                                         <TextBlock Text="{Binding Value.FullName}"
@@ -427,7 +427,7 @@
                                                Margin="10"/>
                                     <StackPanel Orientation="Horizontal">
                                         <clib:TextBox Style="{StaticResource TextBoxStyle}"
-                                                      Text="{Binding UnitQuery, UpdateSourceTrigger=PropertyChanged}"
+                                                      Text="{Binding StaffQuery, UpdateSourceTrigger=PropertyChanged}"
                                                       Placeholder="Поиск по ФИО"
                                                       Width="420"/>
                                         <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
