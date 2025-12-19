@@ -147,10 +147,8 @@ namespace ILS_WPF.ViewModels
                     (CurrentSpeciality == Speciality.AnySpeciality || p.Speciality == CurrentSpeciality) &&
                     (string.IsNullOrWhiteSpace(Query) || EF.Functions.Like(p.FullName, $"%{Query}%")))
                     .Select(p => new Wrap<Staff>(p) { IsChecked = SelectedSoldier != null && SelectedSoldier.Id == p.Id })
+                    .OrderByDescending(w=>w.IsChecked)
                     .ToArrayAsync();
-
-            foreach (var w in Personnel)
-                w.IsChecked = w.Value.Id == SelectedSoldier?.Id;
 
             OnPropertyChanged(nameof(HasItems));
         }
