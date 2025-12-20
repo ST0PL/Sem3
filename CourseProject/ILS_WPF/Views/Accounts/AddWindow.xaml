@@ -1,0 +1,208 @@
+﻿<Window x:Class="ILS_WPF.Views.Accounts.AddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
+        xmlns:local="clr-namespace:ILS_WPF.Views.Accounts"
+        mc:Ignorable="d"
+        Title="Регистрация аккаунта" Height="570" Width="855"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Border CornerRadius="20"
+            BorderThickness="1"
+            BorderBrush="#333e50"
+            Background="#101828">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Background="#80141d2b"
+                    BorderThickness="0,0,0,1"
+                    CornerRadius="20,20,0,0"
+                    BorderBrush="#806b6b6b"
+                    Padding="10"
+                    MouseDown="Border_MouseDown">
+                <clib:Button Style="{StaticResource CloseButtonStyle}"
+                             Click="CloseButton_Click"
+                             Opacity="0.8"
+                             HorizontalAlignment="Right"/>
+            </Border>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Регистрация аккаунта"
+                           Margin="30,25,0,0"
+                           Foreground="#00D492"
+                           FontWeight="SemiBold"
+                           FontSize="20"/>
+                <Grid Grid.Row="1"
+                      Margin="30,10,30,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <clib:TextBox Style="{StaticResource TextBoxStyle}"
+                                      Placeholder="Имя пользователя"
+                                      Width="290"
+                                      MaxLength="50"
+                                      Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+                        <PasswordBox Style="{DynamicResource AccountPasswordBoxStyle}"
+                                     VerticalAlignment="Bottom"
+                                     Margin="10,0,0,0"
+                                     Width="300"
+                                     MaxLength="50"
+                                     PasswordChanged="PasswordBox_PasswordChanged"/>
+                        <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                       Width="175"
+                                       Margin="10,0,0,0"
+                                       ItemsSource="{Binding Roles}"
+                                       SelectedItem="{Binding CurrentRole}">
+                            <clib:ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                               Margin="5"
+                                               Foreground="White"/>
+                                </DataTemplate>
+                            </clib:ComboBox.ItemTemplate>
+                        </clib:ComboBox>
+                        <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                       Width="175"
+                                       Margin="10,0,0,0"
+                                       ItemsSource="{Binding Specialities}"
+                                       SelectedItem="{Binding CurrentSpeciality}">
+                            <clib:ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                               Margin="5"
+                                               Foreground="White"/>
+                                </DataTemplate>
+                            </clib:ComboBox.ItemTemplate>
+                        </clib:ComboBox>
+                    </StackPanel>
+                    <Border Grid.Row="1"
+                            Margin="0,10,0,0"
+                            Background="#050A16"
+                            CornerRadius="20"
+                            Padding="20,10,20,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <clib:TextBox Style="{StaticResource TextBoxStyle}"
+                                              Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"
+                                              Placeholder="Поиск по ФИО"
+                                              Margin="0,0,0,0"
+                                              Width="380"/>
+                                <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                               Width="175"
+                                               Margin="10,0,0,0"
+                                               ItemsSource="{Binding Ranks}"
+                                               SelectedItem="{Binding CurrentRank}">
+                                    <clib:ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                       Margin="5"
+                                                       Foreground="White"/>
+                                        </DataTemplate>
+                                    </clib:ComboBox.ItemTemplate>
+                                </clib:ComboBox>
+                                <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                               Width="175"
+                                               Margin="10,0,0,0"
+                                               ItemsSource="{Binding Specialities}"
+                                               SelectedItem="{Binding CurrentSpeciality}">
+                                    <clib:ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                       Margin="5"
+                                                       Foreground="White"/>
+                                        </DataTemplate>
+                                    </clib:ComboBox.ItemTemplate>
+                                </clib:ComboBox>
+                            </StackPanel>
+                            <TextBlock Grid.Row="1"
+                                       Text="Данных нет"
+                                       Foreground="#66FFFFFF"
+                                       FontSize="30"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HasItems}" Value="True">
+                                                <DataTrigger.Setters>
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger.Setters>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <clib:ListView Grid.Row="1"
+                                           Style="{StaticResource ListViewStyle}"
+                                           ItemsSource="{Binding Personnel}"
+                                           Margin="5">
+                                <clib:ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="#333E50"
+                                                BorderThickness="1"
+                                                Background="#101828"
+                                                Padding="10"
+                                                CornerRadius="15"
+                                                Width="710">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Value.FullName}"
+                                                               Foreground="#00D492"
+                                                               FontSize="15"
+                                                               FontWeight="SemiBold"/>
+                                                    <TextBlock Text="{Binding Value.Rank,StringFormat='Звание: {0}', Converter={StaticResource enumConverter}}"
+                                                               Foreground="#73FFFFFF"
+                                                               FontSize="12"/>
+                                                    <TextBlock Text="{Binding Value.Speciality,StringFormat='Специальность: {0}', Converter={StaticResource enumConverter}}"
+                                                               Foreground="#73FFFFFF"
+                                                               FontSize="12"/>
+                                                </StackPanel>
+                                                <clib:CheckBox Style="{DynamicResource SelectToggleButtonStyle}"
+                                                               IsChecked="{Binding IsChecked}"
+                                                               Command="{Binding DataContext.WrapCheckedCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                               CommandParameter="{Binding}"
+                                                               Grid.Column="1"
+                                                               HorizontalAlignment="Right"
+                                                               VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </clib:ListView.ItemTemplate>
+                            </clib:ListView>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <clib:Button Grid.Row="2" 
+                             Style="{StaticResource DarkGreenButtonStyle}"
+                             Content="Зарегистрировать"
+                             HorizontalAlignment="Right"
+                             Margin="10,0,30,10"
+                             Padding="20,10,20,10"
+                             Command="{Binding RegisterCommand}"
+                             Click="CloseButton_Click"/>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

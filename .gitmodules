@@ -1,0 +1,3 @@
+[submodule "CourseProject/ControlsLib"]
+	path = CourseProject/ControlsLib
+	url = https://github.com/ST0PL/ControlsLib

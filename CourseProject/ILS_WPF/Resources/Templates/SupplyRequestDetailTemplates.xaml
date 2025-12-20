@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ILS_WPF">
+    <DataTemplate x:Key="AmmunitionDetailTemplate">
+        <TextBlock FontSize="17"
+                   Foreground="White"
+                   Opacity="0.7">
+            <Run Text="•"/>
+            <Run Text="{Binding Caliber, Converter={StaticResource enumConverter}}"/>
+            <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="-"/>
+            <Run Text="{Binding Count, Converter={StaticResource numberShortenerConverter}}"/>
+            <Run Text="шт."/>
+        </TextBlock>
+    </DataTemplate>
+    <DataTemplate x:Key="FuelDetailTemplate">
+        <TextBlock FontSize="17"
+                   Foreground="White"
+                   Opacity="0.7">
+            <Run Text="•"/>
+            <Run Text="{Binding FuelType, Converter={StaticResource enumConverter}}"/>
+            <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="-"/>
+            <Run Text="{Binding Count, Converter={StaticResource numberShortenerConverter}}"/>
+            <Run Text="л."/>
+        </TextBlock>
+    </DataTemplate>
+    <DataTemplate x:Key="VehicleDetailTemplate">
+        <TextBlock FontSize="17"
+                   Foreground="White"
+                   Opacity="0.7">
+            <Run Text="•"/>
+            <Run Text="{Binding VehicleType, Converter={StaticResource enumConverter}}"/>
+            <Run Text="{Binding FuelType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="-"/>
+            <Run Text="{Binding Count, Converter={StaticResource numberShortenerConverter}}"/>
+            <Run Text="шт."/>
+        </TextBlock>
+    </DataTemplate>
+    <DataTemplate x:Key="WeaponDetailTemplate">
+        <TextBlock FontSize="17"
+                   Foreground="White"
+                   Opacity="0.7">
+            <Run Text="•"/>
+            <Run Text="{Binding Caliber, Converter={StaticResource enumConverter}}"/>
+            <Run Text="{Binding MaterialType, Converter={StaticResource enumConverter}, StringFormat='({0})'}"/>
+            <Run Text="-"/>
+            <Run Text="{Binding Count, Converter={StaticResource numberShortenerConverter}}"/>
+            <Run Text="шт."/>
+        </TextBlock>
+    </DataTemplate>
+    <local:RequestDetailsTemplateSelector x:Key="requestDetailsTemplateSelector"/>
+</ResourceDictionary>
