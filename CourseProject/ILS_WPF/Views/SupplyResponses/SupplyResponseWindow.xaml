@@ -1,0 +1,151 @@
+﻿<Window x:Class="ILS_WPF.Views.SupplyResponses.SupplyResponseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
+        xmlns:local="clr-namespace:ILS_WPF.Views.Warehouses"
+        mc:Ignorable="d"
+        Title="Ответ на заявку" Height="600" Width="1200"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Border CornerRadius="20"
+            BorderThickness="1"
+            BorderBrush="#333e50"
+            Background="#101828">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Background="#80141d2b"
+                    BorderThickness="0,0,0,1"
+                    CornerRadius="20,20,0,0"
+                    BorderBrush="#806b6b6b"
+                    Padding="10"
+                    MouseDown="Border_MouseDown">
+                <clib:Button Style="{StaticResource CloseButtonStyle}"
+                             Click="CloseButton_Click"
+                             Opacity="0.8"
+                             HorizontalAlignment="Right"/>
+            </Border>
+            <Grid Grid.Row="1"
+                  Margin="30,20,0,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding SupplyResponseWrap.Title}"
+                           TextWrapping="Wrap"
+                           Foreground="#00D492"
+                           FontWeight="SemiBold"
+                           FontSize="20"/>
+                <StackPanel Grid.Row="1"
+                            Orientation="Vertical"
+                            Margin="0,20,0,0">
+                    <TextBlock Text="{Binding SupplyResponseWrap.SupplyResponse.Request.CreationTime, StringFormat='Дата запроса:  {0:yyyy-MM-dd HH:mm}'}"
+                               FontSize="18"
+                               Foreground="White"/>
+                    <TextBlock Text="{Binding SupplyResponseWrap.SupplyResponse.Status, StringFormat='Статус:  {0}', Converter={StaticResource enumConverter}}"
+                               FontSize="18"
+                               Foreground="White"/>
+                </StackPanel>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="#050A16"
+                                Margin="0,10,20,0"
+                                HorizontalAlignment="Stretch"
+                                Padding="15"
+                                CornerRadius="15"
+                                Height="150">
+                            <StackPanel>
+                                <TextBlock Text="Детали запроса"
+                                           FontWeight="SemiBold"
+                                           Opacity="0.6"
+                                           FontSize="16"
+                                           Foreground="White"/>
+                                <clib:ListView Style="{StaticResource ListViewStyle}"
+                                               ItemsSource="{Binding SupplyResponseWrap.SupplyResponse.Request.Details}"
+                                               ItemTemplateSelector="{StaticResource requestDetailsTemplateSelector}"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1"
+                                Background="#050A16"
+                                Margin="0,10,20,0"
+                                HorizontalAlignment="Stretch"
+                                Padding="15"
+                                CornerRadius="15"
+                                Height="150">
+                            <StackPanel>
+                                <TextBlock Text="Неудовлетворенные детали"
+                                           FontWeight="SemiBold"
+                                           Opacity="0.6"
+                                           FontSize="16"
+                                           Foreground="White"/>
+                                <clib:ListView Style="{StaticResource ListViewStyle}"
+                                               ItemsSource="{Binding SupplyResponseWrap.SupplyResponse.UnprocessedDetails}"
+                                               ItemTemplateSelector="{StaticResource requestDetailsTemplateSelector}"/>
+                            </StackPanel>
+                        </Border>                        
+                    </Grid>
+                    
+                    <Border Grid.Row="1"
+                            Background="#050A16"
+                            Margin="0,0,20,0"
+                            HorizontalAlignment="Stretch"
+                            Padding="15"
+                            CornerRadius="15"
+                            Height="175"
+                            IsEnabled="{Binding IsCommentEnabled}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Комментарий"
+                                       FontWeight="SemiBold"
+                                       FontSize="16"
+                                       Opacity="0.6"
+                                       Foreground="White"/>
+                            <clib:TextBox Style="{StaticResource ReadonlyTextBoxStyle}"
+                                          Grid.Row="1"
+                                          Text="{Binding SupplyResponseWrap.SupplyResponse.Comment}"
+                                          FontSize="15"
+                                          Foreground="White"/>
+                        </Grid>
+                    </Border>                          
+                </Grid>
+                <StackPanel Grid.Row="3"
+                            Margin="10,25,25,10"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <clib:Button Style="{StaticResource DarkRedButtonStyle}"
+                                 Content="Удалить"
+                                 Padding="20,10,20,10"
+                                 Margin="0,0,15,0"
+                                 Command="{Binding RemoveCommand}"
+                                 Click="CloseButton_Click"/>
+                    <clib:Button Style="{StaticResource DarkGreenButtonStyle}"
+                                 IsEnabled="{Binding CanRepeat}"
+                                 Content="Повторить"
+                                 Padding="20,10,20,10"
+                                 Command="{Binding RepeatRequestCommand}"
+                                 Click="CloseButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

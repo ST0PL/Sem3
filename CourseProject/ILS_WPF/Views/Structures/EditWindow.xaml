@@ -1,0 +1,566 @@
+﻿<Window x:Class="ILS_WPF.Views.Structures.EditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:clib="clr-namespace:ControlsLib.Controls;assembly=ControlsLib"
+        xmlns:local="clr-namespace:ILS_WPF.Views.Structures"
+        mc:Ignorable="d"
+        Title="Изменение данных подразделения" Height="800" Width="1500"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Border CornerRadius="20"
+            BorderThickness="1"
+            BorderBrush="#333e50"
+            Background="#101828">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Background="#80141d2b"
+                    BorderThickness="0,0,0,1"
+                    CornerRadius="20,20,0,0"
+                    BorderBrush="#806b6b6b"
+                    Padding="10"
+                    MouseDown="Border_MouseDown">
+                <clib:Button Style="{StaticResource CloseButtonStyle}"
+                             Click="CloseButton_Click"
+                             Opacity="0.8"
+                             HorizontalAlignment="Right"/>
+            </Border>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Изменение данных подразделения"
+                           Margin="30,25,0,0"
+                           Foreground="#00D492"
+                           FontWeight="SemiBold"
+                           FontSize="20"/>
+                <Grid Grid.Row="1"
+                      Margin="30,10,30,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                            <clib:TextBox Style="{StaticResource TextBoxStyle}"
+                                          Placeholder="Название подразделения"
+                                          MaxLength="50"
+                                          Width="400"
+                                          IsEnabled="{Binding IsAdmin}"
+                                          Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                            <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                           Width="175"
+                                           Margin="5,10,0,0"
+                                           ItemsSource="{Binding UnitTypes}"
+                                           SelectedItem="{Binding SelectedUnitType}"
+                                           HorizontalAlignment="Left"
+                                           CornerRadius="20"
+                                           IsEnabled="{Binding IsAdmin}">
+                                <clib:ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                   Margin="5"
+                                                   Foreground="White"/>
+                                    </DataTemplate>
+                                </clib:ComboBox.ItemTemplate>
+                            </clib:ComboBox>
+                        </StackPanel>
+                        <Border Grid.Column="1"
+                                Margin="10,10,0,0"
+                                Background="#050A16"
+                                CornerRadius="20"
+                                Padding="20,10,20,10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Доступные склады"
+                                               FontWeight="SemiBold"
+                                               Foreground="White"
+                                               FontSize="17"
+                                               Margin="10"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <clib:TextBox Style="{StaticResource TextBoxStyle}"
+                                                      Text="{Binding WarehouseQuery, UpdateSourceTrigger=PropertyChanged}"
+                                                      Placeholder="Поиск по названию склада"
+                                                      Width="330"/>
+                                        <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                                       Width="120"
+                                                       Margin="10,0,0,0"
+                                                       ItemsSource="{Binding WarehouseTypes}"
+                                                       SelectedItem="{Binding SelectedWarehouseType}">
+                                            <clib:ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                               Margin="5"
+                                                               Foreground="White"/>
+                                                </DataTemplate>
+                                            </clib:ComboBox.ItemTemplate>
+                                        </clib:ComboBox>
+                                    </StackPanel>
+                                </StackPanel>
+                                <TextBlock Grid.Row="1"
+                                           Text="Данных нет"
+                                           Foreground="#66FFFFFF"
+                                           FontSize="15"
+                                           FontWeight="Bold"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasWarehouses}" Value="True">
+                                                    <DataTrigger.Setters>
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger.Setters>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <clib:ListView Grid.Row="1"
+                                               Style="{StaticResource ListViewStyle}"
+                                               ItemsSource="{Binding Warehouses}"
+                                               Margin="5">
+                                    <clib:ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="#333E50"
+                                                    BorderThickness="1"
+                                                    Background="#101828"
+                                                    Padding="10"
+                                                    CornerRadius="15"
+                                                    Width="430">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Value.Name}"
+                                                                   Foreground="#00D492"
+                                                                   FontSize="15"
+                                                                   FontWeight="SemiBold"
+                                                                   TextWrapping="Wrap"/>
+
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Тип: "
+                                                                    Foreground="#73FFFFFF"
+                                                                    FontSize="12"/>
+                                                            <TextBlock Text="{Binding Value.Type, Converter={StaticResource enumConverter}}"
+                                                                    Foreground="#73FFFFFF"
+                                                                    FontSize="12"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <clib:CheckBox Style="{DynamicResource SelectToggleButtonStyle}"
+                                                                   IsChecked="{Binding IsChecked}"
+                                                                   Command="{Binding DataContext.WarehouseWrapCheckedCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                   CommandParameter="{Binding}"
+                                                                   Grid.Column="1"
+                                                                   HorizontalAlignment="Right"
+                                                                   VerticalAlignment="Center"
+                                                                   TitleFontSize="13"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </clib:ListView.ItemTemplate>
+                                </clib:ListView>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Column="2"
+                                Margin="10,10,0,0"
+                                Background="#050A16"
+                                CornerRadius="20"
+                                Padding="20,10,20,10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Подчинение"
+                                               FontWeight="SemiBold"
+                                               Foreground="White"
+                                               FontSize="17"
+                                               Margin="10"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <clib:TextBox Style="{StaticResource TextBoxStyle}"
+                                                      Text="{Binding UnitQuery, UpdateSourceTrigger=PropertyChanged}"
+                                                      Placeholder="Поиск по названию / ФИО коммандира"
+                                                      Width="300"/>
+                                        <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                                       Width="150"
+                                                       Margin="10,0,0,0"
+                                                       ItemsSource="{Binding RelationTypes}"
+                                                       SelectedItem="{Binding SelectedUnitRelationType}">
+                                            <clib:ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                               Margin="5"
+                                                               Foreground="White"/>
+                                                </DataTemplate>
+                                            </clib:ComboBox.ItemTemplate>
+                                        </clib:ComboBox>
+                                    </StackPanel>
+                                </StackPanel>
+                                <TextBlock Grid.Row="1"
+                                           Text="Данных нет"
+                                           Foreground="#66FFFFFF"
+                                           FontSize="15"
+                                           FontWeight="Bold"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasUnits}" Value="True">
+                                                    <DataTrigger.Setters>
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger.Setters>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <clib:ListView Grid.Row="1"
+                                               Style="{StaticResource ListViewStyle}"
+                                               ItemsSource="{Binding Units}"
+                                               Margin="5">
+                                    <clib:ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="#333E50"
+                                                    BorderThickness="1"
+                                                    Background="#101828"
+                                                    Padding="10"
+                                                    CornerRadius="15"
+                                                    Width="430">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Value.Name}"
+                                                                   Foreground="#00D492"
+                                                                   FontSize="15"
+                                                                   FontWeight="SemiBold"
+                                                                   TextWrapping="Wrap"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Тип: "
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                            <TextBlock Text="{Binding Value.Type, Converter={StaticResource enumConverter}}"
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    Visibility="{Binding Value.Commander, Converter={StaticResource emptyVisibilityConverter}}">
+                                                            <TextBlock Text="Коммандир: "
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                            <TextBlock Text="{Binding Value.Commander.FullName, Converter={StaticResource abbreviationConverter}}"
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <clib:CheckBox Style="{DynamicResource SelectToggleButtonStyle}"
+                                                                   IsChecked="{Binding IsChecked}"
+                                                                   Command="{Binding DataContext.UnitWrapCheckedCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                   CommandParameter="{Binding}"
+                                                                   Grid.Column="1"
+                                                                   HorizontalAlignment="Right"
+                                                                   VerticalAlignment="Center"
+                                                                   TitleFontSize="13"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </clib:ListView.ItemTemplate>
+                                </clib:ListView>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="10,10,0,0"
+                                Background="#050A16"
+                                CornerRadius="20"
+                                Padding="20,10,20,10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Коммандир"
+                                               FontWeight="SemiBold"
+                                               Foreground="White"
+                                               FontSize="17"
+                                               Margin="10"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <clib:TextBox Style="{StaticResource TextBoxStyle}"
+                                                      Text="{Binding CommanderQuery, UpdateSourceTrigger=PropertyChanged}"
+                                                      Placeholder="Поиск по ФИО"
+                                                      Width="400"/>
+                                        <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                                       Width="160"
+                                                       Margin="10,0,0,0"
+                                                       ItemsSource="{Binding Specialities}"
+                                                       SelectedItem="{Binding SelectedCommanderSpeciality}">
+                                            <clib:ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                               Margin="5"
+                                                               Foreground="White"/>
+                                                </DataTemplate>
+                                            </clib:ComboBox.ItemTemplate>
+                                        </clib:ComboBox>
+                                    </StackPanel>
+                                </StackPanel>
+                                <TextBlock Grid.Row="1"
+                                           Text="Данных нет"
+                                           Foreground="#66FFFFFF"
+                                           FontSize="15"
+                                           FontWeight="Bold"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasCommanders}" Value="True">
+                                                    <DataTrigger.Setters>
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger.Setters>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <clib:ListView Grid.Row="1"
+                                               Style="{StaticResource ListViewStyle}"
+                                               ItemsSource="{Binding Commanders}"
+                                               Margin="5">
+                                    <clib:ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="#333E50"
+                                                    BorderThickness="1"
+                                                    Background="#101828"
+                                                    Padding="10"
+                                                    CornerRadius="15"
+                                                    Width="560">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Value.FullName}"
+                                                                   Foreground="#00D492"
+                                                                   FontSize="15"
+                                                                   FontWeight="SemiBold"
+                                                                   TextWrapping="Wrap"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Звание: "
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                            <TextBlock Text="{Binding Value.Rank, Converter={StaticResource enumConverter}}"
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Военно-учетная специальность: "
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                            <TextBlock Text="{Binding Value.Speciality, Converter={StaticResource enumConverter}}"
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <clib:CheckBox Style="{DynamicResource SelectToggleButtonStyle}"
+                                                                   IsChecked="{Binding IsChecked}"
+                                                                   Command="{Binding DataContext.CommanderWrapCheckedCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                   CommandParameter="{Binding}"
+                                                                   Grid.Column="1"
+                                                                   HorizontalAlignment="Right"
+                                                                   VerticalAlignment="Center"
+                                                                   TitleFontSize="13"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </clib:ListView.ItemTemplate>
+                                </clib:ListView>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Column="1"
+                                Margin="10,10,0,0"
+                                Background="#050A16"
+                                CornerRadius="20"
+                                Padding="20,10,20,10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Военнослужащие"
+                                               FontWeight="SemiBold"
+                                               Foreground="White"
+                                               FontSize="17"
+                                               Margin="10"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <clib:TextBox Style="{StaticResource TextBoxStyle}"
+                                                      Text="{Binding StaffQuery, UpdateSourceTrigger=PropertyChanged}"
+                                                      Placeholder="Поиск по ФИО"
+                                                      Width="420"/>
+                                        <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                                       Width="160"
+                                                       Margin="10,0,0,0"
+                                                       ItemsSource="{Binding Specialities}"
+                                                       SelectedItem="{Binding SelectedSoldierSpeciality}">
+                                            <clib:ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                               Margin="5"
+                                                               Foreground="White"/>
+                                                </DataTemplate>
+                                            </clib:ComboBox.ItemTemplate>
+                                        </clib:ComboBox>
+                                        <clib:ComboBox Style="{StaticResource ComboBoxStyle}"
+                                                       Width="160"
+                                                       Margin="10,0,0,0"
+                                                       ItemsSource="{Binding RelationTypes}"
+                                                       SelectedItem="{Binding SelectedStaffRelationType}">
+                                            <clib:ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"
+                                                               Margin="5"
+                                                               Foreground="White"/>
+                                                </DataTemplate>
+                                            </clib:ComboBox.ItemTemplate>
+                                        </clib:ComboBox>
+                                    </StackPanel>
+                                </StackPanel>
+                                <TextBlock Grid.Row="1"
+                                           Text="Данных нет"
+                                           Foreground="#66FFFFFF"
+                                           FontSize="15"
+                                           FontWeight="Bold"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasPersonnel}" Value="True">
+                                                    <DataTrigger.Setters>
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger.Setters>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <clib:ListView Grid.Row="1"
+                                               Style="{StaticResource ListViewStyle}"
+                                               ItemsSource="{Binding Personnel}"
+                                               Margin="5">
+                                    <clib:ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel IsItemsHost="True"/>
+                                        </ItemsPanelTemplate>
+                                    </clib:ListView.ItemsPanel>
+                                    <clib:ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="#333E50"
+                                                    BorderThickness="1"
+                                                    Background="#101828"
+                                                    Padding="10"
+                                                    CornerRadius="15"
+                                                    Width="350"
+                                                    Margin="10,0,0,0">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Value.FullName}"
+                                                                   Foreground="#00D492"
+                                                                   FontSize="15"
+                                                                   FontWeight="SemiBold"
+                                                                   TextWrapping="Wrap"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Звание: "
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                            <TextBlock Text="{Binding Value.Rank, Converter={StaticResource enumConverter}}"
+                                                                       MaxWidth="140"
+                                                                       TextWrapping="Wrap"
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Военно-учетная специальность: "
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                            <TextBlock Text="{Binding Value.Speciality, Converter={StaticResource enumConverter}}"
+                                                                       MaxWidth="140"
+                                                                       TextWrapping="Wrap"
+                                                                       Foreground="#73FFFFFF"
+                                                                       FontSize="12"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <clib:CheckBox Style="{DynamicResource SelectToggleButtonStyle}"
+                                                                   IsChecked="{Binding IsChecked}"
+                                                                   Command="{Binding DataContext.StaffWrapCheckedCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                   CommandParameter="{Binding}"
+                                                                   Grid.Column="1"
+                                                                   HorizontalAlignment="Right"
+                                                                   VerticalAlignment="Center"
+                                                                   TitleFontSize="13"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </clib:ListView.ItemTemplate>
+                                </clib:ListView>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="10,0,30,10">
+                    <clib:Button Style="{StaticResource DarkRedButtonStyle}"
+                                 Content="Удалить"
+                                 Padding="20,10,20,10"
+                                 Command="{Binding RemoveCommand}"
+                                 Click="CloseButton_Click"/>
+                    <clib:Button Style="{StaticResource DarkGreenButtonStyle}"
+                                 Content="Сохранить"
+                                 Padding="20,10,20,10"
+                                 Margin="30,0,0,0"
+                                 Command="{Binding SaveCommand}"
+                                 Click="CloseButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

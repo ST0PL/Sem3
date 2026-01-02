@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:cconv="clr-namespace:ControlsLib.Converters;assembly=ControlsLib"
+                    xmlns:conv="clr-namespace:ILS_WPF.Converters">
+    <conv:EnumLocaleConverter x:Key="enumConverter"/>
+    <conv:FullNameAbbreviationConverter x:Key="abbreviationConverter"/>
+    <conv:NumberShortenerConverter x:Key="numberShortenerConverter"/>
+    <conv:CounterColorConverter x:Key="counterColorConverter"/>
+    <cconv:InverseBoolConverter x:Key="inverseBoolConverter"/>
+    <cconv:InverseNullOrEmptyVisibilityConverter x:Key="inverseEmptyVisibilityConverter"/>
+    <cconv:NullOrEmptyVisibilityConverter x:Key="emptyVisibilityConverter"/>
+</ResourceDictionary>
